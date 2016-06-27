@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+"""
+Description:
+    Linux post installation helper.
+
+Usage:
+    linux init
+    linux report
+    linux install
+
+Options:
+    -h --help   Extensive help message.
+"""
+
+from docopt import docopt
+from libs import install, report
+
+if __name__ == '__main__':
+    args = docopt(__doc__)
+
+    try:
+        if args['install']:
+            install()
+            report()
+
+        elif args['report']:
+            report()
+    except KeyError as err:
+        print('ERROR: ' + err.message)
+
