@@ -15,18 +15,21 @@ Options:
 try:
     from subprocess import call
     from docopt import docopt
-    from libs import install, report, config
+    from libs import aptInstall, aptReport, config, pipInstall,pipReport,npmInstall
     from apt.cache import LockFailedException
 
     if __name__ == '__main__':
         args = docopt(__doc__)
         if args['install']:
-            install()
-            config()
-            report()
+            aptInstall()
+            pipInstall()
+            npmInstall()
+            aptReport()
+            pipReport()
 
         elif args['report']:
-            report()
+            aptReport()
+            pipReport()
 
         elif args['config']:
             config()
@@ -37,5 +40,4 @@ except KeyError as err:
 except ImportError as err:
     print('ERROR: ' + err.message)
     if 'y'== raw_input('Do you want setup linux? (y/n): '):
-        call("sudo pip install docopt==0.6.2 tabulate==0.7.5".split())
-        call("sudo apt-get install python-apt".split())
+        call("./config/scripts/setup.sh".split())

@@ -9,14 +9,14 @@ class InstallProgress(base.InstallProgress):
 
     def start_update(self):
         """(Abstract) Start update."""
-        print('\nStart update...\n')
-        sys.stdout.write("\x1b]2;Linux manager: installing 0%\x07")
+        print('\nStart apt update...\n')
+        sys.stdout.write("\x1b]2;Linux apt manager: installing 0%\x07")
 
     def finish_update(self):
         """(Abstract) Called when update has finished."""
-        print('\r\nFinish update...\n')
-        sys.stdout.write("\x1b]2;Linux manager: finished\x07")
+        print('\r\nFinish apt update...\n')
+        sys.stdout.write("\x1b]2;Linux apt manager: finished\x07")
 
     def status_change(self, pkg, percent, status):
         """(Abstract) Called when the APT status changed."""
-        sys.stdout.write("\x1b]2;Linux manager: installing {}%\x07".format(int(percent)))
+        sys.stdout.write("\x1b]2;Linux apt manager: installing {}%\x07".format(int(percent)))

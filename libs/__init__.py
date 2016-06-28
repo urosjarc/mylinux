@@ -1,7 +1,7 @@
-def _getPackages(cache):
+def _getAptPackages(cache):
     packages = []
 
-    with open('packages') as file:
+    with open('./config/packages/apt') as file:
         packagesNames = file.readlines()
 
         for packageName in packagesNames:
@@ -9,7 +9,29 @@ def _getPackages(cache):
 
     return packages
 
-def install():
+def _getPipPackages():
+    packages = []
+
+    with open('./config/packages/pip') as file:
+        packagesNames = file.readlines()
+
+        for packageName in packagesNames:
+            packages.append(packageName)
+
+    return packages
+
+def _getNpmPackages():
+    packages = []
+
+    with open('./config/packages/npm') as file:
+        packagesNames = file.readlines()
+
+        for packageName in packagesNames:
+            packages.append(packageName)
+
+    return packages
+
+def aptInstall():
     import apt
     from apt.progress.text import AcquireProgress
     from libs.aptProgress import InstallProgress
@@ -22,27 +44,51 @@ def install():
     installProgress = InstallProgress()
     cache = apt.Cache()
 
-    packages = _getPackages(cache)
+    packages = _getAptPackages(cache)
 
     for package in packages:
         package.mark_install()
 
     os.system('cls' if os.name == 'nt' else 'clear')
-    sys.stdout.write("\x1b]2;Linux manager: fetching\x07")
+    sys.stdout.write("\x1b]2;Linux apt manager: fetching\x07")
     print('Start fetching...\n')
 
     cache.commit(install_progress=installProgress, fetch_progress=AcquireProgress())
 
-def report():
+def pipInstall():
+    import pip,sys
+
+    sys.stdout.write("\x1b]2;Linux pip manager: installing\x07")
+    print('\nStart pip update...\n')
+
+    for packageName in _getPipPackages():
+        pip.main(['install', packageName])
+
+    print('\nFinish pip update...\n')
+    sys.stdout.write("\x1b]2;Linux pip manager: finished\x07")
+
+def npmInstall():
+    from subprocess import call
+    import sys
+
+    sys.stdout.write("\x1b]2;Linux npm manager: installing\x07")
+    print('\nStart npm update...\n')
+
+    call(('sudo npm install -g ' + ' '.join(_getNpmPackages())).split())
+
+    print('\nFinish npm update...\n')
+    sys.stdout.write("\x1b]2;Linux npm manager: finished\x07")
+
+def aptReport():
     import apt
     from tabulate import tabulate
     from libs.aptProgress import InstallProgress
 
     cache = apt.Cache()
 
-    print('Package report:')
+    print('Apt report:')
     table = []
-    for package in _getPackages(cache):
+    for package in _getAptPackages(cache):
         table.append([
             package.section,
             package.name,
@@ -52,6 +98,20 @@ def report():
         ])
 
     print(tabulate(table, headers=["Section", "Package", "Version", 'Installed', 'Broken'], tablefmt='fancy_grid'))
+
+def pipReport():
+    import importlib
+    from tabulate import tabulate
+
+    print('Pip report:')
+    table = []
+    for packageName in _getPipPackages():
+        try:
+            globals()[packageName] = importlib.import_module(packageName)
+            table.append([packageName, 'True','-'])
+        except Exception as err:
+            table.append([packageName,'False',err.message])
+    print(tabulate(table, headers=["Package", "Can import","Error"], tablefmt='fancy_grid'))
 
 def config():
     import shutil
