@@ -9,12 +9,15 @@ def _getPackages(cache):
 
     return packages
 
-
 def install():
     import apt
     from apt.progress.text import AcquireProgress
     from libs.aptProgress import InstallProgress
     import sys, os
+
+    if os.getenv("SUDO_USER") is None:
+        print('Try to run script with sudo command...')
+        exit()
 
     installProgress = InstallProgress()
     cache = apt.Cache()
@@ -29,7 +32,6 @@ def install():
     print('Start fetching...\n')
 
     cache.commit(install_progress=installProgress, fetch_progress=AcquireProgress())
-
 
 def report():
     import apt

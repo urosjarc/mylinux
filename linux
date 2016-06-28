@@ -1,31 +1,40 @@
 #!/usr/bin/env python
-
 """
 Description:
     Linux post installation helper.
 
 Usage:
-    linux init
-    linux report
-    linux install
+    libs report
+    libs install
 
 Options:
     -h --help   Extensive help message.
 """
 
-from docopt import docopt
-from libs import install, report
+try:
+    from subprocess import call
+    from docopt import docopt
+    from libs import install, report
+    from apt.cache import LockFailedException
 
-if __name__ == '__main__':
-    args = docopt(__doc__)
-
-    try:
+    if __name__ == '__main__':
+        args = docopt(__doc__)
         if args['install']:
             install()
             report()
 
         elif args['report']:
             report()
-    except KeyError as err:
-        print('ERROR: ' + err.message)
 
+except KeyError as err:
+    print('ERROR: ' + err.message)
+
+except ImportError as err:
+    print('ERROR: ' + err.message)
+    if 'y'== raw_input('Do you want setup linux? (y/n): '):
+        call("sudo pip install docopt==0.6.2 tabulate==0.7.5".split())
+        call("sudo apt-get install python-apt".split())
+
+except LockFailedException as err:
+    print('ERROR: ' + err.message)
+    print('Try to run script as sudo user...')
