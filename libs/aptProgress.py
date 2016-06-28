@@ -1,5 +1,4 @@
 from apt.progress import base
-from tabulate import tabulate
 import sys
 
 class InstallProgress(base.InstallProgress):
@@ -7,13 +6,6 @@ class InstallProgress(base.InstallProgress):
 
     def __init__(self):
         super(InstallProgress, self).__init__()
-
-    def packagesReport(self,packages):
-        print('Package report:')
-        table = []
-        for package in packages:
-            table.append([package.section,package.name,package.candidate.version,str(package.is_installed),str(package.is_now_broken)])
-        print(tabulate(table, headers=["Section","Package", "Version",'Installed','Broken'],tablefmt='fancy_grid'))
 
     def start_update(self):
         """(Abstract) Start update."""

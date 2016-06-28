@@ -4,8 +4,9 @@ Description:
     Linux post installation helper.
 
 Usage:
-    libs report
-    libs install
+    linux install
+    linux config
+    linux report
 
 Options:
     -h --help   Extensive help message.
@@ -14,17 +15,21 @@ Options:
 try:
     from subprocess import call
     from docopt import docopt
-    from libs import install, report
+    from libs import install, report, config
     from apt.cache import LockFailedException
 
     if __name__ == '__main__':
         args = docopt(__doc__)
         if args['install']:
             install()
+            config()
             report()
 
         elif args['report']:
             report()
+
+        elif args['config']:
+            config()
 
 except KeyError as err:
     print('ERROR: ' + err.message)
@@ -34,7 +39,3 @@ except ImportError as err:
     if 'y'== raw_input('Do you want setup linux? (y/n): '):
         call("sudo pip install docopt==0.6.2 tabulate==0.7.5".split())
         call("sudo apt-get install python-apt".split())
-
-except LockFailedException as err:
-    print('ERROR: ' + err.message)
-    print('Try to run script as sudo user...')
