@@ -14,7 +14,6 @@ class InstallProgress(base.InstallProgress):
 
     def finish_update(self):
         """(Abstract) Called when update has finished."""
-        print('\r\nFinish apt update...\n')
         sys.stdout.write("\x1b]2;Linux apt manager: finished\x07")
 
     def status_change(self, pkg, percent, status):
