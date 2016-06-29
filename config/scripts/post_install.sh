@@ -1,5 +1,5 @@
 echo '\nRemoving empty files in ~\n'
-rm -R ~/Desktop ~/Music ~/Public ~/Videos ~/Documents ~/examples.desktop ~/Pictures ~/Templates
+rm -r ~/Desktop ~/Music ~/Public ~/Videos ~/Documents ~/examples.desktop ~/Pictures ~/Templates
 
 echo '\nInstall zsh...\n'
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
