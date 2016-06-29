@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+"""
+Description:
+    Linux post installation helper.
+
+Usage:
+    linux init
+    linux install
+    linux config
+    linux report [ --apt --pip --npm --config ]
+
+Options:
+    -h --help   Extensive help message.
+"""
+
+try:
+    from subprocess import call
+    from docopt import docopt
+    from libs import *
+    from apt.cache import LockFailedException
+
+    if __name__ == '__main__':
+        args = docopt(__doc__)
+        print(args)
+        if args['install']:
+            call('sh ./config/scripts/pre_install.sh')
+            aptInstall()
+            pipInstall()
+            npmInstall()
+            call('sh ./config/scripts/post_install.sh')
+
+        elif args['report']:
+            all = True;
+            if(args['--apt']):
+                aptReport()
+                all = False
+            if(args['--pip']):
+                pipReport()
+                all = False
+            if(args['--config']):
+                configReport()
+                all = False
+            if (args['--npm']):
+                npmReport()
+                all = False
+            if all:
+                aptReport()
+                pipReport()
+                npmReport()
+                configReport()
+
+        elif args['config']:
+            config()
+
+        elif args['init']:
+            init()
+
+except KeyError as err:
+    print('ERROR: ' + err.message)
+
+except ImportError as err:
+    print('ERROR: ' + err.message)
+    init()
