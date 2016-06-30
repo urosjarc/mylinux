@@ -4,7 +4,6 @@ Description:
     Linux post installation helper.
 
 Usage:
-    linux init
     linux install
     linux config
     linux report [ --apt --pip --npm --config ]
@@ -14,14 +13,14 @@ Options:
 """
 
 try:
+    from libs import *
     from subprocess import call
     from docopt import docopt
-    from libs import *
     from apt.cache import LockFailedException
 
     if __name__ == '__main__':
         args = docopt(__doc__)
-        print(args)
+
         if args['install']:
             call('sh ./config/scripts/pre_install.sh')
             aptInstall()
@@ -51,9 +50,6 @@ try:
 
         elif args['config']:
             config()
-
-        elif args['init']:
-            init()
 
 except KeyError as err:
     print('ERROR: ' + err.message)
