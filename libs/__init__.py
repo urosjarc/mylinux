@@ -133,7 +133,7 @@ def configReport():
     for root, dirs, files in os.walk(dotfiles):
         for file in files:
             fileSrc = join(dotfiles,file)
-            filePath = file.replace('_|_', '/').replace('~',join(os.path.expanduser("~"),'Desktop/linux/test'))
+            filePath = file.replace('_|_', '/').replace('~',os.path.expanduser("~"))
             if(os.path.exists(filePath)):
                 table.append([
                     file,
