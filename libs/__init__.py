@@ -169,6 +169,7 @@ def npmReport():
 
 def config():
     import shutil,sys
+    from subprocess import call
     from os.path import join
     import os
 
@@ -176,6 +177,7 @@ def config():
     print('\nStart config update...\n')
 
     dotfiles = os.path.abspath('./dotfiles')
+    sudoFiles = []
 
     # traverse root directory, and list directories as dirs and files as files
     for root, dirs, files in os.walk(dotfiles):
@@ -190,9 +192,19 @@ def config():
                 finally:
                     os.umask(original_umask)
 
-            shutil.copyfile(fileSrc,filePath)
-            os.chmod(filePath,_mode)
-            print(filePath)
+	    try:
+		shutil.copyfile(fileSrc,filePath)
+		os.chmod(filePath,_mode)
+		print(filePath)
+	    except IOError:
+		sudoFiles.append([fileSrc,filePath])
+	    except OSError:
+		sudoFiles.append([fileSrc,filePath])
+
+    for sudoFile in sudoFiles:
+	call('sudo cp {} {}'.format(sudoFile[0],sudoFile[1]).split())
+	call('sudo chmod {} {}'.format("755",sudoFile[1]).split())
+	print(sudoFile[1])
 
     sys.stdout.write("\x1b]2;Linux config manager: finished\x07")
 
