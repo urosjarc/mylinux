@@ -3,9 +3,9 @@ printf '\n ---> WELLCOME UROS :)\n'
 {
     export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
 
-    alias intelij='sh ~/APPS/intelij/bin/idea.sh'
-    alias webstorm='sh ~/APPS/webstorm/bin/webstorm.sh'
-    alias pycharm='sh ~/APPS/pycharm/bin/pycharm.sh'
+    alias intelij='sh ~/APPS/idea*/bin/idea.sh'
+    alias webstorm='sh ~/APPS/WebStorm*/bin/webstorm.sh'
+    alias pycharm='sh ~/APPS/pycharm*/bin/pycharm.sh'
 
     xset m 100 3
     xset r rate 180 50

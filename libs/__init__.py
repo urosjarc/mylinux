@@ -232,3 +232,8 @@ def exitIfsudoIsNotNone():
         print(' - "{}" should not have locked access to config files!'.format(os.getenv('USER')))
         print(' - chmod(root,{})'.format(oct(_mode)))
         exit()
+
+def restartComputer():
+    from subprocess import call
+    if 'y' == raw_input('Computer restart? (y/n): '):
+        call("sudo reboot now".split())

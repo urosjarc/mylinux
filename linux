@@ -29,6 +29,7 @@ try:
             pipInstall()
             npmInstall()
             post_install()
+	    restartComputer()
 
         elif args['report']:
             all = True;
