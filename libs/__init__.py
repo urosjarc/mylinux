@@ -198,6 +198,7 @@ def config():
 
 def init():
     from subprocess import call
+    import sys
 
     sys.stdout.write("\x1b]2;Linux manager: init\x07")
     print('\nStart init...\n')
@@ -207,6 +208,7 @@ def init():
 
 def pre_install():
     from subprocess import call
+    import sys
 
     sys.stdout.write("\x1b]2;Linux manager: pre_install\x07")
     print('\nStart pre. install...\n')
@@ -215,6 +217,7 @@ def pre_install():
 
 def post_install():
     from subprocess import call
+    import sys
 
     sys.stdout.write("\x1b]2;Linux manager: post_install\x07")
     print('\nStart post. install...\n')
