@@ -11,11 +11,12 @@ printf '\n ---> WELLCOME UROS :)\n'
     xset r rate 180 50
 
     eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/id_rsa
-    ssh-add ~/.ssh/id_rsa_bb
+    ssh-add ~/.ssh/id_rsa_github
+    ssh-add ~/.ssh/id_rsa_bitbucket
 
     ps cax | grep workrave > /dev/null
     if [ $? -eq 0 ]; then
+	echo ''
     else
         nohup workrave &
     fi

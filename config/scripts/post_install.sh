@@ -20,7 +20,6 @@ sudo update-alternatives --config x-www-browser
 
 echo '\nCreate .ssh directory...\n'
 mkdir ~/.ssh
-sudo chown -R urosjarc: ~/.ssh
 
 echo "\nSet keygen for github:\n - file: ${RED}/home/<user>/.ssh/id_rsa_github${NC}\n - passphrase: ${RED}SKIP${NC}\n"
 ssh-keygen -t rsa -b 4096
@@ -43,7 +42,7 @@ sudo tar -xf ~/Downloads/pycharm.tar.gz -C ~/APPS
 echo 'Extracting webstorm.tar.gz'
 sudo tar -xf ~/Downloads/webstorm.tar.gz -C ~/APPS
 
-echo "\n${RED}Setting chmod(urosjarc,~/APPS)${NC}\n"
-sudo chown -R urosjarc: ~/APPS
+echo "\n${RED}Setting chmod(urosjarc,~)${NC}\n"
+sudo chown -R urosjarc: ~
 
 echo '\nYou should check it out if adding system path to idea.sh would help with i3 hinting\n'
