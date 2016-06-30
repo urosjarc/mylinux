@@ -1,0 +1,23 @@
+printf '\n ---> WELLCOME UROS :)\n'
+
+{
+    export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
+
+    alias intelij='sh ~/APPS/idea*/bin/idea.sh'
+    alias webstorm='sh ~/APPS/WebStorm*/bin/webstorm.sh'
+    alias pycharm='sh ~/APPS/pycharm*/bin/pycharm.sh'
+
+    xset m 100 3
+    xset r rate 180 50
+
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa
+    ssh-add ~/.ssh/id_rsa_bb
+
+    ps cax | grep workrave > /dev/null
+    if [ $? -eq 0 ]; then
+    else
+        nohup workrave &
+    fi
+
+} &> /dev/null

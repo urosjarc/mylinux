@@ -1,0 +1,1 @@
+nohup nm-applet 0<&- &>/dev/null &
