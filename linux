@@ -14,6 +14,7 @@ Options:
 
 try:
     from libs import *
+    import os
     from subprocess import call
     from docopt import docopt
     from apt.cache import LockFailedException
@@ -22,11 +23,12 @@ try:
         args = docopt(__doc__)
 
         if args['install']:
-            call('sh ./config/scripts/pre_install.sh')
+	    exitIfSudoIsNone()
+            pre_install()
             aptInstall()
             pipInstall()
             npmInstall()
-            call('sh ./config/scripts/post_install.sh')
+            post_install()
 
         elif args['report']:
             all = True;
@@ -49,6 +51,7 @@ try:
                 configReport()
 
         elif args['config']:
+            exitIfsudoIsNotNone()
             config()
 
 except KeyError as err:

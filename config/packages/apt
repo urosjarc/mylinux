@@ -16,7 +16,7 @@ oracle-java8-installer
 texlive
 python-pip
 meld
-smartgithg
+smartgit
 git
 ipython-notebook
 python-matplotlib

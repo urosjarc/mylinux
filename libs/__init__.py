@@ -1,3 +1,5 @@
+_mode = 0700 #Owner can r,w,x
+
 def _getAptPackages(cache):
     packages = []
 
@@ -31,15 +33,17 @@ def _getNpmPackages():
 
     return packages
 
+def exitIfSudoIsNone():
+    import os
+    if os.getenv("SUDO_USER") is None:
+        print('Run script with sudo command!')
+        exit()
+
 def aptInstall():
     import apt
     from apt.progress.text import AcquireProgress
     from libs.aptProgress import InstallProgress
     import sys, os
-
-    if os.getenv("SUDO_USER") is None:
-        print('Run script with sudo command!')
-        exit()
 
     installProgress = InstallProgress()
     cache = apt.Cache()
@@ -172,13 +176,6 @@ def config():
     print('\nStart config update...\n')
 
     dotfiles = os.path.abspath('./dotfiles')
-    mode = 0700 #Owner can r,w,x
-
-    if os.getenv("SUDO_USER") is not None:
-        print('Run script without sudo command.')
-        print(' - {} should not have locked access to config files!'.format(os.getenv('SUDO_USER')))
-        print(' - chmod(root,{})'.format(oct(mode)))
-        exit()
 
     # traverse root directory, and list directories as dirs and files as files
     for root, dirs, files in os.walk(dotfiles):
@@ -189,12 +186,12 @@ def config():
             if not os.path.exists(fileDir):
                 try:
                     original_umask = os.umask(0)
-                    os.makedirs(fileDir,mode)
+                    os.makedirs(fileDir,_mode)
                 finally:
                     os.umask(original_umask)
 
             shutil.copyfile(fileSrc,filePath)
-            os.chmod(filePath,mode)
+            os.chmod(filePath,_mode)
             print(filePath)
 
     sys.stdout.write("\x1b]2;Linux config manager: finished\x07")
@@ -202,5 +199,33 @@ def config():
 def init():
     from subprocess import call
 
+    sys.stdout.write("\x1b]2;Linux manager: init\x07")
+    print('\nStart init...\n')
+
     if 'y' == raw_input('Do you want setup linux? (y/n): '):
         call("sh ./config/scripts/init.sh".split())
+
+def pre_install():
+    from subprocess import call
+
+    sys.stdout.write("\x1b]2;Linux manager: pre_install\x07")
+    print('\nStart pre. install...\n')
+
+    call("sh ./config/scripts/pre_install.sh".split())
+
+def post_install():
+    from subprocess import call
+
+    sys.stdout.write("\x1b]2;Linux manager: post_install\x07")
+    print('\nStart post. install...\n')
+
+    call("sh ./config/scripts/post_install.sh".split())
+
+def exitIfsudoIsNotNone():
+    import os
+
+    if os.getenv("SUDO_USER") is not None:
+        print('Run script with sudo command.')
+        print(' - "{}" should not have locked access to config files!'.format(os.getenv('USER')))
+        print(' - chmod(root,{})'.format(oct(_mode)))
+        exit()
