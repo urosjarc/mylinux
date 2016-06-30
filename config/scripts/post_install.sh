@@ -13,7 +13,6 @@ rm -r -i ~/Templates
 
 echo '\nInstall zsh...\n'
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
-chsh -s $(which zsh)
 
 echo '\nSet default browser...\n'
 sudo update-alternatives --config x-www-browser
@@ -44,5 +43,8 @@ sudo tar -xf ~/Downloads/webstorm.tar.gz -C ~/APPS
 
 echo "\n${RED}Setting chmod(urosjarc,~)${NC}\n"
 sudo chown -R urosjarc: ~
+
+echo '\nSet default shell...\n'
+sudo -u urosjarc -H sh -c "chsh -s $(which zsh)"
 
 echo '\nYou should check it out if adding system path to idea.sh would help with i3 hinting\n'
