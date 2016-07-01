@@ -1,0 +1,17 @@
+
+"CONSTANTS"
+    let mapleader=" "
+
+"SET VARIBLES"
+    set smartcase
+    set ignorecase
+    set sidescrolloff=20
+    set scrolloff=10
+
+"MAPING SHORTCUTS"
+
+    "WINDOW"
+        map <A-j> <C-w>j
+        map <A-k> <C-w>k
+        map <A-h> <C-w>h
+        map <A-l> <C-w>l
