@@ -39,7 +39,7 @@
     [[[child1]]]
       type = Terminal
       parent = window0
-      profile = solarized-dark
+      profile = solarized-light
     [[[window0]]]
       type = Window
       parent = ""
