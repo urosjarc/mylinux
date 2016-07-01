@@ -29,9 +29,6 @@ ssh-keygen -t rsa -b 4096
 echo "\nSet keygen for bitbucket:\n - file: ${RED}/home/<user>/.ssh/id_rsa_bitbucket${NC}\n - passphrase: ${RED}SKIP${NC}\n"
 ssh-keygen -t rsa -b 4096
 
-echo '\nAdding .MY_login source to .profile file...\n'
-grep -q -F 'source ~/.MY_login' ~/.profile || echo 'source ~/.MY_login' >> ~/.profile
-
 echo '\nInstalling IDEA products\n'
 wget -O ~/Downloads/intellij.tar.gz https://download-cf.jetbrains.com/idea/ideaIC-2016.1.3.tar.gz
 wget -O ~/Downloads/pycharm.tar.gz https://download-cf.jetbrains.com/python/pycharm-community-2016.1.4.tar.gz
