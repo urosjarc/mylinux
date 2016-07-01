@@ -1,16 +1,6 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo "\n${RED}Removing empty files in ~${NC}\n"
-rm -r -i ~/Desktop 
-rm -r -i ~/Music
-rm -r -i ~/Public 
-rm -r -i ~/Videos
-rm -r -i ~/Documents 
-rm -r -i ~/Pictures 
-rm -r -i ~/Templates
-rm -r -i ~/examples.desktop 
-
 echo '\nInstall zsh...\n'
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 
@@ -44,4 +34,14 @@ sudo tar -xf ~/Downloads/webstorm.tar.gz -C ~/.APPS
 echo "\n${RED}Setting chmod(urosjarc,~)${NC}\n"
 sudo chown -R urosjarc: ~
 
-echo '\nYou should check it out if adding system path to idea.sh would help with i3 hinting\n'
+echo "\n${RED}Removing stupid ubuntu shit...${NC}\n"
+rm -r -i ~/Desktop 
+rm -r -i ~/Music
+rm -r -i ~/Public 
+rm -r -i ~/Videos
+rm -r -i ~/Documents 
+rm -r -i ~/Pictures 
+rm -r -i ~/Templates
+rm -r -i ~/examples.desktop 
+
+echo "\n${RED}Post installation script finished...${NC}\n"
