@@ -26,7 +26,7 @@ directory. In this directory should be only files with the names that
 represents where you want to copy and name file. For example, if you
 want to place file `.vimrc` to the path `~/.vimrc` you will copy all `.virmc`
 data to file with the name `~_|_.vimrc` and place it in `./dotfiles` directory.
-*Be aware that **linux** will replace all "**\_|\_**" with "**/**" !*
+Be aware that **linux** will replace all "**\_|\_**" with "**/**" !
 So if you want place `.vimrc` file in directory `/home/user/Desktop`,
 you will name the file in `./dotfiles` as `_|_home_|_user_|_Desktop_|_.vimrc`,
 and **linux** will create all directories in path if they don't exist and
