@@ -23,7 +23,7 @@ try:
         args = docopt(__doc__)
 
         if args['install']:
-	    exitIfSudoIsNone()
+            exitIfSudoIsNone()
             pre_install()
             aptInstall()
             pipInstall()
@@ -31,7 +31,7 @@ try:
             post_install()
 
         elif args['report']:
-            all = True;
+            all = True
             if(args['--apt']):
                 aptReport()
                 all = False
