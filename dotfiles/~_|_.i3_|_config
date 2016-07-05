@@ -145,7 +145,6 @@ workspace 5 output DVI-I-0
 #Execute settings
 exec spd-say -r -30 -i -50 -t female3 "Login accepted. Welcome back. Master"
 exec xset m 100 3 && xset r rate 180 50
-exec eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa_github && ssh-add ~/.ssh/id_rsa_bitbucket
 
 #Execute starting programms
 exec nm-applet

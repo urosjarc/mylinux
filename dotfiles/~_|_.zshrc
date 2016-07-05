@@ -15,3 +15,11 @@ source $ZSH/oh-my-zsh.sh
 
 #My settings
 printf '\n ---> WELLCOME UROS :)\n'
+{
+    export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
+
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa_github
+    ssh-add ~/.ssh/id_rsa_bitbucket
+
+} &> /dev/null
