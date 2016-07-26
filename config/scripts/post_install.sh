@@ -1,14 +1,17 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo '\nInstall zsh...\n'
-wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
-
 echo '\nSet default shell...\n'
 sudo -u urosjarc -H sh -c "chsh -s $(which zsh)"
 
 echo '\nSet default browser...\n'
 sudo update-alternatives --config x-www-browser
+
+echo '\nInstall zsh...\n'
+wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
+
+echo '\nUpdate npm...\n'
+sudo npm update npm -g
 
 echo '\nCreate .ssh directory...\n'
 mkdir ~/.ssh
