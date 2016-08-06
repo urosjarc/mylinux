@@ -78,8 +78,8 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
         bindsym $mod+r exec reboot
-        bindsym $mod+l exec sleep 0.5 && spd-say -r -30 -i -50 -t female3 "Good bye. Master" && sleep 2.2 && i3-msg exit
-        bindsym $mod+p exec sleep 0.5 && spd-say -r -30 -i -50 -t female3 "Good bye. Master" && sleep 2.2 && poweroff
+        bindsym $mod+l exec sleep 0.5 && notify-send -u low -i face-laugh 'Good bye. Master' && spd-say -r -30 -i -50 -t female3 "Good bye. Master" && sleep 2.2 && i3-msg exit
+        bindsym $mod+p exec sleep 0.5 && notify-send -u low -i face-laugh 'Good bye. Master' && spd-say -r -30 -i -50 -t female3 "Good bye. Master" && sleep 2.2 && poweroff
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -143,9 +143,12 @@ workspace 1 output DP-1
 workspace 5 output DVI-I-0
 
 #Execute settings
-exec spd-say -r -30 -i -50 -t female3 "Welcome back. Master"
 exec xset m 100 3 && xset r rate 180 50
 
 #Execute starting programms
 exec nm-applet
-exec eval "while true; do notify-send -u low -i face-laugh 'Time for workout you lazy fuck xD'; sleep 20; done &"
+exec eval "while true; do sleep 600; notify-send -u low -i face-laugh 'Time for workout you lazy fuck xD'; done" &
+
+#Execute welcoming
+exec spd-say -r -30 -i -50 -t female3 "Welcome back. Master"
+exec notify-send -u low -i face-laugh 'Welcome back. Master'
