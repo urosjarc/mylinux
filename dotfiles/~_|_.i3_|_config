@@ -147,7 +147,7 @@ exec xset m 100 3 && xset r rate 180 50
 
 #Execute starting programms
 exec nm-applet
-exec eval "while true; do sleep 600; notify-send -u low -i face-laugh 'Time for workout you lazy fuck! xD'; done" &
+exec eval "while true; do sleep 600; notify-send -u low -i face-laugh 'Time for workout you lazy fuck! xD'; spd-say -r -30 -i -50 -t female3 'Time for workout.'; done" &
 
 #Execute welcoming
 exec spd-say -r -30 -i -50 -t female3 "Welcome back. Master"
