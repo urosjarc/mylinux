@@ -35,7 +35,7 @@ sudo tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
 echo 'Extracting webstorm.tar.gz'
 sudo tar -xf ~/Downloads/webstorm.tar.gz -C ~/.APPS
 echo 'Extracting sonarqube.zip'
-sudo unzip sonarqube.zip -d ~/.APPS
+sudo unzip ~/Downloads/sonarqube.zip -d ~/.APPS
 
 echo "\n${RED}Setting chmod(urosjarc,~)${NC}\n"
 sudo chown -R urosjarc: ~
