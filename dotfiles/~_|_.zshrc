@@ -22,6 +22,4 @@ printf '\n ---> WELLCOME UROS :)\n'
     ssh-add ~/.ssh/id_rsa_github
     ssh-add ~/.ssh/id_rsa_bitbucket
 
-    source /usr/local/bin/virtualenvwrapper.sh
-
 } &> /dev/null
