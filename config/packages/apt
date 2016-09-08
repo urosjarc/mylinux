@@ -22,7 +22,6 @@ smartgit
 git
 ipython-notebook
 python-matplotlib
-virtualenvwrapper
 texlive-latex-extra
 vim-gnome
 vim
