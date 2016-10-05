@@ -10,6 +10,10 @@ sudo update-alternatives --config x-www-browser
 echo '\nInstall zsh...\n'
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 
+echo '\nRaise file system inotify\n'
+sudo grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
+sudo sysctl -p
+
 echo '\nUpdate npm...\n'
 sudo npm update npm -g
 
@@ -26,7 +30,6 @@ echo '\nDownloading external products\n'
 wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.1.3.tar.gz
 wget -O ~/Downloads/pycharm.tar.gz 	https://download-cf.jetbrains.com/python/pycharm-community-2016.1.4.tar.gz
 wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.1.3.tar.gz
-wget -O ~/Downloads/sonarqube.zip 	https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-6.0.zip
 mkdir ~/.APPS
 echo 'Extracting intelij.tar.gz'
 sudo tar -xf ~/Downloads/intellij.tar.gz -C ~/.APPS
@@ -34,8 +37,6 @@ echo 'Extracting pycharm.tar.gz'
 sudo tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
 echo 'Extracting webstorm.tar.gz'
 sudo tar -xf ~/Downloads/webstorm.tar.gz -C ~/.APPS
-echo 'Extracting sonarqube.zip'
-sudo unzip ~/Downloads/sonarqube.zip -d ~/.APPS
 
 echo "\n${RED}Setting chmod(urosjarc,~)${NC}\n"
 sudo chown -R urosjarc: ~
