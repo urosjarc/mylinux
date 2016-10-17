@@ -116,6 +116,8 @@ bar {
 
     status_command i3status --config ~/.i3/i3status.conf
 
+    font pango:DejaVu Sans Mono, Awesome 8
+
     colors {
         background #000000
         statusline #ffffff
