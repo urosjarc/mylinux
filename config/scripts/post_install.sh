@@ -27,9 +27,9 @@ echo "\nSet keygen for bitbucket:\n - file: ${RED}/home/<user>/.ssh/id_rsa_bitbu
 ssh-keygen -t rsa -b 4096
 
 echo '\nDownloading external products\n'
-wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.1.3.tar.gz
-wget -O ~/Downloads/pycharm.tar.gz 	https://download-cf.jetbrains.com/python/pycharm-community-2016.1.4.tar.gz
-wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.1.3.tar.gz
+wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.2.4.tar.gz
+wget -O ~/Downloads/pycharm.tar.gz 	https://download-cf.jetbrains.com/python/pycharm-community-2016.2.3.tar.gz
+wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.2.3.tar.gz
 mkdir ~/.APPS
 echo 'Extracting intelij.tar.gz'
 sudo tar -xf ~/Downloads/intellij.tar.gz -C ~/.APPS
