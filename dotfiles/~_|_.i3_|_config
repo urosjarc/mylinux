@@ -74,6 +74,11 @@ bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+Shift+w reload
 bindsym $mod+Shift+r restart
 
+# Audio manager
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
+bindsym XF86AudioMute exec amixer -q set Master toggle
+
 # Create Log out, Reboot, Poweroff bindings
 bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
@@ -148,7 +153,10 @@ workspace 5 output DVI-I-0
 exec xset m 100 3 && xset r rate 180 50
 
 #Execute starting programms
+exec classicmenu-indicator
 exec nm-applet
+
+#Execute repeating programms
 exec eval "while true; do sleep 600; notify-send -u low -i face-laugh 'Time for workout you lazy fuck! xD'; done" &
 
 #Execute welcoming
