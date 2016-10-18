@@ -155,6 +155,7 @@ exec xset m 100 3 && xset r rate 180 50
 #Execute starting programms
 exec classicmenu-indicator
 exec nm-applet
+exec /opt/extras.ubuntu.com/indicator-brightness/indicator-brightness
 
 #Execute repeating programms
 exec eval "while true; do sleep 600; notify-send -u low -i face-laugh 'Time for workout you lazy fuck! xD'; done" &
