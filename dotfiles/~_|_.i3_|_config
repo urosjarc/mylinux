@@ -1,133 +1,13 @@
-set $mod Mod4
-font pango:DejaVu Sans Mono 8
+#Fonts
+font pango:DejaVu Sans Mono, Awesome 8
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
-
-# Close focused window
-bindsym $mod+Shift+c kill
-
-# start dmenu (a program launcher)
-bindsym $mod+p exec dmenu_run
-
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-# New created window split in dir
-bindsym $mod+Shift+Right split h
-bindsym $mod+Shift+Down split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+t layout tabbed
-bindsym $mod+g layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+Up focus parent
-bindsym $mod+Down focus child
-
-# switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
-
-# reload the configuration / restart / logout
-bindsym $mod+Shift+w reload
-bindsym $mod+Shift+r restart
-
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
-
-# Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-
-# Create Log out, Reboot, Poweroff bindings
-bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
-mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
-        bindsym $mod+r exec reboot
-        bindsym $mod+l exec sleep 0.5 && notify-send -u low -i face-laugh 'Good bye. Master!' && sleep 2.2 && i3-msg exit
-        bindsym $mod+p exec sleep 0.5 && notify-send -u low -i face-laugh 'Good bye. Master!' && sleep 2.2 && poweroff
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-# resize window (you can also use the mouse for that)
-bindsym $mod+r mode "resize"
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym l resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym h resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-#Mouse do not change focus :)
-focus_follows_mouse no
-
-#Color variables
+# Color variables
 set $green #66CD00
 set $black  #000000
 
 bar {
 
     status_command i3status --config ~/.i3/i3status.conf
-
-    font pango:DejaVu Sans Mono, Awesome 8
 
     colors {
         background #000000
@@ -142,29 +22,143 @@ bar {
 
 }
 
-#Window size
+# Window size
 new_window none
 new_float none
 
-#Color                      border      background      text
+# Color                     border      background      text
 client.focused              $green      $green          $black
 client.unfocused            $black      $black          $green
 client.focused_inactive     $black      $black          $green
 
-#Window positioning
-workspace 1 output DP-1
-workspace 5 output DVI-I-0
+# Set modifier
+set $mod Mod4
 
-#Execute settings
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Start dmenu (a program launcher)
+bindsym $mod+p exec dmenu_run
+
+# Close focused window
+bindsym $mod+Shift+c kill
+
+#Mouse do not change focus :)
+focus_follows_mouse no
+
+# Change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# New created window split in dir
+bindsym $mod+Shift+Right split h
+bindsym $mod+Shift+Down split v
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+g layout toggle split
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# Focus the parent container
+bindsym $mod+Up focus parent
+bindsym $mod+Down focus child
+
+# Switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Reload the configuration / restart / logout
+bindsym $mod+Shift+w reload
+bindsym $mod+Shift+r restart
+
+# Resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym l resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym h resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# Create Log out, Reboot, Poweroff bindings
+bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
+mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
+        bindsym $mod+r exec reboot
+        bindsym $mod+l exec sleep 0.5 && notify-send -u low -i face-laugh 'Good bye. Master!' && sleep 2.2 && i3-msg exit
+        bindsym $mod+p exec sleep 0.5 && notify-send -u low -i face-laugh 'Good bye. Master!' && sleep 2.2 && poweroff
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# Start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
+
+# Start print screen
+bindsym --release Print exec gnome-screenshot --interactive
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Execute settings
 exec xset m 100 3 && xset r rate 180 50
 
-#Execute starting programms
+# Execute starting programms
 exec classicmenu-indicator
 exec nm-applet
 exec /opt/extras.ubuntu.com/indicator-brightness/indicator-brightness
 
-#Execute repeating programms
+# Execute repeating programms
 exec eval "while true; do sleep 600; notify-send -u low -i face-laugh 'Time for workout you lazy fuck! xD'; done" &
 
-#Execute welcoming
+# Execute welcoming
 exec notify-send -u low -i face-laugh 'Welcome back. Master!'
