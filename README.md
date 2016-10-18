@@ -38,7 +38,7 @@ You can define all those things in scripts `post_install.sh` and `pre_install.sh
 that are located in `./config/scripts` directory. The script with the
 name `init.sh` is reserved for installing **linux** dependencies... 
 
-##OK, I want to try it out!
+##OK, I let's try it out!
 
 Hold your horses, and follow steps:
 
