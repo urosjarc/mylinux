@@ -5,6 +5,12 @@ font pango:DejaVu Sans Mono, Awesome 8
 set $green #66CD00
 set $black  #000000
 
+# Color                     border      background      text
+client.focused              $green      $green          $black
+client.unfocused            $black      $black          $green
+client.focused_inactive     $black      $black          $green
+
+# Status bar
 bar {
 
     status_command i3status --config ~/.i3/i3status.conf
@@ -25,11 +31,6 @@ bar {
 # Window size
 new_window none
 new_float none
-
-# Color                     border      background      text
-client.focused              $green      $green          $black
-client.unfocused            $black      $black          $green
-client.focused_inactive     $black      $black          $green
 
 # Set modifier
 set $mod Mod4
@@ -119,7 +120,8 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-# Create Log out, Reboot, Poweroff bindings
+# CUSTOM BINDING
+
 bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
         bindsym $mod+r exec reboot
@@ -131,34 +133,23 @@ mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
         bindsym Escape mode "default"
 }
 
-# Start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
 
-# Start print screen
 bindsym --release Print exec gnome-screenshot --interactive
 
-# Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
 
-# Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+# POST EXECUTE
 
-# Execute settings
 exec xset m 100 3 && xset r rate 180 50
 
-# Execute starting programms
 exec classicmenu-indicator
 exec nm-applet
 exec /opt/extras.ubuntu.com/indicator-brightness/indicator-brightness
 
-# Execute repeating programms
 exec eval "while true; do sleep 600; notify-send -u low -i face-laugh 'Time for workout you lazy fuck! xD'; done" &
 
-# Execute welcoming
 exec notify-send -u low -i face-laugh 'Welcome back. Master!'
