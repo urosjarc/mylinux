@@ -5,7 +5,7 @@ sudo mv /tmp/neo4j.list /etc/apt/sources.list.d
 curl --silent --location https://deb.nodesource.com/setup_6.x | sudo bash -
 
 sudo add-apt-repository ppa:cwchien/gradle -y
-sudo add-apt-repository ppa:ndicator-brightness/ppa -y
+sudo add-apt-repository ppa:indicator-brightness/ppa -y
 sudo add-apt-repository ppa:webupd8team/java -y
 
 sudo apt-get update
