@@ -1,6 +1,6 @@
 [user]
     name = urosjarc
-    email = urosjarc@users.noreply.github.com
+    email = jar.fmf@googlemail.com
 [core]
     editor = vim
 [color]
@@ -11,3 +11,4 @@
     keepBackup = false
 [http]
     sslverify=false
+
