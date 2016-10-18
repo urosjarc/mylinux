@@ -6,7 +6,7 @@ Description:
 Usage:
     linux install
     linux config
-    linux report [ --apt --pip --npm --config ]
+    linux report [ --apt --pip --gem --npm --config ]
 
 Options:
     -h --help   Extensive help message.
@@ -26,6 +26,7 @@ try:
             exitIfSudoIsNone()
             pre_install()
             aptInstall()
+            gemInstall()
             pipInstall()
             npmInstall()
             post_install()
@@ -44,9 +45,13 @@ try:
             if (args['--npm']):
                 npmReport()
                 all = False
+            if (args['--gem']):
+                gemReport()
+                all = False
             if all:
                 aptReport()
                 pipReport()
+                gemReport()
                 npmReport()
                 configReport()
 

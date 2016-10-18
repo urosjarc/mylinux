@@ -33,6 +33,17 @@ def _getNpmPackages():
 
     return packages
 
+def _getGemPackages():
+    packages = []
+
+    with open('./config/packages/gem') as file:
+        packagesNames = file.readlines()
+
+        for packageName in packagesNames:
+            packages.append(packageName.strip())
+
+    return packages
+
 def exitIfSudoIsNone():
     import os
     if os.getenv("SUDO_USER") is None:
@@ -80,6 +91,16 @@ def npmInstall():
     call(('sudo npm install -g ' + ' '.join(_getNpmPackages())).split())
     sys.stdout.write("\x1b]2;Linux npm manager: finished\x07")
 
+def gemInstall():
+    from subprocess import call
+    import sys
+
+    sys.stdout.write("\x1b]2;Linux gem manager: installing\x07")
+    print('\nStart gem update...\n')
+
+    call(('sudo gem install ' + ' '.join(_getGemPackages())).split())
+    sys.stdout.write("\x1b]2;Linux gem manager: finished\x07")
+
 def aptReport():
     import apt
     from tabulate import tabulate
@@ -101,7 +122,7 @@ def aptReport():
     print(tabulate(table, headers=["Section", "Package", "Version", 'Installed', 'Broken'], tablefmt='fancy_grid'))
 
 def pipReport():
-    import importlib, subprocess,os
+    import importlib, subprocess
     from tabulate import tabulate
 
     print('\nPip report:\n')
@@ -164,6 +185,22 @@ def npmReport():
         for installedPac in installedPacs:
             if package.strip()==installedPac.split('@')[0]:
                 version = installedPac.split('@')[1]
+        table.append([package,str(version)])
+    print(tabulate(table,headers=['Package','Version'],tablefmt='fancy_grid'))
+
+def gemReport():
+    import subprocess
+    from tabulate import tabulate
+
+    print('\nGem report:\n')
+    output = subprocess.Popen(('gem list').split(), stdout=subprocess.PIPE).communicate()[0]
+    installedPacs = output.split('\n')
+    table = []
+    for package in _getGemPackages():
+        version = None
+        for installedPac in installedPacs:
+            if package.strip()==installedPac.split(' ')[0]:
+                version = installedPac.split(' ')[1].replace('(','').replace(')','')
         table.append([package,str(version)])
     print(tabulate(table,headers=['Package','Version'],tablefmt='fancy_grid'))
 

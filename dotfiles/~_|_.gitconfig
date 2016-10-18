@@ -11,4 +11,3 @@
     keepBackup = false
 [http]
     sslverify=false
-
