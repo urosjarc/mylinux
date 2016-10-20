@@ -30,6 +30,7 @@ try:
             pipInstall()
             npmInstall()
             post_install()
+            print('\n > Linux installation finish.')
 
         elif args['report']:
             all = True

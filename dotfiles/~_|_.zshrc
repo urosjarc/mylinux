@@ -13,6 +13,10 @@ bindkey "^R" history-incremental-search-backward
 #Plugin shell
 source $ZSH/oh-my-zsh.sh
 
+#NVM support
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
 #My settings
 printf '\n ---> WELLCOME UROS :)\n'
 {

@@ -17,6 +17,5 @@ oracle-java9-installer
 neo4j
 git
 python-virtualenv
-nodejs
 python-pip
 gradle
