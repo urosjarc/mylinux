@@ -5,7 +5,7 @@ export ZSH=/home/urosjarc/.oh-my-zsh
 ZSH_THEME="avit"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(git)
+plugins=(git zsh-syntax-highlighting)
 
 bindkey -v
 bindkey "^R" history-incremental-search-backward

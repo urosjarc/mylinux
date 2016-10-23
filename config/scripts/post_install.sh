@@ -5,6 +5,7 @@ NC='\033[0m' # No Color
 
 echo '\n...CUSTOM INSTALL...\n'
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
 nvm install node
 sudo npm update npm -g
