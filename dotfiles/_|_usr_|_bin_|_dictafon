@@ -13,15 +13,25 @@ Options:
 from subprocess import call, PIPE
 from docopt import docopt
 import os
+import shutil
 
 if __name__ == '__main__':
     args = docopt(__doc__)
 
     if args['play']:
-        voicesPath = os.path.join('/media', os.environ.get('USER'), 'DVT1100/VOICE', args['<voice>'])
-        voices = os.listdir(voicesPath)
 
+        voicesPath = os.path.join('/media', os.environ.get('USER'), 'DVT1100/VOICE', args['<voice>'])
+        trashPath = os.path.join('/home',os.environ.get('USER'), '.local/share/Trash')
+
+        voices = os.listdir(voicesPath)
         for file in voices:
             filePath = os.path.join(voicesPath, file)
             print(filePath)
             call('audacity ' + filePath + ' > /dev/null 2>&1', shell=True)
+
+            if 'y' == raw_input('Remove ' + file + ' (y/n):'):
+                trashFilePath = os.path.join(trashPath,file)
+				try:
+					shutil.move(filePath,trashFilePath)
+				except OSError:
+					os.rename(filePath,trashFilePath)
