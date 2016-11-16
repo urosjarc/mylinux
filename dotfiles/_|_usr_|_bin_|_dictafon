@@ -21,7 +21,7 @@ if __name__ == '__main__':
     if args['play']:
 
         voicesPath = os.path.join('/media', os.environ.get('USER'), 'DVT1100/VOICE', args['<voice>'])
-        trashPath = os.path.join('/home',os.environ.get('USER'), '.local/share/Trash')
+        trashPath = os.path.join('/home', os.environ.get('USER'), '.local/share/Trash')
 
         voices = os.listdir(voicesPath)
         for file in voices:
@@ -30,8 +30,8 @@ if __name__ == '__main__':
             call('audacity ' + filePath + ' > /dev/null 2>&1', shell=True)
 
             if 'y' == raw_input('Remove ' + file + ' (y/n):'):
-                trashFilePath = os.path.join(trashPath,file)
-				try:
-					shutil.move(filePath,trashFilePath)
-				except OSError:
-					os.rename(filePath,trashFilePath)
+                trashFilePath = os.path.join(trashPath, file)
+                try:
+                    shutil.move(filePath, trashFilePath)
+                except OSError:
+                    os.rename(filePath, trashFilePath)
