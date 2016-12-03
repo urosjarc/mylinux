@@ -1,6 +1,5 @@
 fonts-font-awesome
 classicmenu-indicator
-usbmount
 indicator-brightness
 icedtea-plugin
 chromium-browser
@@ -10,7 +9,6 @@ terminator
 ranger
 feh
 vim
-audacity
 vlc
 meld
 pinta

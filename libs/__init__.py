@@ -148,7 +148,7 @@ def configReport():
 
     print('\nConfig report:\n')
 
-    dotfiles = os.path.abspath('./dotfiles')
+    dotfiles = os.path.abspath('./config/dotfiles')
     table = []
     # traverse root directory, and list directories as dirs and files as files
     for root, dirs, files in os.walk(dotfiles):
@@ -213,7 +213,7 @@ def config():
     sys.stdout.write("\x1b]2;Linux config manager: starting\x07")
     print('\nStart config update...\n')
 
-    dotfiles = os.path.abspath('./dotfiles')
+    dotfiles = os.path.abspath('./config/dotfiles')
     sudoFiles = []
 
     # traverse root directory, and list directories as dirs and files as files
