@@ -1,5 +1,6 @@
 fonts-font-awesome
 classicmenu-indicator
+usbmount
 indicator-brightness
 icedtea-plugin
 chromium-browser
@@ -14,6 +15,7 @@ vlc
 meld
 pinta
 kazam
+openshot
 ruby
 python
 oracle-java9-installer
