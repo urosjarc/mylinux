@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 """
 Description:
-    Dictafon interface.
+    Personal gadget interface.
 
 Usage:
-    dictafon play <voice>
+    gadget play-dic <voice>
+    gadget load-mp3 <mp3File>
 
 Options:
     -h --help   Extensive help message.
@@ -18,7 +19,7 @@ import shutil
 if __name__ == '__main__':
     args = docopt(__doc__)
 
-    if args['play']:
+    if args['play-dic']:
 
         voicesPath = os.path.join('/media', os.environ.get('USER'), 'DVT1100/VOICE', args['<voice>'])
         trashPath = os.path.join('/home', os.environ.get('USER'), '.local/share/Trash')
@@ -35,3 +36,6 @@ if __name__ == '__main__':
                     shutil.move(filePath, trashFilePath)
                 except OSError:
                     os.rename(filePath, trashFilePath)
+
+    elif args['load-mp3']:
+        print(os.path.join(os.getcwd(), args['<mp3File>']))
