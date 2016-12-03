@@ -50,3 +50,13 @@ rm -rf ~/Pictures
 rm -rf ~/Templates
 rm -rf ~/examples.desktop
 sudo chown -R urosjarc: ~
+
+echo '\n...VERSION CONTROL SYSTEM...\n'
+mkdir ~/vcs
+git clone git@github.com:urosjarc/linux.git ~/vcs
+git clone git@github.com:urosjarc/jetbrains.git ~/vcs
+
+echo '\n...GOOGLE DRIVE FILE SYSTEM...\n'
+mkdir ~/gdrive
+cd ~/gdrive
+grive --auth --progress-bar

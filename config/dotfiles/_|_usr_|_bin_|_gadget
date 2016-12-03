@@ -4,50 +4,86 @@ Description:
     Personal gadget interface.
 
 Usage:
-    gadget play-dic <voice>
-    gadget load-mp3 <mp3File>
+    gadget dic play <voice>
+    gadget mp3 load <mp3File>
 
 Options:
     -h --help   Extensive help message.
 """
 
-from subprocess import call, PIPE
+from subprocess import Popen, PIPE
 from docopt import docopt
 import os
-import shutil
+import json
 
-partitionsFile = open("/proc/partitions")
-lines = partitionsFile.readlines()[2:]  # Skips the header lines
-for line in lines:
-    words = [x.strip() for x in line.split()]
-    minorNumber = int(words[1])
-    deviceName = words[3]
-    if minorNumber % 16 == 0:
-        path = "/sys/class/block/" + deviceName
-        if os.path.islink(path):
-            if os.path.realpath(path).find("/usb") > 0:
-                print "/dev/%s" % deviceName
+gadgets = {
+    "dict": {
+        'uuid': "0000-006F",
+        'alias': 'dictaphone'
+    },
+    'mp3': {
+        'uuid': "846D-FD0B",
+        'alias': 'mp3player'
+    }
+}
+
+
+def shell(command):
+    output, err = Popen(command.split(), stdout=PIPE, stderr=PIPE).communicate()
+    return output
+
+
+def getMountPoint(*path):
+    return os.path.join('/media', os.environ.get("USER"), *path)
+
+
+def gadgetsMounter(unmount=False):
+    lsblk = json.loads(
+        shell('lsblk -f -J')
+    )
+
+    for device in lsblk['blockdevices']:
+        for i in gadgets:
+            gadget = gadgets[i]
+            if gadget['uuid'] == device['uuid']:
+                mountPoint = getMountPoint(gadget['alias'])
+
+                if unmount:
+                    shell('sudo unmount {} {}'.format(os.path.join('/dev', device['name']), mountPoint))
+                    print('Un mount: ' + mountPoint)
+                else:
+                    shell('sudo mkdir -p {}'.format(mountPoint))
+                    shell('sudo mount {} {}'.format(os.path.join('/dev', device['name']), mountPoint))
+                    print('Mount: ' + mountPoint)
+
+
+def getDriveFolder(*path):
+    return os.path.join('/home', os.environ.get("USER"), 'gdrive', *path)
+
 
 if __name__ == '__main__':
+
     args = docopt(__doc__)
 
-    if args['play-dic']:
+    gadgetsMounter()
 
-        voicesPath = os.path.join('/media', os.environ.get('USER'), 'DVT1100/VOICE', args['<voice>'])
-        trashPath = os.path.join('/home', os.environ.get('USER'), '.local/share/Trash')
+    if args['dic']:
+        if args['play']:
+            voicesPath = getMountPoint(gadgets['dict']['alias'], 'VOICE', args['<voice>'])
 
-        voices = os.listdir(voicesPath)
-        for file in voices:
-            filePath = os.path.join(voicesPath, file)
-            print(filePath)
-            call('audacity ' + filePath + ' > /dev/null 2>&1', shell=True)
+            voices = os.listdir(voicesPath)
+            for file in voices:
+                filePath = os.path.join(voicesPath, file)
+                print(filePath)
+                shell('vlc {} '.format(filePath))
 
-            if 'y' == raw_input('Remove ' + file + ' (y/n):'):
-                trashFilePath = os.path.join(trashPath, file)
-                try:
-                    shutil.move(filePath, trashFilePath)
-                except OSError:
-                    os.rename(filePath, trashFilePath)
+                if 'y' == raw_input('Upload file (y/n):'):
+                    emotion = raw_input('Custvo: ')
+                    shell('cp {} {}', filePath, getDriveFolder(emotion))
 
-    elif args['load-mp3']:
-        print(os.path.join(os.getcwd(), args['<mp3File>']))
+                if 'y' == raw_input('Trash file (y/n):'):
+                    shell('sudo gvfs-trash {}'.format(filePath))
+
+    elif args['mp3']:
+        if args['load']:
+            print(os.path.join(os.getcwd(), args['<mp3File>']))
