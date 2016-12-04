@@ -4,9 +4,9 @@ Description:
     Linux post installation helper.
 
 Usage:
-    linux install
-    linux config
-    linux report [ --apt --pip --gem --npm --config ]
+    make install
+    make config
+    make report [ --apt --pip --gem --npm --config ]
 
 Options:
     -h --help   Extensive help message.

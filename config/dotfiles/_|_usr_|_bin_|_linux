@@ -1,0 +1,320 @@
+#!/usr/bin/env python2
+"""
+Description:
+    Personal gadget interface.
+
+Usage:
+    gadget dic play <voice>
+    gadget mp3 load audiobook
+    gadget drive update
+
+Options:
+    -h --help   Extensive help message.
+"""
+
+from subprocess import Popen, PIPE, CalledProcessError
+from docopt import docopt
+import os
+import json
+import re
+import fnmatch
+import shutil
+
+
+class Shell:
+    @staticmethod
+    def _parseCmd(cmd):
+        if isinstance(cmd, basestring):
+            return cmd.split()
+        return cmd
+
+    @staticmethod
+    def _calledProcessError(cmd, err):
+        raise CalledProcessError(1, ' '.join(Shell._parseCmd(cmd)), output=err)
+
+    @staticmethod
+    def cmdWait(cmd, catchErr=False, output=False, workingDir=None):
+
+        output, err = Shell.cmd(cmd, output=output, workingDir=workingDir).communicate()
+
+        if not catchErr and err != '':
+            Shell._calledProcessError(cmd, err)
+
+        if catchErr:
+            return err
+        else:
+            return output
+
+    @staticmethod
+    def cmd(cmd, output=False, workingDir=None):
+
+        stdout = None if output else PIPE
+        stderr = None if output else PIPE
+
+        return Popen(Shell._parseCmd(cmd), stdout=stdout, stderr=stderr, cwd=workingDir)
+
+
+class Utils:
+    @staticmethod
+    def openImage(*path):
+        return Shell.cmd(
+            'eog {}'.format(os.path.join(*path))
+        )
+
+    @staticmethod
+    def openAudioPlayer(*path):
+        Shell.cmdWait('vlc {}'.format(os.path.join(*path)), catchErr=True)
+
+
+class Fs:
+    @staticmethod
+    def findFiles(dir, glob):
+        matches = []
+        for root, dirnames, filenames in os.walk(dir):
+            for filename in fnmatch.filter(filenames, glob):
+                matches.append(os.path.join(root, filename))
+        return matches
+
+    @staticmethod
+    def mvToTrash(*path):
+        print(' > Move to trash: {}'.format(os.path.join(*path)))
+        Shell.cmdWait('sudo gvfs-trash {}'.format(os.path.join(*path)))
+
+    @staticmethod
+    def getCwd(*path):
+        return os.path.join(
+            os.getcwd(),
+            *path
+        )
+
+
+class Device:
+    def __init__(self, uuid, alias):
+        self.uuid = uuid
+        self.alias = alias
+        self.mountPath = os.path.join('/media', os.environ.get("USER"), self.alias)
+        self.devicePath = None
+
+        self._setDevicePath()
+
+    def getMountPath(self, *path):
+        return os.path.join(self.mountPath, *path)
+
+    def _setDevicePath(self):
+        lsblk = json.loads(
+            Shell.cmdWait('lsblk -f -J')
+        )
+
+        for blockdevice in lsblk['blockdevices']:
+
+            devices = [blockdevice]
+            if 'children' in blockdevice:
+                devices += blockdevice['children']
+
+            for device in devices:
+                if self.uuid == device['uuid']:
+                    self.devicePath = os.path.join('/dev', device['name'])
+
+        if not self.devicePath:
+            print(' > Device not found: {}'.format(self.alias))
+
+    def mount(self):
+        print(' > Mount: {} to {}'.format(self.devicePath, self.mountPath))
+        if not os.path.exists(self.mountPath):
+            os.makedirs(self.mountPath)
+        Shell.cmdWait('sudo mount {} {}'.format(self.devicePath, self.mountPath))
+
+    def unmount(self):
+        print(' > UnMount: {}'.format(self.mountPath))
+        Shell.cmdWait('sudo unmount {} {}'.format(self.devicePath, self.mountPath))
+
+
+class GDrive:
+    @staticmethod
+    def getPath(*path):
+        return os.path.join('/home', os.environ.get("USER"), 'gdrive', *path)
+
+    @staticmethod
+    def update():
+        print(' > Updating drive')
+        Shell.cmdWait('grive --progress-bar', output=True, workingDir=GDrive.getPath())
+
+    @staticmethod
+    def saveEmotion(*src):
+        emotion = raw_input(' ? Custvo: ')
+        drivePath = GDrive.getPath('custva', emotion)
+
+        # Create new emotion if not exist
+        if not (emotion in os.listdir(GDrive.getPath('custva'))):
+            if 'y' == raw_input(' ? mkdir {} (y/n):'.format(drivePath)):
+                os.makedirs(drivePath)
+
+        # Copy to emotion folder
+        print(' > Emotion saved: {}'.format(drivePath))
+        shutil.copyfile(os.path.join(*src), drivePath)
+
+    @staticmethod
+    def saveAudioBook(*src):
+        drivePath = GDrive.getPath('knjige/audio')
+        print(' > Audiobook saved: {}'.format(drivePath))
+        shutil.copyfile(os.path.join(*src), drivePath)
+
+
+class AAX:
+    def __init__(self, *file):
+        self.path = os.path.join(*file)
+
+        meta = Shell.cmdWait('ffprobe {}'.format(self.path), catchErr=True)
+        self.author = re.findall('artist\s*:\s*(.*)', meta)[0]
+        self.title = re.sub('\s*\(\s*Unabridged\s*\)\s*', '', re.findall('title\s*:\s*(.*)', meta)[0])
+        self.bitrate = re.findall('bitrate:\s*(.*)\s*kb', meta)[0]
+
+    def getOutputFile(self, fileExt=None):
+        if fileExt:
+            fileExt = '.{}'.format(fileExt)
+
+        return re.sub(r'[\\/:"*?<>|]+', "", '{} - {}{}'.format(
+            self.author, self.title, fileExt
+        ))
+
+    def to_mp3(self, *dest):
+        dest = os.path.join(*dest)
+        compiledFileBase = self.getOutputFile(fileExt='mp3')
+        compiledPath = os.path.join(os.getcwd(), compiledFileBase)
+
+        print(' > Compiling to mp3: {}'.format(self.path))
+        cmdArr = 'ffmpeg -v error -stats -activation_bytes 0cedab08 -i {input} -vn -c:a libmp3lame -ab {bitrate}'.format(
+            input=self.path,
+            bitrate=self.bitrate
+        ).split()
+        cmdArr.append(compiledFileBase)
+        Shell.cmdWait(cmdArr, stdout=None, stderr=None, catchErr=True)
+
+        print(' > Move mp3 to: {}'.format(dest))
+        shutil.move(compiledPath, dest)
+
+
+class Dictaphone(Device):
+    def __init__(self, uuid, alias='dictaphone'):
+        super(Dictaphone, self).__init__(uuid, alias)
+
+        self.emotions = 'A'
+        self.todos = 'B'
+        self.book = 'C'
+        self.other = 'D'
+
+    def getVoicePath(self, *voice):
+        return self.getMountPath('VOICE', voice)
+
+
+class Mp3Player(Device):
+    def __init__(self, uuid, alias='mp3Player'):
+        super(Mp3Player, self).__init__(uuid, alias)
+
+    def getMusicPath(self):
+        return self.getMountPath('MUSIC')
+
+    def saveMusic(self, *src):
+        print(' > Save to mp3 music: {}'.format(os.path.join(*src)))
+        shutil.copyfile(
+            os.path.join(*src),
+            self.getMusicPath()
+        )
+
+
+class SdCard(Device):
+    def __init__(self, uuid, alias='sdCard'):
+        super(SdCard, self).__init__(uuid, alias)
+
+
+if __name__ == '__main__':
+    args = docopt(__doc__)
+
+    if args['dic']:
+
+        dic = Dictaphone("0000-006F")
+
+        if args['play']:
+
+            # Save voice
+            voice = args['<voice>']
+
+            # Get voices files.
+            voices = os.listdir(dic.getVoicePath(voice))
+
+            if len(voices) != 0:
+
+                # Open image
+                imageProcess = None
+                if voice == dic.emotions:
+                    imageProcess = Utils.openImage(
+                        GDrive.getPath('custva', 'emotions.jpg')
+                    )
+
+                # Process every file in voices
+                for file in voices:
+                    print(' > {}'.format(file))
+
+                    voiceFilePath = dic.getVoicePath(voice, file)
+
+                    # Open audio player with file
+                    Utils.openAudioPlayer(voiceFilePath)
+
+                    # Process emotional voices
+                    if voice == dic.emotions and 'y' == raw_input('Upload file (y/n):'):
+                        GDrive.saveEmotion(voiceFilePath)
+
+                    # Move to trash if user wants it
+                    if 'y' == raw_input('Trash file (y/n):'):
+                        Fs.mvToTrash(voiceFilePath)
+
+                # Close image viewer
+                if imageProcess:
+                    imageProcess.terminate()
+
+                # Update drive
+                if 'y' == raw_input('Update drive (y/n):'):
+                    GDrive.update()
+
+            # Warn on no file
+            else:
+                print(' > No file in "{}"'.format(voice))
+
+        dic.unmount()
+
+    elif args['mp3']:
+
+        mp3Player = Mp3Player('846D-FD0B')
+
+        if args['load']:
+            if args['audiobook']:
+
+                sdCard = SdCard('5C6B-303E')
+
+                # Get glob files .aax
+                aaxFiles = Fs.findFiles(
+                    sdCard.mountPath, '*.aax'
+                )
+
+                # Process every aax file
+                for aaxFile in aaxFiles:
+
+                    aax = AAX(aaxFile)
+                    aaxOutputFile = aax.getOutputFile(fileExt='mp3')
+
+                    if 'y' == raw_input('Compile to mp3 & gdrive "{}" (y/n):'.format(aaxOutputFile)):
+                        tmpPath_aax = os.path.join('/tmp', aaxOutputFile)
+
+                        aax.to_mp3(tmpPath_aax)
+
+                        GDrive.saveAudioBook(tmpPath_aax)
+                        mp3Player.saveMusic(tmpPath_aax)
+
+                        Fs.mvToTrash(tmpPath_aax)
+
+                sdCard.unmount()
+        mp3Player.unmount()
+
+    elif args['drive']:
+        if args['update']:
+            GDrive.update()
