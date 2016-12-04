@@ -15,6 +15,7 @@ Options:
 from subprocess import Popen, PIPE, CalledProcessError
 from docopt import docopt
 from os.path import join as pathJoin
+from os.path import basename
 
 import os
 import json
@@ -22,6 +23,7 @@ import re
 import fnmatch
 import shutil
 import sys
+
 
 # sys.exit codes: http://stackoverflow.com/questions/1101957/are-there-any-standard-exit-status-codes-in-linux
 
@@ -107,22 +109,22 @@ class GDrive(object):
     @staticmethod
     def saveEmotion(*src):
         emotion = raw_input(' ? Custvo: ')
-        drivePath = GDrive.getPath('custva', emotion)
+        destPath = GDrive.getPath('custva', emotion, basename(*src))
 
         # Create new emotion if not exist
         if not (emotion in os.listdir(GDrive.getPath('custva'))):
-            if 'y' == raw_input(' ? mkdir "{}" (y/n):'.format(drivePath)):
-                os.makedirs(drivePath)
+            if 'y' == raw_input(' ? mkdir "{}" (y/n):'.format(destPath)):
+                os.makedirs(destPath)
 
         # Copy to emotion folder
-        print(' > Emotion saved: "{}"'.format(drivePath))
-        shutil.copyfile(pathJoin(*src), drivePath)
+        print(' > Emotion saved: "{}"'.format(destPath))
+        shutil.copyfile(pathJoin(*src), destPath)
 
     @staticmethod
     def saveAudioBook(*src):
-        drivePath = GDrive.getPath('knjige/audio')
-        print(' > Audiobook saved: "{}"'.format(drivePath))
-        shutil.copyfile(pathJoin(*src), drivePath)
+        destPath = GDrive.getPath('knjige/audio', basename(*src))
+        print(' > Audiobook saved: "{}"'.format(destPath))
+        shutil.copyfile(pathJoin(*src), destPath)
 
 
 class AAX(object):
@@ -147,15 +149,14 @@ class AAX(object):
         compiledFileBase = self.getOutputFile(fileExt='mp3')
         compiledPath = pathJoin(os.getcwd(), compiledFileBase)
 
-        print(' > Compile "{}" to mp3'.format(self.path))
-        cmdArr = 'ffmpeg -v error -stats -activation_bytes 0cedab08 -i {input} -vn -c:a libmp3lame -ab {bitrate}'.format(
+        print(' > Compile "{}" to "{}"'.format(self.path, dest))
+        cmdArr = 'sudo ffmpeg -v error -stats -activation_bytes 0cedab08 -i {input} -vn -c:a libmp3lame -ab {bitrate}'.format(
             input=self.path,
             bitrate=self.bitrate
         ).split()
         cmdArr.append(compiledFileBase)
         Shell.cmdWait(cmdArr, output=True, catchErr=True)
 
-        print(' > Move mp3 to: "{}"'.format(dest))
         shutil.move(compiledPath, dest)
 
 
@@ -168,7 +169,6 @@ class Device(object):
 
         self._setDevicePath()
         self.mount()
-
 
     def getMountPath(self, *path):
         return pathJoin(self.mountPath, pathJoin(*path))
@@ -226,14 +226,15 @@ class Mp3Player(Device):
     def __init__(self):
         super(Mp3Player, self).__init__(Mp3Player.uuid, Mp3Player.alias)
 
-    def getMusicPath(self):
-        return self.getMountPath('MUSIC')
+    def getMusicPath(self, *path):
+        return self.getMountPath('MUSIC', *path)
 
     def saveMusic(self, *src):
-        print(' > Save to mp3 music: {}'.format(pathJoin(*src)))
+        destPath = self.getMusicPath(basename(*src))
+        print(' > MP3 saved: {}'.format(destPath))
         shutil.copyfile(
             pathJoin(*src),
-            self.getMusicPath()
+            destPath
         )
 
 
