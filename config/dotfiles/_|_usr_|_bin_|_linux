@@ -40,9 +40,9 @@ class Shell(object):
         raise CalledProcessError(1, ' '.join(Shell._parseCmd(cmd)), output=err)
 
     @staticmethod
-    def cmdWait(cmd, catchErr=False, output=False, workingDir=None):
+    def cmdWait(cmd, catchErr=False, output=False, workingDir=None, shell=False):
 
-        output, err = Shell.cmd(cmd, output=output, workingDir=workingDir).communicate()
+        output, err = Shell.cmd(cmd, output=output, workingDir=workingDir, shell=shell).communicate()
 
         if not catchErr and err != '':
             Shell._calledProcessError(cmd, err)
@@ -53,24 +53,22 @@ class Shell(object):
             return output
 
     @staticmethod
-    def cmd(cmd, output=False, workingDir=None):
+    def cmd(cmd, output=False, workingDir=None, shell=False):
 
         stdout = None if output else PIPE
         stderr = None if output else PIPE
 
-        return Popen(Shell._parseCmd(cmd), stdout=stdout, stderr=stderr, cwd=workingDir)
+        return Popen(Shell._parseCmd(cmd), stdout=stdout, stderr=stderr, cwd=workingDir, shell=shell)
 
 
 class Utils(object):
     @staticmethod
     def openImage(*path):
-        return Shell.cmd(
-            'eog {}'.format(pathJoin(*path))
-        )
+        return Shell.cmd(['eog', pathJoin(*path)])
 
     @staticmethod
     def openAudioPlayer(*path):
-        Shell.cmdWait('vlc {}'.format(pathJoin(*path)), catchErr=True)
+        Shell.cmdWait(['vlc', pathJoin(*path)], catchErr=True)
 
 
 class Fs(object):
@@ -86,7 +84,7 @@ class Fs(object):
     @staticmethod
     def mvToTrash(*path):
         print(' > Move to trash: "{}"'.format(pathJoin(*path)))
-        Shell.cmdWait('sudo gvfs-trash {}'.format(pathJoin(*path)))
+        Shell.cmdWait(['sudo', 'gvfs-trash', pathJoin(*path)])
 
     @staticmethod
     def getCwd(*path):
@@ -94,6 +92,10 @@ class Fs(object):
             os.getcwd(),
             *path
         )
+
+    @staticmethod
+    def setFilePermissions(*path):
+        Shell.cmdWait(['sudo', 'chmod', '775', pathJoin(*path)])
 
 
 class GDrive(object):
@@ -131,7 +133,7 @@ class AAX(object):
     def __init__(self, *file):
         self.path = pathJoin(*file)
 
-        meta = Shell.cmdWait('ffprobe {}'.format(self.path), catchErr=True)
+        meta = Shell.cmdWait(['ffprobe', self.path], catchErr=True)
         self.author = re.findall('artist\s*:\s*(.*)', meta)[0]
         self.title = re.sub('\s*\(\s*Unabridged\s*\)\s*', '', re.findall('title\s*:\s*(.*)', meta)[0])
         self.bitrate = re.findall('bitrate:\s*(.*)\s*kb', meta)[0]
@@ -144,22 +146,19 @@ class AAX(object):
             self.author, self.title, fileExt
         ))
 
-    def to_mp3(self, *dest):
-        dest = pathJoin(*dest)
+    def to_mp3(self):
         compiledFileBase = self.getOutputFile(fileExt='mp3')
-        compiledPath = pathJoin(os.getcwd(), compiledFileBase)
+        compiledPath = Fs.getCwd(compiledFileBase)
 
-        print(' > Compile "{}" to "{}"'.format(self.path, dest))
+        print(' > Compile "{}" to "{}"'.format(self.path, compiledPath))
         cmdArr = 'ffmpeg -v error -stats -activation_bytes 0cedab08 -i {input} -vn -c:a libmp3lame -ab {bitrate}'.format(
             input=self.path,
             bitrate=self.bitrate
         ).split()
         cmdArr.append(compiledFileBase)
         Shell.cmdWait(cmdArr, output=True, catchErr=True)
-        Shell.cmdWait('sudo chown -R {}: {}'.format(os.environ['USER'], compiledPath))
 
-        shutil.move(compiledPath, dest)
-
+        Fs.setFilePermissions(compiledPath)
 
 
 class Device(object):
@@ -198,11 +197,11 @@ class Device(object):
         print(' > Mount: "{}" to "{}"'.format(self.devicePath, self.mountPath))
         if not os.path.exists(self.mountPath):
             os.makedirs(self.mountPath)
-        Shell.cmdWait('sudo mount {} {}'.format(self.devicePath, self.mountPath), catchErr=True)
+        Shell.cmdWait(['sudo', 'mount', self.devicePath, self.mountPath], catchErr=True, shell=True)
 
     def unmount(self):
         print(' > UnMount: "{}"'.format(self.mountPath))
-        Shell.cmdWait('sudo unmount {} {}'.format(self.devicePath, self.mountPath), catchErr=True)
+        Shell.cmdWait(['sudo', 'unmount', self.devicePath, self.mountPath], catchErr=True)
 
 
 class Dictaphone(Device):
@@ -234,10 +233,8 @@ class Mp3Player(Device):
     def saveMusic(self, *src):
         destPath = self.getMusicPath(basename(*src))
         print(' > MP3 saved: {}'.format(destPath))
-        shutil.copyfile(
-            pathJoin(*src),
-            destPath
-        )
+
+        Shell.cmdWait(['sudo', 'cp', pathJoin(*src), destPath])
 
 
 class SdCard(Device):
@@ -324,14 +321,17 @@ if __name__ == '__main__':
                     aaxOutputFile = aax.getOutputFile(fileExt='mp3')
 
                     if 'y' == raw_input(' ? Process "{}: {}" (y/n):'.format(aax.author, aax.title)):
-                        tmpPath_aax = pathJoin('/tmp', aaxOutputFile)
+                        compiledPath = Fs.getCwd(aaxOutputFile)
 
-                        aax.to_mp3(tmpPath_aax)
+                        aax.to_mp3()
 
-                        GDrive.saveAudioBook(tmpPath_aax)
-                        mp3Player.saveMusic(tmpPath_aax)
+                        GDrive.saveAudioBook(compiledPath)
+                        mp3Player.saveMusic(compiledPath)
 
-                        Fs.mvToTrash(tmpPath_aax)
+                        Fs.mvToTrash(compiledPath)
+
+                if 'y' == raw_input(' ? Update drive (y/n):'):
+                    GDrive.update()
 
                 sdCard.unmount()
         mp3Player.unmount()
