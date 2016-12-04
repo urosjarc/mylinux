@@ -18,6 +18,7 @@ import os
 import json
 import re
 import fnmatch
+import shutil
 
 gadgets = {
     "sdc": {
@@ -35,17 +36,18 @@ gadgets = {
 }
 
 
-def shell(command, returnErr=False, stdout=PIPE, stderr=PIPE):
+def shell(command, catchErr=False, stdout=PIPE, stderr=PIPE):
     if isinstance(command, basestring):
         cmd = command.split()
     else:
         cmd = command
 
     output, err = Popen(cmd, stdout=stdout, stderr=stderr).communicate()
-    if not returnErr and err != '':
-        raise CalledProcessError(1, command, output=err)
 
-    if returnErr:
+    if not catchErr and err != '':
+        raise CalledProcessError(1, ' '.join(cmd), output=err)
+
+    if catchErr:
         return err
     else:
         return output
@@ -91,7 +93,8 @@ def gadgetsMounter(unmount=False):
                             shell('sudo unmount {} {}'.format(os.path.join('/dev', device['name']), mountPoint))
                         else:
                             print('Mount: {}'.format(mountPoint))
-                            shell('sudo mkdir -p {}'.format(mountPoint))
+                            if not os.path.exists(mountPoint):
+                                os.makedirs(mountPoint)
                             shell('sudo mount {} {}'.format(os.path.join('/dev', device['name']), mountPoint))
                     except:
                         None
@@ -116,17 +119,17 @@ def aaxToMp3(source):
 
     cmdArr.append('{}'.format(meta['mp3']))
 
-    shell(cmdArr, stdout=None, stderr=None)
+    shell(cmdArr, stdout=None, stderr=None, catchErr=True)
 
 
 def aaxMetaInfo(source):
-    meta = shell('ffprobe {}'.format(source), returnErr=True)
+    meta = shell('ffprobe {}'.format(source), catchErr=True)
 
     author = re.findall('\s* artist \s*:\s*(.*)', meta)[0]
     title = re.sub('\s*\(\s*Unabridged\s*\)\s*', '', re.findall('title\s*:\s*(.*)', meta)[0])
 
     return {
-        'mp3': '{}: {}.mp3'.format(author, title),
+        'mp3': re.sub(r'[\\/:"*?<>|]+', "", '{}: {}.mp3'.format(author, title)),
         'bitrate': re.findall('bitrate: (.*) kb\/s', meta)[0],
         'author': author,
         'title': title
@@ -160,10 +163,7 @@ if __name__ == '__main__':
                     print(' > {}'.format(file))
                     filePath = os.path.join(voicesPath, file)
 
-                    try:
-                        shell('vlc {}'.format(filePath))
-                    except:
-                        None
+                    shell('vlc {}'.format(filePath), catchErr=True)
 
                     if args['<voice>'] == 'A' and 'y' == raw_input('Upload file (y/n):'):
                         emotion = raw_input('Custvo: ')
@@ -175,7 +175,7 @@ if __name__ == '__main__':
                                 os.makedirs(drivePath)
                                 shell('chmod -R 775 {}'.format(drivePath))
 
-                        shell('cp {} {}'.format(filePath, driveFilePath))
+                        shutil.copyfile(filePath, drivePath)
                         print(' > {}'.format(driveFilePath))
 
                     if 'y' == raw_input('Trash file (y/n):'):
@@ -201,14 +201,11 @@ if __name__ == '__main__':
 
                         aaxToMp3(aaxFile)
 
-                        try:
-                            shell(['mv', os.path.join(os.getcwd(), meta['mp3']), driveAudio ])
-                        except:
-                            None
-                        try:
-                            shell(['cp', driveAudio, getMountPoint(gadgets['mp3']['alias'], 'MUSIC', aaxFile) ])
-                        except:
-                            None
+                        createFile = os.path.join(os.getcwd(), meta['mp3'])
+
+                        shutil.copyfile(createFile, driveAudio)
+                        shutil.copyfile(createFile, getMountPoint(gadgets['mp3']['alias'], 'MUSIC', meta['mp3']))
+                        os.remove(createFile)
 
 
     elif args['drive']:
