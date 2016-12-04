@@ -131,8 +131,7 @@ def aaxMetaInfo(source):
 
 def updateDrive():
     print('Updating drive...')
-    shell('grive --progress-bar', stdout=None, stderr=None, cwd=getDriveFolder()).communicate()
-
+    shell('grive --progress-bar', stdout=None, stderr=None, cwd=getDriveFolder())
 
 gadgets = {
     "sdc": {
