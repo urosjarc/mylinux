@@ -20,21 +20,6 @@ import re
 import fnmatch
 import shutil
 
-gadgets = {
-    "sdc": {
-        'uuid': '5C6B-303E',
-        'alias': 'sdCard'
-    },
-    "dict": {
-        'uuid': "0000-006F",
-        'alias': 'dictaphone'
-    },
-    'mp3': {
-        'uuid': "846D-FD0B",
-        'alias': 'mp3player'
-    }
-}
-
 
 def shell(command, catchErr=False, stdout=PIPE, stderr=PIPE, cwd=None):
     if isinstance(command, basestring):
@@ -149,6 +134,21 @@ def updateDrive():
     shell('grive --progress-bar', stdout=None, stderr=None, cwd=getDriveFolder()).communicate()
 
 
+gadgets = {
+    "sdc": {
+        'uuid': '5C6B-303E',
+        'alias': 'sdCard'
+    },
+    "dict": {
+        'uuid': "0000-006F",
+        'alias': 'dictaphone'
+    },
+    'mp3': {
+        'uuid': "846D-FD0B",
+        'alias': 'mp3player'
+    }
+}
+
 if __name__ == '__main__':
 
     args = docopt(__doc__)
@@ -223,7 +223,6 @@ if __name__ == '__main__':
                     meta = aaxMetaInfo(aaxFile)
 
                     if 'y' == raw_input('Compile to mp3 & gdrive "{}" (y/n):'.format(meta['mp3'])):
-
                         # Get destinations and compiled path
                         driveAudio = getDriveFolder('knjige/audio', meta['mp3'])
                         mp3Music = getMountPoint(gadgets['mp3']['alias'], 'MUSIC', meta['mp3'])
