@@ -150,14 +150,16 @@ class AAX(object):
         compiledPath = pathJoin(os.getcwd(), compiledFileBase)
 
         print(' > Compile "{}" to "{}"'.format(self.path, dest))
-        cmdArr = 'sudo ffmpeg -v error -stats -activation_bytes 0cedab08 -i {input} -vn -c:a libmp3lame -ab {bitrate}'.format(
+        cmdArr = 'ffmpeg -v error -stats -activation_bytes 0cedab08 -i {input} -vn -c:a libmp3lame -ab {bitrate}'.format(
             input=self.path,
             bitrate=self.bitrate
         ).split()
         cmdArr.append(compiledFileBase)
         Shell.cmdWait(cmdArr, output=True, catchErr=True)
+        Shell.cmdWait('sudo chown -R {}: {}'.format(os.environ['USER'], compiledPath))
 
         shutil.move(compiledPath, dest)
+
 
 
 class Device(object):
