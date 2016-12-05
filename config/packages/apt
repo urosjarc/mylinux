@@ -1,6 +1,8 @@
 fonts-font-awesome
 ffmpeg
 libmp3lame
+android-tools-adb
+android-tools-fastboot
 classicmenu-indicator
 indicator-brightness
 icedtea-plugin

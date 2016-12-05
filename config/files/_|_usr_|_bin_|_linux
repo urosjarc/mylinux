@@ -1,4 +1,6 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
 """
 Description:
     Personal linux interface.
@@ -8,6 +10,9 @@ Usage:
     linux sd compile audiobooks <dest>
     linux mp3 save <path>
     linux drive update
+    linux android apps <dest>
+    linux android install
+    linux android report
 
 Options:
     -h --help   Extensive help message.
@@ -69,7 +74,6 @@ class Utils(object):
     def openAudioPlayer(*paths):
         Shell.cmdWait(['vlc', path.join(*paths)], catchErr=True)
 
-
 class Fs(object):
     @staticmethod
     def findFiles(dir, glob):
@@ -86,7 +90,7 @@ class Fs(object):
 
     @staticmethod
     def mvToTrash(*paths):
-        print(' > Move to trash: "{}"'.format(path.join(*paths)))
+        print(' > Moving to trash: "{}"'.format(path.join(*paths)))
         Shell.cmdWait(['sudo', 'gvfs-trash', path.join(*paths)])
 
     @staticmethod
@@ -100,6 +104,16 @@ class Fs(object):
     def setFilePermissions(*paths):
         Shell.cmdWait(['sudo', 'chmod', '775', path.join(*paths)])
 
+    @staticmethod
+    def mkdir(*paths):
+        dirPath = path.join(*paths)
+        # Check dir existance
+        if path.isfile(dirPath):
+            print(' ! Is not dir: {}'.format(dirPath))
+            sys.exit(64)
+        if not path.exists(dirPath):
+            print(' > mkdir: {}'.format(dirPath))
+            makedirs(dirPath)
 
 class GDrive(object):
     @staticmethod
@@ -119,16 +133,16 @@ class GDrive(object):
         # Create new emotion if not exist
         if not (emotion in listdir(GDrive.getPath('custva'))):
             if 'y' == raw_input(' ? mkdir "{}" (y/n):'.format(destPath)):
-                makedirs(destPath)
+                Fs.mkdir(destPath)
 
         # Copy to emotion folder
-        print(' > Emotion saved: "{}"'.format(destPath))
+        print(' > Saving emotion: "{}"'.format(destPath))
         shutil.copyfile(path.join(*src), destPath)
 
     @staticmethod
     def saveAudioBook(*src):
         destPath = GDrive.getPath('knjige/audio', path.basename(*src))
-        print(' > Audiobook saved: "{}"'.format(destPath))
+        print(' > Saving audiobook: "{}"'.format(destPath))
         shutil.copyfile(path.join(*src), destPath)
 
 
@@ -153,7 +167,7 @@ class AAX(object):
         compiledFileBase = self.getOutputFile(fileExt='mp3')
         compiledPath = Fs.getCwd(compiledFileBase)
 
-        print(' > Compile "{}" to "{}"'.format(self.path, compiledPath))
+        print(' > Compiling "{}" to "{}"'.format(self.path, compiledPath))
         cmdArr = 'ffmpeg -v error -stats -activation_bytes 0cedab08 -i {input} -vn -c:a libmp3lame -ab {bitrate}'.format(
             input=self.path,
             bitrate=self.bitrate
@@ -199,13 +213,12 @@ class Device(object):
             sys.exit(68)
 
     def mount(self):
-        print(' > Mount: "{}" to "{}"'.format(self.devicePath, self.mountPath))
-        if not path.exists(self.mountPath):
-            makedirs(self.mountPath)
+        print(' > Mounting: "{}" to "{}"'.format(self.devicePath, self.mountPath))
+        Fs.mkdir(self.mountPath)
         Shell.cmdWait(['sudo', 'mount', self.devicePath, self.mountPath], catchErr=True)
 
     def unmount(self):
-        print(' > UnMount: "{}"'.format(self.mountPath))
+        print(' > UnMounting: "{}"'.format(self.mountPath))
         Shell.cmdWait(['sudo', 'unmount', self.devicePath, self.mountPath], catchErr=True)
 
 
@@ -237,7 +250,7 @@ class Mp3Player(Device):
 
     def saveMusic(self, *src):
         destPath = self.getMusicPath(path.basename(*src))
-        print(' > MP3 saved: {}'.format(destPath))
+        print(' > Saving mp3: {}'.format(destPath))
 
         Shell.cmdWait(['sudo', 'cp', path.join(*src), destPath])
 
@@ -249,6 +262,48 @@ class SdCard(Device):
     def __init__(self):
         super(SdCard, self).__init__(self.uuid, self.alias)
 
+
+class Android(Device):
+    uuid = '5C6B-303E'
+    alias = 'android'
+
+    apps = [
+        'com.ijinshan.kbackup',
+        'com.acd.ekadashi',
+        'com.audible.application',
+        'com.google.android.calendar',
+        'com.popularapp.sevenmins',
+        'com.sebmorand.brightcom',
+        'com.whatsapp',
+        'org.dayup.gtask',
+        'pl.solidexplorer2',
+        'ws.appdev.android.rotation2'
+    ]
+
+    def __init__(self):
+        super(Android, self).__init__(self.uuid, self.alias)
+        Shell.cmdWait('sudo adb stop-server', catchErr=True)
+        Shell.cmdWait('sudo adb start-server', catchErr=True, output=True)
+        Shell.cmdWait('adb devices', catchErr=True, output=True)
+
+    def installPackages(self):
+        for app in Android.apps:
+            Shell.cmd(['chromium-browser','https://play.google.com/store/apps/details?id={}'.format(app)])
+
+    def getInstalledApps(self):
+        packages = Shell.cmdWait('adb shell pm list packages -3').replace('package:', '').split()
+
+        return filter(lambda x: not re.match(r'^\s*$', x), packages)
+
+    def checkInstalledApps(self):
+        installedApps = self.getInstalledApps()
+
+        print(' > Checking installed apps:')
+        for app in Android.apps:
+            if app in installedApps:
+                print('\t✔ {}'.format(app))
+            else:
+                print('\t✖ {}'.format(app))
 
 if __name__ == '__main__':
     args = docopt(__doc__)
@@ -305,6 +360,30 @@ if __name__ == '__main__':
 
         dic.unmount()
 
+    if args['android']:
+        android = Android()
+        if args['apps']:
+            dest = args['<dest>']
+            packages = android.getInstalledApps()
+
+            print(' > User packages:')
+            for package in packages:
+                print('\t- {}'.format(package))
+
+            print('')
+            Fs.mkdir(path.dirname(dest))
+            print(' > Saving apps: {}'.format(dest))
+            with open(dest, 'w') as file:
+                file.write('\n'.join(packages))
+
+        if args['install']:
+            android.installPackages()
+
+        if args['report']:
+            android.checkInstalledApps()
+
+        android.unmount()
+
     elif args['sd']:
 
         sdCard = SdCard()
@@ -314,12 +393,7 @@ if __name__ == '__main__':
 
                 dest = args['<dest>']
 
-                # Check dir existance
-                if path.isFile(dest):
-                    print(' ! Is not dir: {}'.format(dest))
-                    sys.exit(64)
-                if not path.exists(dest):
-                    makedirs(dest)
+                Fs.mkdir(dest)
 
                 # Get glob files .aax
                 aaxFiles = Fs.findFiles(
