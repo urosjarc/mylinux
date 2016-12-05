@@ -4,6 +4,7 @@ Description:
     Linux post installation helper.
 
 Usage:
+    make lint
     make install
     make config
     make report [ --apt --pip --gem --npm --config ]
@@ -15,6 +16,7 @@ Options:
 try:
     from libs import *
     import os
+    from pylint import epylint as lint
     from subprocess import call
     from docopt import docopt
     from apt.cache import LockFailedException
@@ -59,6 +61,12 @@ try:
         elif args['config']:
             exitIfsudoIsNotNone()
             files()
+
+        elif args['lint']:
+            lint.py_run('make')
+            lint.py_run('libs')
+            lint.py_run('"config/files/_|_usr_|_bin_|_linux"')
+
 
 except KeyError as err:
     print('ERROR: ' + err.message)

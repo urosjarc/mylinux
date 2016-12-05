@@ -12,14 +12,11 @@ Usage:
     linux drive update
     linux android apps
     linux android install
+    linux devices
 
 Options:
     -h --help   Extensive help message.
 """
-
-from os import path, walk, listdir, environ, getcwd, makedirs
-from subprocess import Popen, PIPE, CalledProcessError
-from docopt import docopt
 
 import json
 import re
@@ -27,6 +24,9 @@ import fnmatch
 import shutil
 import sys
 
+from os import path, walk, listdir, environ, getcwd, makedirs
+from subprocess import Popen, PIPE, CalledProcessError
+from docopt import docopt
 
 # sys.exit codes: http://stackoverflow.com/questions/1101957/are-there-any-standard-exit-status-codes-in-linux
 
@@ -73,6 +73,11 @@ class Utils(object):
     def openAudioPlayer(*paths):
         Shell.cmdWait(['vlc', path.join(*paths)], catchErr=True)
 
+    @staticmethod
+    def openBrowser(url):
+        Shell.cmd(['sensible-browser', url])
+
+
 class Fs(object):
     @staticmethod
     def findFiles(dir, glob):
@@ -114,6 +119,7 @@ class Fs(object):
             print(' > mkdir: {}'.format(dirPath))
             makedirs(dirPath)
 
+
 class GDrive(object):
     @staticmethod
     def getPath(*paths):
@@ -154,7 +160,7 @@ class AAX(object):
         self.title = re.sub('\s*\(\s*Unabridged\s*\)\s*', '', re.findall('title\s*:\s*(.*)', meta)[0])
         self.bitrate = re.findall('bitrate:\s*(.*)\s*kb', meta)[0]
 
-    def getOutputFile(self, fileExt=None):
+    def getTitle(self, fileExt=None):
         if fileExt:
             fileExt = '.{}'.format(fileExt)
 
@@ -163,23 +169,40 @@ class AAX(object):
         ))
 
     def to_mp3(self):
-        compiledFileBase = self.getOutputFile(fileExt='mp3')
-        compiledPath = Fs.getCwd(compiledFileBase)
+        fileTitle = self.getTitle(fileExt='mp3')
+        compiledPath = Fs.getCwd(fileTitle)
 
         print(' > Compiling "{}" to "{}"'.format(self.path, compiledPath))
         cmdArr = 'ffmpeg -v error -stats -activation_bytes 0cedab08 -i {input} -vn -c:a libmp3lame -ab {bitrate}'.format(
             input=self.path,
             bitrate=self.bitrate
         ).split()
-        cmdArr.append(compiledFileBase)
+        cmdArr.append(fileTitle)
         Shell.cmdWait(cmdArr, output=True, catchErr=True)
 
         Fs.setFilePermissions(compiledPath)
 
-        return compiledFileBase
+        return fileTitle
 
 
 class Device(object):
+    @staticmethod
+    def getAll():
+        allDevices = []
+        lsblk = json.loads(
+            Shell.cmdWait('lsblk -f -J')
+        )
+
+        for blockdevice in lsblk['blockdevices']:
+
+            devices = [blockdevice]
+            if 'children' in blockdevice:
+                devices += blockdevice['children']
+
+            allDevices += devices
+
+        return allDevices
+
     def __init__(self, uuid, alias):
         self.uuid = uuid
         self.alias = alias
@@ -193,19 +216,9 @@ class Device(object):
         return path.join(self.mountPath, path.join(*paths))
 
     def _setDevicePath(self):
-        lsblk = json.loads(
-            Shell.cmdWait('lsblk -f -J')
-        )
-
-        for blockdevice in lsblk['blockdevices']:
-
-            devices = [blockdevice]
-            if 'children' in blockdevice:
-                devices += blockdevice['children']
-
-            for device in devices:
-                if self.uuid == device['uuid']:
-                    self.devicePath = path.join('/dev', device['name'])
+        for device in Device.getAll():
+            if self.uuid == device['uuid']:
+                self.devicePath = path.join('/dev', device['name'])
 
         if not self.devicePath:
             print(' ! Device "{}" not found'.format(self.alias))
@@ -262,11 +275,13 @@ class SdCard(Device):
         super(SdCard, self).__init__(self.uuid, self.alias)
 
 
-class Android(Device):
-    uuid = '5C6B-303E'
-    alias = 'android'
-
+class Android(object):
     apps = [
+        'pl.solidexplorer2',
+        'com.google.android.apps.adm',
+        'com.google.android.apps.inbox',
+        'si.izum.mcobiss',
+        'com.goodreads',
         'com.ijinshan.kbackup',
         'com.acd.ekadashi',
         'com.audible.application',
@@ -280,19 +295,19 @@ class Android(Device):
     ]
 
     def __init__(self):
-        super(Android, self).__init__(self.uuid, self.alias)
         Shell.cmdWait('sudo adb stop-server', catchErr=True)
         Shell.cmdWait('sudo adb start-server', catchErr=True, output=True)
         Shell.cmdWait('adb devices', catchErr=True, output=True)
 
     def installPackages(self):
         for app in Android.apps:
-            Shell.cmd(['chromium-browser','https://play.google.com/store/apps/details?id={}'.format(app)])
+            Utils.openBrowser('https://play.google.com/store/apps/details?id={}'.format(app))
 
     def getInstalledApps(self):
         packages = Shell.cmdWait('adb shell pm list packages -3').replace('package:', '').split()
 
         return filter(lambda x: not re.match(r'^\s*$', x), packages)
+
 
 if __name__ == '__main__':
     args = docopt(__doc__)
@@ -349,6 +364,14 @@ if __name__ == '__main__':
 
         dic.unmount()
 
+    if args['devices']:
+        print(' > All connected devices:')
+        for device in Device.getAll():
+            if device['uuid']:
+                print('\t- {}: {}'.format(
+                    device['name'], device['uuid']
+                ))
+
     if args['android']:
         android = Android()
         if args['apps']:
@@ -365,13 +388,11 @@ if __name__ == '__main__':
                     print('\t- {}'.format(package))
 
             for requiredApp in Android.apps:
-                if not(requiredApp in installedApps):
+                if not (requiredApp in installedApps):
                     print('\t✖ {}'.format(requiredApp))
 
         if args['install']:
             android.installPackages()
-
-        android.unmount()
 
     elif args['sd']:
 
