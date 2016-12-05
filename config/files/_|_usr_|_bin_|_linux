@@ -10,9 +10,8 @@ Usage:
     linux sd compile audiobooks <dest>
     linux mp3 save <path>
     linux drive update
-    linux android apps <dest>
+    linux android apps
     linux android install
-    linux android report
 
 Options:
     -h --help   Extensive help message.
@@ -295,16 +294,6 @@ class Android(Device):
 
         return filter(lambda x: not re.match(r'^\s*$', x), packages)
 
-    def checkInstalledApps(self):
-        installedApps = self.getInstalledApps()
-
-        print(' > Checking installed apps:')
-        for app in Android.apps:
-            if app in installedApps:
-                print('\t✔ {}'.format(app))
-            else:
-                print('\t✖ {}'.format(app))
-
 if __name__ == '__main__':
     args = docopt(__doc__)
 
@@ -363,24 +352,24 @@ if __name__ == '__main__':
     if args['android']:
         android = Android()
         if args['apps']:
-            dest = args['<dest>']
             packages = android.getInstalledApps()
+
+            installedApps = []
 
             print(' > User packages:')
             for package in packages:
-                print('\t- {}'.format(package))
+                if package in Android.apps:
+                    print('\t✔ {}'.format(package))
+                    installedApps.append(package)
+                else:
+                    print('\t- {}'.format(package))
 
-            print('')
-            Fs.mkdir(path.dirname(dest))
-            print(' > Saving apps: {}'.format(dest))
-            with open(dest, 'w') as file:
-                file.write('\n'.join(packages))
+            for requiredApp in Android.apps:
+                if not(requiredApp in installedApps):
+                    print('\t✖ {}'.format(requiredApp))
 
         if args['install']:
             android.installPackages()
-
-        if args['report']:
-            android.checkInstalledApps()
 
         android.unmount()
 
