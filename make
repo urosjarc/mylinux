@@ -41,7 +41,7 @@ try:
                 pipReport()
                 all = False
             if(args['--config']):
-                configReport()
+                filesReport()
                 all = False
             if (args['--npm']):
                 npmReport()
@@ -54,11 +54,11 @@ try:
                 pipReport()
                 gemReport()
                 npmReport()
-                configReport()
+                filesReport()
 
         elif args['config']:
             exitIfsudoIsNotNone()
-            config()
+            files()
 
 except KeyError as err:
     print('ERROR: ' + err.message)

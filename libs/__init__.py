@@ -140,7 +140,7 @@ def pipReport():
             table.append([packageName,version,'False'])
     print(tabulate(table, headers=["Package","Version","Can import"], tablefmt='fancy_grid'))
 
-def configReport():
+def filesReport():
     from os.path import join
     import os
     import filecmp
@@ -204,16 +204,16 @@ def gemReport():
         table.append([package,str(version)])
     print(tabulate(table,headers=['Package','Version'],tablefmt='fancy_grid'))
 
-def config():
+def files():
     import shutil,sys
     from subprocess import call
     from os.path import join
     import os
 
-    sys.stdout.write("\x1b]2;Linux config manager: starting\x07")
-    print('\nStart config update...\n')
+    sys.stdout.write("\x1b]2;Linux files manager: starting\x07")
+    print('\nStart files update...\n')
 
-    dotfiles = os.path.abspath('./config/dotfiles')
+    dotfiles = os.path.abspath('./config/files')
     sudoFiles = []
 
     # traverse root directory, and list directories as dirs and files as files
@@ -243,7 +243,7 @@ def config():
 	call('sudo chmod {} {}'.format("755",sudoFile[1]).split())
 	print(sudoFile[1])
 
-    sys.stdout.write("\x1b]2;Linux config manager: finished\x07")
+    sys.stdout.write("\x1b]2;Linux files manager: finished\x07")
 
 def init():
     from subprocess import call
