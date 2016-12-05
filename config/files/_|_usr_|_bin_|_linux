@@ -1,23 +1,22 @@
 #!/usr/bin/env python2
 """
 Description:
-    Personal gadget interface.
+    Personal linux interface.
 
 Usage:
-    gadget dic play <voice>
-    gadget mp3 load audiobook
-    gadget drive update
+    linux dic play <voice>
+    linux sd compile audiobooks <dest>
+    linux mp3 save <path>
+    linux drive update
 
 Options:
     -h --help   Extensive help message.
 """
 
+from os import path, walk, listdir, environ, getcwd, makedirs
 from subprocess import Popen, PIPE, CalledProcessError
 from docopt import docopt
-from os.path import join as pathJoin
-from os.path import basename
 
-import os
 import json
 import re
 import fnmatch
@@ -40,9 +39,9 @@ class Shell(object):
         raise CalledProcessError(1, ' '.join(Shell._parseCmd(cmd)), output=err)
 
     @staticmethod
-    def cmdWait(cmd, catchErr=False, output=False, workingDir=None, shell=False):
+    def cmdWait(cmd, catchErr=False, output=False, workingDir=None):
 
-        output, err = Shell.cmd(cmd, output=output, workingDir=workingDir, shell=shell).communicate()
+        output, err = Shell.cmd(cmd, output=output, workingDir=workingDir).communicate()
 
         if not catchErr and err != '':
             Shell._calledProcessError(cmd, err)
@@ -53,22 +52,22 @@ class Shell(object):
             return output
 
     @staticmethod
-    def cmd(cmd, output=False, workingDir=None, shell=False):
+    def cmd(cmd, output=False, workingDir=None):
 
         stdout = None if output else PIPE
         stderr = None if output else PIPE
 
-        return Popen(Shell._parseCmd(cmd), stdout=stdout, stderr=stderr, cwd=workingDir, shell=shell)
+        return Popen(Shell._parseCmd(cmd), stdout=stdout, stderr=stderr, cwd=workingDir)
 
 
 class Utils(object):
     @staticmethod
-    def openImage(*path):
-        return Shell.cmd(['eog', pathJoin(*path)])
+    def openImage(*paths):
+        return Shell.cmd(['eog', path.join(*paths)])
 
     @staticmethod
-    def openAudioPlayer(*path):
-        Shell.cmdWait(['vlc', pathJoin(*path)], catchErr=True)
+    def openAudioPlayer(*paths):
+        Shell.cmdWait(['vlc', path.join(*paths)], catchErr=True)
 
 
 class Fs(object):
@@ -76,32 +75,36 @@ class Fs(object):
     def findFiles(dir, glob):
         print(' > Searching for "{}" in "{}"'.format(glob, dir))
         matches = []
-        for root, dirnames, filenames in os.walk(dir):
+        for root, dirnames, filenames in walk(dir):
             for filename in fnmatch.filter(filenames, glob):
-                matches.append(pathJoin(root, filename))
+                matches.append(path.join(root, filename))
+
+        if len(matches) == 0:
+            print(' ! No file found')
+
         return matches
 
     @staticmethod
-    def mvToTrash(*path):
-        print(' > Move to trash: "{}"'.format(pathJoin(*path)))
-        Shell.cmdWait(['sudo', 'gvfs-trash', pathJoin(*path)])
+    def mvToTrash(*paths):
+        print(' > Move to trash: "{}"'.format(path.join(*paths)))
+        Shell.cmdWait(['sudo', 'gvfs-trash', path.join(*paths)])
 
     @staticmethod
-    def getCwd(*path):
-        return pathJoin(
-            os.getcwd(),
-            *path
+    def getCwd(*paths):
+        return path.join(
+            getcwd(),
+            *paths
         )
 
     @staticmethod
-    def setFilePermissions(*path):
-        Shell.cmdWait(['sudo', 'chmod', '775', pathJoin(*path)])
+    def setFilePermissions(*paths):
+        Shell.cmdWait(['sudo', 'chmod', '775', path.join(*paths)])
 
 
 class GDrive(object):
     @staticmethod
-    def getPath(*path):
-        return pathJoin('/home', os.environ.get("USER"), 'gdrive', *path)
+    def getPath(*paths):
+        return path.join('/home', environ.get("USER"), 'gdrive', *paths)
 
     @staticmethod
     def update():
@@ -111,27 +114,27 @@ class GDrive(object):
     @staticmethod
     def saveEmotion(*src):
         emotion = raw_input(' ? Custvo: ')
-        destPath = GDrive.getPath('custva', emotion, basename(*src))
+        destPath = GDrive.getPath('custva', emotion, path.basename(*src))
 
         # Create new emotion if not exist
-        if not (emotion in os.listdir(GDrive.getPath('custva'))):
+        if not (emotion in listdir(GDrive.getPath('custva'))):
             if 'y' == raw_input(' ? mkdir "{}" (y/n):'.format(destPath)):
-                os.makedirs(destPath)
+                makedirs(destPath)
 
         # Copy to emotion folder
         print(' > Emotion saved: "{}"'.format(destPath))
-        shutil.copyfile(pathJoin(*src), destPath)
+        shutil.copyfile(path.join(*src), destPath)
 
     @staticmethod
     def saveAudioBook(*src):
-        destPath = GDrive.getPath('knjige/audio', basename(*src))
+        destPath = GDrive.getPath('knjige/audio', path.basename(*src))
         print(' > Audiobook saved: "{}"'.format(destPath))
-        shutil.copyfile(pathJoin(*src), destPath)
+        shutil.copyfile(path.join(*src), destPath)
 
 
 class AAX(object):
     def __init__(self, *file):
-        self.path = pathJoin(*file)
+        self.path = path.join(*file)
 
         meta = Shell.cmdWait(['ffprobe', self.path], catchErr=True)
         self.author = re.findall('artist\s*:\s*(.*)', meta)[0]
@@ -160,19 +163,21 @@ class AAX(object):
 
         Fs.setFilePermissions(compiledPath)
 
+        return compiledFileBase
+
 
 class Device(object):
     def __init__(self, uuid, alias):
         self.uuid = uuid
         self.alias = alias
-        self.mountPath = pathJoin('/media', os.environ.get("USER"), self.alias)
+        self.mountPath = path.join('/media', environ.get("USER"), self.alias)
         self.devicePath = None
 
         self._setDevicePath()
         self.mount()
 
-    def getMountPath(self, *path):
-        return pathJoin(self.mountPath, pathJoin(*path))
+    def getMountPath(self, *paths):
+        return path.join(self.mountPath, path.join(*paths))
 
     def _setDevicePath(self):
         lsblk = json.loads(
@@ -187,7 +192,7 @@ class Device(object):
 
             for device in devices:
                 if self.uuid == device['uuid']:
-                    self.devicePath = pathJoin('/dev', device['name'])
+                    self.devicePath = path.join('/dev', device['name'])
 
         if not self.devicePath:
             print(' ! Device "{}" not found'.format(self.alias))
@@ -195,9 +200,9 @@ class Device(object):
 
     def mount(self):
         print(' > Mount: "{}" to "{}"'.format(self.devicePath, self.mountPath))
-        if not os.path.exists(self.mountPath):
-            os.makedirs(self.mountPath)
-        Shell.cmdWait(['sudo', 'mount', self.devicePath, self.mountPath], catchErr=True, shell=True)
+        if not path.exists(self.mountPath):
+            makedirs(self.mountPath)
+        Shell.cmdWait(['sudo', 'mount', self.devicePath, self.mountPath], catchErr=True)
 
     def unmount(self):
         print(' > UnMount: "{}"'.format(self.mountPath))
@@ -209,7 +214,7 @@ class Dictaphone(Device):
     alias = 'dictaphone'
 
     def __init__(self):
-        super(Dictaphone, self).__init__(Dictaphone.uuid, Dictaphone.alias)
+        super(Dictaphone, self).__init__(self.uuid, self.alias)
 
         self.emotions = 'A'
         self.todos = 'B'
@@ -225,16 +230,16 @@ class Mp3Player(Device):
     alias = 'mp3Player'
 
     def __init__(self):
-        super(Mp3Player, self).__init__(Mp3Player.uuid, Mp3Player.alias)
+        super(Mp3Player, self).__init__(self.uuid, self.alias)
 
-    def getMusicPath(self, *path):
-        return self.getMountPath('MUSIC', *path)
+    def getMusicPath(self, *paths):
+        return self.getMountPath('MUSIC', *paths)
 
     def saveMusic(self, *src):
-        destPath = self.getMusicPath(basename(*src))
+        destPath = self.getMusicPath(path.basename(*src))
         print(' > MP3 saved: {}'.format(destPath))
 
-        Shell.cmdWait(['sudo', 'cp', pathJoin(*src), destPath])
+        Shell.cmdWait(['sudo', 'cp', path.join(*src), destPath])
 
 
 class SdCard(Device):
@@ -242,7 +247,7 @@ class SdCard(Device):
     alias = 'sdCard'
 
     def __init__(self):
-        super(SdCard, self).__init__(SdCard.uuid, SdCard.alias)
+        super(SdCard, self).__init__(self.uuid, self.alias)
 
 
 if __name__ == '__main__':
@@ -258,7 +263,7 @@ if __name__ == '__main__':
             voice = args['<voice>']
 
             # Get voices files.
-            voices = os.listdir(dic.getVoicePath(voice))
+            voices = listdir(dic.getVoicePath(voice))
 
             if len(voices) != 0:
 
@@ -300,14 +305,21 @@ if __name__ == '__main__':
 
         dic.unmount()
 
-    elif args['mp3']:
+    elif args['sd']:
 
-        mp3Player = Mp3Player()
+        sdCard = SdCard()
 
-        if args['load']:
-            if args['audiobook']:
+        if args['compile']:
+            if args['audiobooks']:
 
-                sdCard = SdCard()
+                dest = args['<dest>']
+
+                # Check dir existance
+                if path.isFile(dest):
+                    print(' ! Is not dir: {}'.format(dest))
+                    sys.exit(64)
+                if not path.exists(dest):
+                    makedirs(dest)
 
                 # Get glob files .aax
                 aaxFiles = Fs.findFiles(
@@ -318,24 +330,19 @@ if __name__ == '__main__':
                 for aaxFile in aaxFiles:
 
                     aax = AAX(aaxFile)
-                    aaxOutputFile = aax.getOutputFile(fileExt='mp3')
 
                     if 'y' == raw_input(' ? Process "{}: {}" (y/n):'.format(aax.author, aax.title)):
-                        compiledPath = Fs.getCwd(aaxOutputFile)
+                        mp3File = aax.to_mp3()
+                        shutil.move(mp3File, path.join(dest, mp3File))
 
-                        aax.to_mp3()
-
-                        GDrive.saveAudioBook(compiledPath)
-                        mp3Player.saveMusic(compiledPath)
-
-                        Fs.mvToTrash(compiledPath)
-
-                if 'y' == raw_input(' ? Update drive (y/n):'):
-                    GDrive.update()
-
-                sdCard.unmount()
-        mp3Player.unmount()
+        sdCard.unmount()
 
     elif args['drive']:
         if args['update']:
             GDrive.update()
+
+    elif args['mp3']:
+        mp3Player = Mp3Player()
+        if args['save']:
+            mp3Player.saveMusic(args['<path>'])
+        mp3Player.unmount()
