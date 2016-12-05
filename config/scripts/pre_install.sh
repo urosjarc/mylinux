@@ -6,5 +6,6 @@ sudo add-apt-repository ppa:cwchien/gradle -y
 sudo add-apt-repository ppa:indicator-brightness/ppa -y
 sudo add-apt-repository ppa:webupd8team/java -y
 sudo add-apt-repository ppa:nilarimogard/webupd8
+sudo add-apt-repository ppa:phablet-team/tools
 
 sudo apt-get update

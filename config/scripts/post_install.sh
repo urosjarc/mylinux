@@ -14,11 +14,9 @@ sudo npm update npm -g
 
 echo '\n...TAR INSTALL...\n'
 mkdir ~/.APPS
-wget -O ~/Downloads/android.tar.gz      https://dl.google.com/dl/android/studio/ide-zips/2.2.2.0/android-studio-ide-145.3360264-linux.zip
 wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.2.4.tar.gz
 wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2016.2.3.tar.gz
 wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.2.3.tar.gz
-unzip -q ~/Downloads/android.tar.gz     -d ~/.APPS
 unzip -q ~/Downloads/intellij.tar.gz    -d ~/.APPS
 unzip -q ~/Downloads/pycharm.tar.gz     -d ~/.APPS
 unzip -q ~/Downloads/webstorm.tar.gz    -d ~/.APPS
