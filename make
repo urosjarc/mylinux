@@ -63,8 +63,8 @@ try:
             files()
 
         elif args['lint']:
-            lint.py_run('make')
-            lint.py_run('libs')
+            lint.py_run('"make"')
+            lint.py_run('"libs"')
             lint.py_run('"config/files/_|_usr_|_bin_|_linux"')
 
 
