@@ -1,4 +1,5 @@
-_mode = 0700 #Owner can r,w,x
+_mode = 0700  # Owner can r,w,x
+
 
 def _getAptPackages(cache):
     packages = []
@@ -11,6 +12,7 @@ def _getAptPackages(cache):
 
     return packages
 
+
 def _getPipPackages():
     packages = []
 
@@ -21,6 +23,7 @@ def _getPipPackages():
             packages.append(packageName.strip())
 
     return packages
+
 
 def _getNpmPackages():
     packages = []
@@ -33,6 +36,7 @@ def _getNpmPackages():
 
     return packages
 
+
 def _getGemPackages():
     packages = []
 
@@ -44,11 +48,13 @@ def _getGemPackages():
 
     return packages
 
+
 def exitIfSudoIsNone():
     import os
     if os.getenv("SUDO_USER") is None:
         print('Run script with sudo command!')
         exit()
+
 
 def aptInstall():
     import apt
@@ -70,8 +76,9 @@ def aptInstall():
 
     cache.commit(install_progress=installProgress, fetch_progress=AcquireProgress())
 
+
 def pipInstall():
-    import pip,sys
+    import pip, sys
 
     sys.stdout.write("\x1b]2;Linux pip manager: installing\x07")
     print('\nStart pip update...\n')
@@ -80,6 +87,7 @@ def pipInstall():
         pip.main(['install', packageName])
 
     sys.stdout.write("\x1b]2;Linux pip manager: finished\x07")
+
 
 def npmInstall():
     from subprocess import call
@@ -91,6 +99,7 @@ def npmInstall():
     call(('sudo npm install -g ' + ' '.join(_getNpmPackages())).split())
     sys.stdout.write("\x1b]2;Linux npm manager: finished\x07")
 
+
 def gemInstall():
     from subprocess import call
     import sys
@@ -100,6 +109,7 @@ def gemInstall():
 
     call(('sudo gem install ' + ' '.join(_getGemPackages())).split())
     sys.stdout.write("\x1b]2;Linux gem manager: finished\x07")
+
 
 def aptReport():
     import apt
@@ -121,6 +131,7 @@ def aptReport():
 
     print(tabulate(table, headers=["Section", "Package", "Version", 'Installed', 'Broken'], tablefmt='fancy_grid'))
 
+
 def pipReport():
     import importlib, subprocess
     from tabulate import tabulate
@@ -129,16 +140,17 @@ def pipReport():
     table = []
     for packageName in _getPipPackages():
         output = subprocess.Popen(('pip show ' + packageName).split(), stdout=subprocess.PIPE).communicate()[0]
-        if output=='' or output.isspace():
+        if output == '' or output.isspace():
             version = 'None'
         else:
             version = output.split('\n')[3].split()[1]
         try:
             globals()[packageName] = importlib.import_module(packageName)
-            table.append([packageName,version,'True'])
+            table.append([packageName, version, 'True'])
         except ImportError:
-            table.append([packageName,version,'False'])
-    print(tabulate(table, headers=["Package","Version","Can import"], tablefmt='fancy_grid'))
+            table.append([packageName, version, 'False'])
+    print(tabulate(table, headers=["Package", "Version", "Can import"], tablefmt='fancy_grid'))
+
 
 def filesReport():
     from os.path import join
@@ -153,14 +165,14 @@ def filesReport():
     # traverse root directory, and list directories as dirs and files as files
     for root, dirs, files in os.walk(dotfiles):
         for file in files:
-            fileSrc = join(dotfiles,file)
-            filePath = file.replace('_|_', '/').replace('~',os.path.expanduser("~"))
-            if(os.path.exists(filePath)):
+            fileSrc = join(dotfiles, file)
+            filePath = file.replace('_|_', '/').replace('~', os.path.expanduser("~"))
+            if (os.path.exists(filePath)):
                 table.append([
                     file,
                     file.replace('_|_', '/'),
                     'True',
-                    str(filecmp.cmp(fileSrc,filePath))
+                    str(filecmp.cmp(fileSrc, filePath))
                 ])
             else:
                 table.append([
@@ -170,7 +182,8 @@ def filesReport():
                     'False'
                 ])
 
-    print(tabulate(table,headers=["Source", "Destination","Exists","Equal"], tablefmt='fancy_grid'))
+    print(tabulate(table, headers=["Source", "Destination", "Exists", "Equal"], tablefmt='fancy_grid'))
+
 
 def npmReport():
     import subprocess
@@ -183,10 +196,11 @@ def npmReport():
     for package in _getNpmPackages():
         version = None
         for installedPac in installedPacs:
-            if package.strip()==installedPac.split('@')[0]:
+            if package.strip() == installedPac.split('@')[0]:
                 version = installedPac.split('@')[1]
-        table.append([package,str(version)])
-    print(tabulate(table,headers=['Package','Version'],tablefmt='fancy_grid'))
+        table.append([package, str(version)])
+    print(tabulate(table, headers=['Package', 'Version'], tablefmt='fancy_grid'))
+
 
 def gemReport():
     import subprocess
@@ -199,13 +213,14 @@ def gemReport():
     for package in _getGemPackages():
         version = None
         for installedPac in installedPacs:
-            if package.strip()==installedPac.split(' ')[0]:
-                version = installedPac.split(' ')[1].replace('(','').replace(')','')
-        table.append([package,str(version)])
-    print(tabulate(table,headers=['Package','Version'],tablefmt='fancy_grid'))
+            if package.strip() == installedPac.split(' ')[0]:
+                version = installedPac.split(' ')[1].replace('(', '').replace(')', '')
+        table.append([package, str(version)])
+    print(tabulate(table, headers=['Package', 'Version'], tablefmt='fancy_grid'))
+
 
 def files():
-    import shutil,sys
+    import shutil, sys
     from subprocess import call
     from os.path import join
     import os
@@ -219,31 +234,32 @@ def files():
     # traverse root directory, and list directories as dirs and files as files
     for root, dirs, files in os.walk(dotfiles):
         for file in files:
-            fileSrc = join(dotfiles,file)
-            filePath = file.replace('_|_', '/').replace('~',os.path.expanduser("~"))
+            fileSrc = join(dotfiles, file)
+            filePath = file.replace('_|_', '/').replace('~', os.path.expanduser("~"))
             fileDir = '/'.join(filePath.split('/')[:-1])
             if not os.path.exists(fileDir):
                 try:
                     original_umask = os.umask(0)
-                    os.makedirs(fileDir,_mode)
+                    os.makedirs(fileDir, _mode)
                 finally:
                     os.umask(original_umask)
 
-	    try:
-		shutil.copyfile(fileSrc,filePath)
-		os.chmod(filePath,_mode)
-		print(filePath)
-	    except IOError:
-		sudoFiles.append([fileSrc,filePath])
-	    except OSError:
-		sudoFiles.append([fileSrc,filePath])
+            try:
+                shutil.copyfile(fileSrc, filePath)
+                os.chmod(filePath, _mode)
+                print(filePath)
+            except IOError:
+                sudoFiles.append([fileSrc, filePath])
+            except OSError:
+                sudoFiles.append([fileSrc, filePath])
 
     for sudoFile in sudoFiles:
-	call('sudo cp {} {}'.format(sudoFile[0],sudoFile[1]).split())
-	call('sudo chmod {} {}'.format("755",sudoFile[1]).split())
-	print(sudoFile[1])
+        call('sudo cp {} {}'.format(sudoFile[0], sudoFile[1]).split())
+        call('sudo chmod {} {}'.format("755", sudoFile[1]).split())
+        print(sudoFile[1])
 
     sys.stdout.write("\x1b]2;Linux files manager: finished\x07")
+
 
 def init():
     from subprocess import call
@@ -255,6 +271,7 @@ def init():
     if 'y' == raw_input('Do you want setup linux? (y/n): '):
         call("sh ./config/scripts/init.sh".split())
 
+
 def pre_install():
     from subprocess import call
     import sys
@@ -264,6 +281,7 @@ def pre_install():
 
     call("sh ./config/scripts/pre_install.sh".split())
 
+
 def post_install():
     from subprocess import call
     import sys
@@ -272,6 +290,7 @@ def post_install():
     print('\nStart post. install...\n')
 
     call("sh ./config/scripts/post_install.sh".split())
+
 
 def exitIfsudoIsNotNone():
     import os
