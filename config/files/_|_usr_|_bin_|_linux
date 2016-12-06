@@ -297,7 +297,15 @@ class Android(object):
     def __init__(self):
         Shell.cmdWait('sudo adb stop-server', catchErr=True)
         Shell.cmdWait('sudo adb start-server', catchErr=True, output=True)
-        Shell.cmdWait('adb devices', catchErr=True, output=True)
+        devices = re.findall('([A-Z0-9]{2,})\s*device', Shell.cmdWait('adb devices'))
+        if len(devices) == 0:
+            print(' ! No devices found')
+            sys.exit(68)
+        else:
+            print(' > List of devices:')
+            for device in devices:
+                if device:
+                    print('\t- {}'.format(device))
 
     def installPackages(self):
         for app in Android.apps:
@@ -333,6 +341,9 @@ if __name__ == '__main__':
                         GDrive.getPath('custva', 'emotions.jpg')
                     )
 
+                if voice == dic.todos:
+                    Utils.openBrowser('https://calendar.google.com')
+
                 # Process every file in voices
                 for file in voices:
                     print(' > {}'.format(file))
@@ -355,7 +366,7 @@ if __name__ == '__main__':
                     imageProcess.terminate()
 
                 # Update drive
-                if 'y' == raw_input(' ? Update drive (y/n):'):
+                if voice == dic.emotions and 'y' == raw_input(' ? Update drive (y/n):'):
                     GDrive.update()
 
             # Warn on no file
