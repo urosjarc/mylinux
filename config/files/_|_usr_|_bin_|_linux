@@ -241,10 +241,10 @@ class Dictaphone(Device):
     def __init__(self):
         super(Dictaphone, self).__init__(self.uuid, self.alias)
 
-        self.emotions = 'A'
+        self.fastTodos = 'A'
         self.todos = 'B'
-        self.book = 'C'
-        self.other = 'D'
+        self.emotions = 'C'
+        self.book = 'D'
 
     def getVoicePath(self, *voice):
         return self.getMountPath('VOICE', *voice)
