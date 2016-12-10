@@ -137,8 +137,9 @@ class GDrive(object):
 
         # Create new emotion if not exist
         if not (emotion in listdir(GDrive.getPath('custva'))):
-            if 'y' == raw_input(' ? mkdir "{}" (y/n):'.format(destPath)):
-                Fs.mkdir(destPath)
+            destDir = path.dirname(destPath)
+            if 'y' == raw_input(' ? mkdir "{}" (y/n):'.format(destDir)):
+                Fs.mkdir(destDir)
 
         # Copy to emotion folder
         print(' > Saving emotion: "{}"'.format(destPath))
