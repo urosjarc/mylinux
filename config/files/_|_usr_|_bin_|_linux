@@ -29,6 +29,7 @@ from os import path, walk, listdir, environ, getcwd, makedirs
 from subprocess import Popen, PIPE, CalledProcessError
 from docopt import docopt
 
+
 # sys.exit codes: http://stackoverflow.com/questions/1101957/are-there-any-standard-exit-status-codes-in-linux
 
 
@@ -248,15 +249,15 @@ class Dictaphone(Device):
         self.emotions = 'C'
         self.others = 'D'
 
-    def getPath(self,*paths):
-        return self.getMountPath('VOICE',*paths)
+    def getPath(self, *paths):
+        return self.getMountPath('VOICE', *paths)
 
     def getVoicesPaths(self, *voices):
         filesPaths = []
         for voice in voices:
             for voicesFile in listdir(self.getPath(voice)):
                 filesPaths.append(
-                    self.getPath(voice,voicesFile)
+                    self.getPath(voice, voicesFile)
                 )
 
         return filesPaths
@@ -273,10 +274,20 @@ class Mp3Player(Device):
         return self.getMountPath('MUSIC', *paths)
 
     def saveMusic(self, *src):
-        destPath = self.getMusicPath(path.basename(*src))
-        print(' > Saving mp3: {}'.format(destPath))
+        src = path.join(*src)
+        destPath = self.getMusicPath(path.basename(src))
 
-        Shell.cmdWait(['sudo', 'cp', path.join(*src), destPath])
+        if path.isfile(src) and path.exists(src) and 'y' == raw_input(' ? Split file on 10 min chunks (y/n):'):
+            srcName, ext = path.splitext(src)
+            destDir = self.getMusicPath(path.basename(srcName))
+            destPath = '{}{}'.format(path.join(destDir, 'part_%03d'), ext)
+            Fs.mkdir(destDir)
+            print(' > saving mp3: {}'.format(destPath))
+            Shell.cmdWait(['ffmpeg', '-i', src, '-f', 'segment', '-segment_time', '600', '-c', 'copy', destPath],
+                          output=True, catchErr=True)
+        else:
+            print(' > saving mp3: {}'.format(destPath))
+            Shell.cmdWait(['sudo', 'cp', src, destPath], output=True)
 
 
 class SdCard(Device):
@@ -343,8 +354,8 @@ if __name__ == '__main__':
 
             # Get voices files.
             if voice == 'all':
-                voice = 'D' # Set voice to others which simulate non special files.
-                voices = dic.getVoicesPaths('A','B','C','D')
+                voice = 'D'  # Set voice to others which simulate non special files.
+                voices = dic.getVoicesPaths('A', 'B', 'C', 'D')
             else:
                 voices = dic.getVoicesPaths(voice)
 
