@@ -357,7 +357,7 @@ if __name__ == '__main__':
                         GDrive.getPath('custva', 'emotions.jpg')
                     )
 
-                if voice == dic.todos:
+                if voice == dic.todos or voice == dic.fastTodos:
                     Utils.openBrowser('https://calendar.google.com')
 
                 # Process every file in voices
