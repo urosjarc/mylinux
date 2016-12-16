@@ -244,9 +244,9 @@ class Dictaphone(Device):
     def __init__(self):
         super(Dictaphone, self).__init__(self.uuid, self.alias)
 
-        self.fastTodos = 'A'
-        self.todos = 'B'
-        self.emotions = 'C'
+        self.todos = 'A'
+        self.emotions = 'B'
+        self.dvigZavesti = 'C'
         self.others = 'D'
 
     def getPath(self, *paths):
@@ -368,7 +368,7 @@ if __name__ == '__main__':
                         GDrive.getPath('custva', 'emotions.jpg')
                     )
 
-                if voice == dic.todos or voice == dic.fastTodos:
+                if voice == dic.todos:
                     Utils.openBrowser('https://calendar.google.com')
 
                 # Process every file in voices
