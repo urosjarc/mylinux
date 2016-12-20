@@ -17,10 +17,11 @@ mkdir -p ~/.APPS
 wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.3.1.tar.gz
 wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2016.3.1.tar.gz
 wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.3.2.tar.gz
+wget -O ~/Downloads/gitkraken.tar.gz    https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz
 tar -xf ~/Downloads/intellij.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/webstorm.tar.gz -C ~/.APPS
-
+tar -xf ~/Downloads/gitkraken.tar.gz -C ~/.APPS
 
 
 echo '\n...SYSTEM CONFIG...\n'
