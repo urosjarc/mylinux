@@ -13,7 +13,7 @@ sudo npm update npm -g
 
 
 echo '\n...TAR INSTALL...\n'
-mkdir ~/.APPS
+mkdir -p ~/.APPS
 wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.3.1.tar.gz
 wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2016.3.1.tar.gz
 wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.3.2.tar.gz
