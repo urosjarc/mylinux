@@ -387,11 +387,10 @@ if __name__ == '__main__':
 					Utils.openAudioPlayer(file)
 
 					# Process emotional voices
-					if 'y' == raw_input(' ? Upload file (y/n):'):
-						if voice == dic.emotions:
-							GDrive.saveEmotion(file)
-						if voice == dic.questions:
-							GDrive.saveQuestion(file)
+					if voice == dic.emotions and 'y' == raw_input(' ? Upload file (y/n):'):
+						GDrive.saveEmotion(file)
+					if voice == dic.questions and 'y' == raw_input(' ? Upload file (y/n):'):
+						GDrive.saveQuestion(file)
 
 					# Move to trash if user wants it
 					if 'y' == raw_input(' ? Trash file (y/n):'):
