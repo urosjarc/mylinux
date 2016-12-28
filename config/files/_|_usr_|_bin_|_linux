@@ -149,9 +149,18 @@ class GDrive(object):
 
 	@staticmethod
 	def saveQuestion(*src):
-		destPath = GDrive.getPath('vprasanja', path.basename(*src))
+		ucitelji = GDrive.getPath('vprasanja')
+		print(listdir(ucitelji))
+		ucitelj = raw_input(' ? Guru: ')
+		destPath = GDrive.getPath('vprasanja', ucitelj, path.basename(*src))
 
-		# Copy to question folder
+		# Create new emotion if not exist
+		if not (ucitelj in listdir(GDrive.getPath('vprasanja'))):
+			destDir = path.dirname(destPath)
+			if 'y' == raw_input(' ? mkdir "{}" (y/n):'.format(destDir)):
+				Fs.mkdir(destDir)
+
+		# Copy to emotion folder
 		print(' > Saving question: "{}"'.format(destPath))
 		shutil.copyfile(path.join(*src), destPath)
 
@@ -401,7 +410,7 @@ if __name__ == '__main__':
 					imageProcess.terminate()
 
 				# Update drive
-				if voice == dic.emotions and voice == dic.questions and 'y' == raw_input(' ? Update drive (y/n):'):
+				if (voice == dic.emotions or voice == dic.questions) and 'y' == raw_input(' ? Update drive (y/n):'):
 					GDrive.update()
 
 			# Warn on no file
