@@ -2,6 +2,7 @@ ffmpeg
 wireshark
 arandr
 libmp3lame0
+texlive-full
 android-tools-adb
 android-tools-fastboot
 classicmenu-indicator
@@ -19,6 +20,7 @@ meld
 pinta
 kazam
 openshot
+redshift
 ruby
 git
 python
