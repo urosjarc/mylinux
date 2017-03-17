@@ -6,17 +6,17 @@ NC='\033[0m' # No Color
 echo '\n...CUSTOM INSTALL...\n'
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
-nvm install node
-sudo npm update npm -g
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+nvm install --lts
+npm update npm -g
 
 
 
 echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
-wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.3.1.tar.gz
-wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2016.3.1.tar.gz
-wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.3.2.tar.gz
+wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.3.5.tar.gz
+wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2016.3.2.tar.gz
+wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.3.4.tar.gz
 wget -O ~/Downloads/gitkraken.tar.gz    https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz
 tar -xf ~/Downloads/intellij.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
@@ -50,7 +50,6 @@ rm -rf ~/Documents
 rm -rf ~/Pictures
 rm -rf ~/Templates
 rm -rf ~/examples.desktop
-sudo chown -R urosjarc: ~
 
 
 
@@ -65,3 +64,8 @@ echo '\n...GOOGLE DRIVE FILE SYSTEM...\n'
 mkdir ~/gdrive
 cd ~/gdrive
 grive --auth --progress-bar
+
+
+
+echo '\n...SET AUTHOR PERMISSIONS...\n'
+sudo chown -R urosjarc: ~

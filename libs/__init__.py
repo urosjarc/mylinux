@@ -96,7 +96,7 @@ def npmInstall():
     sys.stdout.write("\x1b]2;Linux npm manager: installing\x07")
     print('\nStart npm update...\n')
 
-    call(('sudo npm install -g ' + ' '.join(_getNpmPackages())).split())
+    call(('npm install -g ' + ' '.join(_getNpmPackages())).split())
     sys.stdout.write("\x1b]2;Linux npm manager: finished\x07")
 
 
@@ -160,7 +160,7 @@ def filesReport():
 
     print('\nConfig report:\n')
 
-    dotfiles = os.path.abspath('./config/dotfiles')
+    dotfiles = os.path.abspath('./config/files')
     table = []
     # traverse root directory, and list directories as dirs and files as files
     for root, dirs, files in os.walk(dotfiles):
