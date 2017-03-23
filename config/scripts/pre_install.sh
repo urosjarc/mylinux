@@ -6,6 +6,7 @@ sudo mv /tmp/neo4j.list /etc/apt/sources.list.d
 
 echo '\n...SET KEYS...\n'
 
+sudo add-apt-repository ppa:yannubuntu/boot-repair	-y
 sudo add-apt-repository ppa:cwchien/gradle              -y
 sudo add-apt-repository ppa:indicator-brightness/ppa    -y
 sudo add-apt-repository ppa:webupd8team/java            -y
