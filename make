@@ -30,7 +30,7 @@ try:
             aptInstall()
             gemInstall()
             pipInstall()
-            npmInstall()
+            # npmInstall()
             post_install()
             print('\n > Linux installation finish.')
 

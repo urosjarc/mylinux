@@ -1,14 +1,6 @@
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-
-
-
 echo '\n...CUSTOM INSTALL...\n'
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-nvm install --lts
-npm update npm -g
 
 
 
@@ -24,20 +16,12 @@ tar -xf ~/Downloads/webstorm.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/gitkraken.tar.gz -C ~/.APPS
 
 
+
 echo '\n...SYSTEM CONFIG...\n'
 sudo grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
 sudo sysctl -p #Update inotify
 sudo update-alternatives --config x-www-browser
 sudo -u urosjarc -H sh -c "chsh -s $(which zsh)"
-
-
-
-echo '\n...SSH CONFIG....\n'
-mkdir ~/.ssh
-echo "\nSet keygen for github:\n - file: ${RED}/home/<user>/.ssh/id_rsa_github${NC}\n - passphrase: ${RED}SKIP${NC}\n"
-ssh-keygen -t rsa -b 4096
-echo "\nSet keygen for bitbucket:\n - file: ${RED}/home/<user>/.ssh/id_rsa_bitbucket${NC}\n - passphrase: ${RED}SKIP${NC}\n"
-ssh-keygen -t rsa -b 4096
 
 
 
@@ -55,8 +39,8 @@ rm -rf ~/examples.desktop
 
 echo '\n...VERSION CONTROL SYSTEM...\n'
 mkdir ~/vcs
-git clone git@github.com:urosjarc/linux.git ~/vcs
-git clone git@github.com:urosjarc/jetbrains.git ~/vcs
+git clone https://github.com/urosjarc/mylinux.git ~/vcs/mylinux
+git clone https://github.com/urosjarc/jetbrains.git ~/vcs/jetbrains
 
 
 

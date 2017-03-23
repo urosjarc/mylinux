@@ -96,7 +96,7 @@ def npmInstall():
     sys.stdout.write("\x1b]2;Linux npm manager: installing\x07")
     print('\nStart npm update...\n')
 
-    call(('npm install -g ' + ' '.join(_getNpmPackages())).split())
+    call(('sudo npm install -g ' + ' '.join(_getNpmPackages())).split())
     sys.stdout.write("\x1b]2;Linux npm manager: finished\x07")
 
 
@@ -281,7 +281,6 @@ def pre_install():
 
     call("sh ./config/scripts/pre_install.sh".split())
 
-
 def post_install():
     from subprocess import call
     import sys
@@ -290,7 +289,6 @@ def post_install():
     print('\nStart post. install...\n')
 
     call("sh ./config/scripts/post_install.sh".split())
-
 
 def exitIfsudoIsNotNone():
     import os
