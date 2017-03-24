@@ -9,6 +9,7 @@ Usage:
     linux dic play <voice>
     linux dic play all
     linux sd compile audiobooks <dest>
+    linux compile audiobook <in>
     linux mp3 save <path>
     linux drive update
     linux android apps
@@ -448,6 +449,17 @@ if __name__ == '__main__':
 
 		if args['install']:
 			android.installPackages()
+
+	elif args['compile']:
+		if args['audiobook']:
+
+			inPath = args['<in>']
+
+			# Get glob files .aax
+			aax = AAX(inPath)
+
+			if 'y' == raw_input(' ? Process "{}: {}" (y/n):'.format(aax.author, aax.title)):
+				aax.to_mp3()
 
 	elif args['sd']:
 
