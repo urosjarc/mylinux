@@ -30,5 +30,6 @@ oracle-java9-installer
 neo4j
 git
 python-virtualenv
+qt4-designer
 python-pip
 gradle
