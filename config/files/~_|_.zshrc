@@ -18,7 +18,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 #BASH
-[[ -e ~/.bashrc ]] && emulate sh -c 'source ~/.bashrc'
+[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
 #My settings
 printf '\n ---> WELLCOME UROS :)\n'
