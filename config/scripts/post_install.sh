@@ -3,6 +3,10 @@ wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - 
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
 
+echo '\n...I3 LOCK SCREEN...\n'
+git clone https://github.com/guimeira/i3lock-fancy-multimonitor.git ~/.i3/i3lock-fancy-multimonitor
+sudo chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
+
 
 echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
