@@ -153,6 +153,4 @@ exec classicmenu-indicator
 exec nm-applet
 exec /opt/extras.ubuntu.com/indicator-brightness/indicator-brightness
 
-exec eval "while true; do sleep 600; notify-send -u low -i face-laugh 'Time for workout you lazy fuck! xD'; done" &
-
 exec notify-send -u low -i face-laugh 'Welcome back. Master!'
