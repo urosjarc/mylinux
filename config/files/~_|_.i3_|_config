@@ -153,4 +153,7 @@ exec classicmenu-indicator
 exec nm-applet
 exec /opt/extras.ubuntu.com/indicator-brightness/indicator-brightness
 
+exec pkill workrave
+exec workrave
+
 exec notify-send -u low -i face-laugh 'Welcome back. Master!'

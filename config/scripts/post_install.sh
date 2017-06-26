@@ -48,6 +48,11 @@ git clone https://github.com/urosjarc/jetbrains.git ~/vcs/jetbrains
 
 
 
+echo '\n...WORKRAVE CONFIGURATION...\n'
+mkdir ~/.workrave
+
+
+
 echo '\n...GOOGLE DRIVE FILE SYSTEM...\n'
 mkdir ~/gdrive
 cd ~/gdrive
