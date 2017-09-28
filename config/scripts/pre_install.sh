@@ -12,8 +12,6 @@ sudo add-apt-repository ppa:indicator-brightness/ppa    -y
 sudo add-apt-repository ppa:webupd8team/java            -y
 sudo add-apt-repository ppa:nilarimogard/webupd8        -y
 sudo add-apt-repository ppa:phablet-team/tools          -y
-sudo add-apt-repository ppa:rob-caelers/workrave        -y
-sudo add-apt-repository ppa:webupd8team/tor-browser     -y
 
 echo '\n...UPGRADE MANAGERS...\n'
 

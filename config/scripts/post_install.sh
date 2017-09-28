@@ -10,9 +10,9 @@ sudo chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
 
 echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
-wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2016.3.5.tar.gz
-wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2016.3.2.tar.gz
-wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2016.3.4.tar.gz
+wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz
+wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2017.2.3.tar.gz
+wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2017.2.4.tar.gz
 wget -O ~/Downloads/gitkraken.tar.gz    https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz
 tar -xf ~/Downloads/intellij.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
@@ -45,11 +45,6 @@ echo '\n...VERSION CONTROL SYSTEM...\n'
 mkdir ~/vcs
 git clone https://github.com/urosjarc/mylinux.git ~/vcs/mylinux
 git clone https://github.com/urosjarc/jetbrains.git ~/vcs/jetbrains
-
-
-
-echo '\n...WORKRAVE CONFIGURATION...\n'
-mkdir ~/.workrave
 
 
 
