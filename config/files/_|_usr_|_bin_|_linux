@@ -318,21 +318,18 @@ class SdCard(Device):
 
 class Android(object):
 	apps = [
-		'pl.solidexplorer2',
-		'com.google.android.apps.adm',
+		'com.andymstone.metronome',
+		'com.audible.application',
+		'com.evgeniysharafan.tabatatimer',
+		'com.ijinshan.kbackup',
+		'com.urbandroid.lux', #Dimmer
+		'hai.lior.ukaleletunerfree',
+		'ws.appdev.android.rotation2',
+		'com.google.android.apps.adm', #Mobile tracker
 		'com.google.android.apps.inbox',
 		'si.izum.mcobiss',
-		'com.goodreads',
-		'com.ijinshan.kbackup',
-		'com.acd.ekadashi',
-		'com.audible.application',
 		'com.google.android.calendar',
-		'com.popularapp.sevenmins',
-		'com.sebmorand.brightcom',
-		'com.whatsapp',
-		'org.dayup.gtask',
-		'pl.solidexplorer2',
-		'ws.appdev.android.rotation2'
+		'org.dayup.gtask'
 	]
 
 	def __init__(self):
