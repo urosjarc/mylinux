@@ -2,6 +2,7 @@ boot-repair
 ffmpeg
 wireshark
 arandr
+ardour
 libmp3lame0
 texlive-full
 android-tools-adb
