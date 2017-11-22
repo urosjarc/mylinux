@@ -57,3 +57,4 @@ grive --auth --progress-bar
 
 echo '\n...SET AUTHOR PERMISSIONS...\n'
 sudo chown -R urosjarc: ~
+ulimit -u unlimited
