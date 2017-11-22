@@ -1,5 +1,5 @@
 echo "\nInstalling apt dependencies...\n"
-sudo apt-get -y install python-apt python-pip
+sudo apt-get -y install python-apt python-pip curl
 
 echo "\nUpgrade pip...\n"
 pip install --upgrade pip
