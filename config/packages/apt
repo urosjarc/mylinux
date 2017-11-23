@@ -7,6 +7,7 @@ texlive-full
 android-tools-adb
 android-tools-fastboot
 unetbootin
+winusb
 gparted
 classicmenu-indicator
 indicator-brightness
