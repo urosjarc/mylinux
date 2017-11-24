@@ -12,8 +12,9 @@ echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
 wget -O ~/Downloads/intellij.tar.gz 	https://download-cf.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz
 wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2017.2.3.tar.gz
-wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2017.2.4.tar.gz
+wget -O ~/Downloads/webstorm.tar.gz 	https://download-cf.jetbrains.com/webstorm/WebStorm-2017.2.5.tar.gz
 wget -O ~/Downloads/gitkraken.tar.gz    https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz
+
 tar -xf ~/Downloads/intellij.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/webstorm.tar.gz -C ~/.APPS
