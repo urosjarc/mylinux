@@ -163,6 +163,6 @@ exec nm-applet
 exec notify-send -u low -i face-laugh 'Welcome back. Master!'
 
 # Init mindfulness
-cvlc --play-and-exit ~/.i3/bell.mp3 &
+exec cvlc --play-and-exit ~/.i3/bell.mp3 &
 exec while true; do cvlc --play-and-exit ~/.i3/bell.mp3 &; sleep 240; done &
 exec while true; do cvlc --play-and-exit ~/.i3/bells.mp3 &; sleep 1800; done &
