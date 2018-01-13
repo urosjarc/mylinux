@@ -1,41 +1,60 @@
-boot-repair
-ffmpeg
-wireshark
-arandr
-libmp3lame0
-texlive-full
-android-tools-adb
-android-tools-fastboot
-unetbootin
-winusb
+# -------- Booting tools -----------------
 gparted
+winusb
+boot-repair
+unetbootin
+
+# -------- Sound tools -------------------
+ffmpeg
+libmp3lame0
+vlc
+pavucontrol
+
+# -------- System admin ------------------
+wireshark
+meld
+
+# -------- Linux environment -------------
+i3
+
+# -------- Display -----------------------
+arandr
+redshift
+xbacklight
 classicmenu-indicator
 indicator-brightness
-icedtea-plugin
-chromium-browser
-i3
+
+# -------- Terminal ----------------------
 zsh
 terminator
 ranger
 feh
 vim
-vlc
-meld
+
+# -------- Programming -------------------
+texlive-full
+ruby
+git
+python3.6
+python-virtualenv
+python-pip
+qtcreator
+oracle-java9-installer
+neo4j
+gradle
+
+# -------- Android -----------------------
+android-tools-adb
+android-tools-fastboot
+
+# -------- Browser -----------------------
+icedtea-plugin
+chromium-browser
+
+# -------- Media tools -------------------
 pinta
 kazam
 openshot
 scrot
-redshift
-ruby
-git
-python
-grive
-oracle-java9-installer
-neo4j
-git
-python-virtualenv
-qt4-designer
-python-pip
-gradle
-pavucontrol
+audacity
 musescore

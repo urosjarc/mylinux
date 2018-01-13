@@ -46,13 +46,9 @@ echo '\n...VERSION CONTROL SYSTEM...\n'
 mkdir ~/vcs
 git clone https://github.com/urosjarc/mylinux.git ~/vcs/mylinux
 git clone https://github.com/urosjarc/jetbrains.git ~/vcs/jetbrains
-
-
-
-echo '\n...GOOGLE DRIVE FILE SYSTEM...\n'
-mkdir ~/gdrive
-cd ~/gdrive
-grive --auth --progress-bar
+git clone https://github.com/urosjarc/diary.git ~/vcs/diary
+git clone https://github.com/urosjarc/wallet.git ~/vcs/wallet
+git clone https://github.com/urosjarc/heart.git ~/vcs/heart
 
 
 
