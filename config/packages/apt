@@ -22,7 +22,6 @@ arandr
 redshift
 xbacklight
 classicmenu-indicator
-indicator-brightness
 
 # -------- Terminal ----------------------
 zsh
@@ -32,16 +31,14 @@ feh
 vim
 
 # -------- Programming -------------------
-texlive-full
+# texlive-full
 ruby
 git
 python3.6
 python-virtualenv
 python-pip
 qtcreator
-oracle-java9-installer
 neo4j
-gradle
 
 # -------- Android -----------------------
 android-tools-adb
