@@ -23,7 +23,6 @@ export NVM_DIR="$HOME/.nvm"
 #My settings
 printf '\n ---> WELLCOME UROS :)\n'
 {
-    export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
 
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_rsa_github

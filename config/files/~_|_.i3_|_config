@@ -150,7 +150,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightne
 bindsym $mod+Ctrl+l exec ~/.i3/i3lock-fancy-multimonitor/lock
 
 # Background
-exec feh --randomize --bg-scale ~/vcs/mylinux/background/*
+exec feh --randomize --bg-scale ~/.i3/background/*
 
 # POST EXECUTE
 exec pactl set-sink-mute 1 0
