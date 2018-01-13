@@ -160,4 +160,4 @@ exec classicmenu-indicator
 exec nm-applet
 
 exec notify-send -u low -i face-laugh 'Welcome back. Master!'
-exec play -q ~.i3/bell.mp3
+exec cvlc ~/.i3/bell.mp3 &
