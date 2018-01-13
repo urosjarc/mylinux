@@ -14,6 +14,7 @@ Options:
 """
 
 try:
+    import shutil
     from libs import *
     import os
     from pylint import epylint as lint
@@ -61,6 +62,7 @@ try:
         elif args['config']:
             exitIfsudoIsNotNone()
             files()
+            copy('background', '~/.i3/background')
 
         elif args['lint']:
             lint.py_run('"make"')

@@ -1,5 +1,21 @@
+import shutil
+import os
+import errno
+
 _mode = 0700  # Owner can r,w,x
 
+def copy(src, dest):
+    try:
+	src = src.replace('~', os.path.expanduser('~'))
+	dest = dest.replace('~',os.path.expanduser("~"))
+	print(dest)
+        shutil.copytree(src, dest)
+    except OSError as e:
+        # If the error was caused because the source wasn't a directory
+        if e.errno == errno.ENOTDIR:
+            shutil.copy(src, dest)
+        else:
+            print('Directory not copied. Error: %s' % e)
 
 def _getAptPackages(cache):
 	packages = []
@@ -242,6 +258,7 @@ def files():
 			if not os.path.exists(fileDir):
 				try:
 					original_umask = os.umask(0)
+					print(fileDir)
 					os.makedirs(fileDir, _mode)
 				finally:
 					os.umask(original_umask)
