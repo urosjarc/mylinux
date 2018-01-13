@@ -14,8 +14,6 @@ def copy(src, dest):
         # If the error was caused because the source wasn't a directory
         if e.errno == errno.ENOTDIR:
             shutil.copy(src, dest)
-        else:
-            print('Directory not copied. Error: %s' % e)
 
 def _getAptPackages(cache):
 	packages = []
