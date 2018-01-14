@@ -1,3 +1,0 @@
-exec cvlc --play-and-exit ~/.i3/bell.mp3 &
-exec while true; do sleep 240; cvlc --play-and-exit ~/.i3/bell.mp3 &; done &
-exec while true; do sleep 1800; cvlc --play-and-exit ~/.i3/bells.mp3 &; done &

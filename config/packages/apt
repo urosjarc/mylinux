@@ -20,7 +20,6 @@ i3
 # -------- Display -----------------------
 arandr
 redshift
-xbacklight
 classicmenu-indicator
 
 # -------- Terminal ----------------------
