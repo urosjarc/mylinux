@@ -164,3 +164,7 @@ exec notify-send -u low -i face-laugh 'Welcome back. Master!'
 
 # Init mindfulness
 exec cvlc --play-and-exit ~/.i3/bell.mp3 &
+
+# Keybindings
+bindsym $mod+Ctrl+u exec setxkbmap us
+bindsym $mod+Ctrl+s exec setxkbmap si
