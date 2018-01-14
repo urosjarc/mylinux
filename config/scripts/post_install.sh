@@ -47,11 +47,6 @@ git clone https://github.com/urosjarc/wallet.git ~/vcs/wallet
 git clone https://github.com/urosjarc/heart.git ~/vcs/heart
 
 
-echo '\n...GOOGLE CLOUD...\n'
-curl https://sdk.cloud.google.com | bash
-. ~/.bashrc
-gcloud auth application-default login
-
 
 echo '\n...SET AUTHOR PERMISSIONS...\n'
 sudo chown -R urosjarc: ~
