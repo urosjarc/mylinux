@@ -30,12 +30,11 @@ feh
 vim
 
 # -------- Programming -------------------
-# texlive-full
+texlive-full
 ruby
 git
 python3.6
-python-virtualenv
-python-pip
+python3.6-dev
 qtcreator
 neo4j
 

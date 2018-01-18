@@ -9,12 +9,11 @@ echo '\n...SET KEYS...\n'
 sudo add-apt-repository ppa:yannubuntu/boot-repair	    -y
 sudo add-apt-repository ppa:phablet-team/tools          -y
 sudo add-apt-repository ppa:nilarimogard/webupd8	-y
-sudo add-apt-repository ppa:deadsnakes/ppa		-y
 
 echo '\n...UPGRADE MANAGERS...\n'
 
 sudo apt-get update
-pip install --upgrade pip
+pip3 install --upgrade pip3
 
 echo '\n...INSTALL NVM & NPM...\n'
 

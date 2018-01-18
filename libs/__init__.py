@@ -155,7 +155,7 @@ def pipReport():
 	print('\nPip report:\n')
 	table = []
 	for packageName in _getPipPackages():
-		output = subprocess.Popen(('pip show ' + packageName).split(), stdout=subprocess.PIPE).communicate()[0]
+		output = subprocess.Popen(('pip3 show ' + packageName).split(), stdout=subprocess.PIPE).communicate()[0]
 		if output == '' or output.isspace():
 			version = 'None'
 		else:

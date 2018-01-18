@@ -1,11 +1,11 @@
 echo "\nInstalling apt dependencies...\n"
-sudo apt-get -y install python-apt python-pip curl
+sudo apt-get -y install python3.6-dev curl
 
 echo "\nUpgrade pip...\n"
-pip install --upgrade pip
+pip3 install --upgrade pip3
 
 echo "\nInstalling pip dependencies...\n"
-sudo pip install pylint docopt tabulate
+sudo pip3 install pylint docopt tabulate
 
 
 echo "\nInstalling node dependencies...\n"
