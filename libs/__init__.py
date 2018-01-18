@@ -2,18 +2,20 @@ import shutil
 import os
 import errno
 
-_mode = 0700  # Owner can r,w,x
+_mode = 0o700  # Owner can r,w,x
+
 
 def copy(src, dest):
-    try:
-	src = src.replace('~', os.path.expanduser('~'))
-	dest = dest.replace('~',os.path.expanduser("~"))
-	print(dest)
-        shutil.copytree(src, dest)
-    except OSError as e:
-        # If the error was caused because the source wasn't a directory
-        if e.errno == errno.ENOTDIR:
-            shutil.copy(src, dest)
+	try:
+		src = src.replace('~', os.path.expanduser('~'))
+		dest = dest.replace('~', os.path.expanduser("~"))
+		print(dest)
+		shutil.copytree(src, dest)
+	except OSError as e:
+		# If the error was caused because the source wasn't a directory
+		if e.errno == errno.ENOTDIR:
+			shutil.copy(src, dest)
+
 
 def _getAptPackages(cache):
 	packages = []

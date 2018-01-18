@@ -67,16 +67,17 @@ class Utils(object):
 	def openBrowser(url):
 		Shell.cmd(['sensible-browser', url])
 
+
 class Android(object):
 	apps = [
 		'com.andymstone.metronome',
 		'com.audible.application',
 		'com.evgeniysharafan.tabatatimer',
 		'com.ijinshan.kbackup',
-		'com.urbandroid.lux', #Dimmer
+		'com.urbandroid.lux',  # Dimmer
 		'hai.lior.ukaleletunerfree',
 		'ws.appdev.android.rotation2',
-		'com.google.android.apps.adm', #Mobile tracker
+		'com.google.android.apps.adm',  # Mobile tracker
 		'com.google.android.apps.inbox',
 		'si.izum.mcobiss',
 		'com.google.android.calendar',
@@ -130,4 +131,3 @@ if __name__ == '__main__':
 
 		if args['install']:
 			android.installPackages()
-
