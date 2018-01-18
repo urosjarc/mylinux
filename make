@@ -71,8 +71,8 @@ try:
 
 
 except KeyError as err:
-	print('ERROR: ' + err.message)
+	print('ERROR: ' + str(err))
 
 except ImportError as err:
-	print('ERROR: ' + err.message)
+	print('ERROR: ' + str(err))
 	init()

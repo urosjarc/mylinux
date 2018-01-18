@@ -1,8 +1,6 @@
 echo "\nInstalling apt dependencies...\n"
 sudo apt-get -y install python3.6-dev curl
 
-echo "\nUpgrade pip...\n"
-pip3 install --upgrade pip3
 
 echo "\nInstalling pip dependencies...\n"
 sudo pip3 install pylint docopt tabulate

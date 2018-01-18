@@ -287,7 +287,7 @@ def init():
 	sys.stdout.write("\x1b]2;Linux manager: init\x07")
 	print('\nStart init...\n')
 
-	if 'y' == raw_input('Do you want setup linux? (y/n): '):
+	if 'y' == input('Do you want setup linux? (y/n): '):
 		call("sh ./config/scripts/init.sh".split())
 
 

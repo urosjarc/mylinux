@@ -13,7 +13,6 @@ sudo add-apt-repository ppa:nilarimogard/webupd8	-y
 echo '\n...UPGRADE MANAGERS...\n'
 
 sudo apt-get update
-pip3 install --upgrade pip3
 
 echo '\n...INSTALL NVM & NPM...\n'
 
