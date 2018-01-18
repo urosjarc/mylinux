@@ -169,5 +169,5 @@ exec cvlc --play-and-exit ~/.i3/bell.mp3 &
 bindsym $mod+Ctrl+u exec setxkbmap us
 bindsym $mod+Ctrl+s exec setxkbmap si
 
-nohup watch -n 1800 cvlc --play-and-exit /home/urosjarc/.i3/bell.mp3 &>/dev/null &
-nohup watch -n 240 cvlc --play-and-exit /home/urosjarc/.i3/bells.mp3 &>/dev/null &
+exec nohup watch -n 1800 cvlc --play-and-exit /home/urosjarc/.i3/bell.mp3 &>/dev/null &
+exec nohup watch -n 240 cvlc --play-and-exit /home/urosjarc/.i3/bells.mp3 &>/dev/null &
