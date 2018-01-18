@@ -1,0 +1,3 @@
+nohup slack &>/dev/null &
+nohup chromium-browser &>/dev/null &
+nohup pycharm &>/dev/null &
