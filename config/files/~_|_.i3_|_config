@@ -125,8 +125,8 @@ mode "resize" {
 bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
         bindsym $mod+r exec reboot
-        bindsym $mod+l exec sleep 0.5 && notify-send -u low -i face-laugh 'Good bye. Master!' && sleep 2.2 && i3-msg exit
-        bindsym $mod+p exec sleep 0.5 && notify-send -u low -i face-laugh 'Good bye. Master!' && sleep 2.2 && poweroff
+        bindsym $mod+l exec i3-msg exit
+        bindsym $mod+p exec poweroff
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -169,6 +169,6 @@ exec cvlc --play-and-exit ~/.i3/sounds/login.mp3 &
 bindsym $mod+Ctrl+u exec setxkbmap us
 bindsym $mod+Ctrl+s exec setxkbmap si
 
-exec nohup watch -n 5 cvlc --play-and-exit /home/urosjarc/.i3/sounds/login.mp3 &>/dev/null &
-exec nohup watch -n 1800 cvlc --play-and-exit /home/urosjarc/.i3/sounds/bell.mp3 &>/dev/null &
-exec nohup watch -n 240 cvlc --play-and-exit /home/urosjarc/.i3/sounds/bells.mp3 &>/dev/null &
+exec nohup watch -n 1 cvlc --play-and-exit /home/urosjarc/.i3/sounds/login.mp3 &>/dev/null &
+exec nohup watch -n 1800 cvlc --play-and-exit /home/urosjarc/.i3/sounds/break_big.mp3 &>/dev/null &
+exec nohup watch -n 240 cvlc --play-and-exit /home/urosjarc/.i3/sounds/break_small.mp3 &>/dev/null &
