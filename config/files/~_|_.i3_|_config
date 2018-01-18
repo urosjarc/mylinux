@@ -168,7 +168,3 @@ exec cvlc --play-and-exit ~/.i3/sounds/login.mp3 &
 # Keybindings
 bindsym $mod+Ctrl+u exec setxkbmap us
 bindsym $mod+Ctrl+s exec setxkbmap si
-
-exec nohup watch -n 1 cvlc --play-and-exit /home/urosjarc/.i3/sounds/login.mp3 &>/dev/null &
-exec nohup watch -n 1800 cvlc --play-and-exit /home/urosjarc/.i3/sounds/break_big.mp3 &>/dev/null &
-exec nohup watch -n 240 cvlc --play-and-exit /home/urosjarc/.i3/sounds/break_small.mp3 &>/dev/null &
