@@ -29,3 +29,10 @@ printf '\n ---> WELLCOME UROS :)\n'
     ssh-add ~/.ssh/id_rsa_bitbucket
 
 } &> /dev/null
+
+#SHORTCUTS
+alias dc='docker-compose'
+alias dc-logs='dc logs --tail=100 -f'
+alias dc-stats='dc ps | grep Up | cut -d" " -f1 | tr "\\n" " " | xargs docker stats'
+alias dc-build='dc down && docker volume rm mab_build-artifacts || true && dc build'
+alias dc-up='dc up -d ads cache compiler dev-proxy dev-storage deviceinfo garbage-collector geo geoip hub rule-evaluator thumbnail-updater tracker video weather'
