@@ -160,11 +160,10 @@ exec classicmenu-indicator
 exec nm-applet
 
 # Start initilizacion
-exec notify-send -u low -i face-laugh 'Welcome back. Master!'
-
-# Init mindfulness
 exec cvlc --play-and-exit ~/.i3/sounds/login.mp3 &
 
 # Keybindings
 bindsym $mod+Ctrl+u exec setxkbmap us
 bindsym $mod+Ctrl+s exec setxkbmap si
+
+exec gnome-terminal -x sh -c 'nohup onlogin' > /dev/null 2>&1&
