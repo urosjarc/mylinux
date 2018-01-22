@@ -166,4 +166,5 @@ exec cvlc --play-and-exit ~/.i3/sounds/login.mp3 &
 bindsym $mod+Ctrl+u exec setxkbmap us
 bindsym $mod+Ctrl+s exec setxkbmap si
 
-exec gnome-terminal -x sh -c 'nohup onlogin' > /dev/null 2>&1&
+
+exec gnome-terminal -x sh -c 'nohup mindfulness' > /dev/null 2>&1&
