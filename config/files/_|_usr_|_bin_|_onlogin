@@ -1,4 +1,7 @@
+#!/usr/bin/env bash
 #Applications
+
+xrandr --output VGA-1 --off --output eDP-1 --off --output LVDS-1 --off --output DP-3 --mode 3840x2160 --pos 3840x0 --rotate left --output DP-2 --primary --mode 3840x2160 --pos 0x0 --rotate normal --output DP-1 --off
 
 nohup slack > /dev/null 2>&1&
 nohup chromium-browser > /dev/null 2>&1&
