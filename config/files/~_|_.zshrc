@@ -31,6 +31,7 @@ printf '\n ---> WELLCOME UROS :)\n'
 } &> /dev/null
 
 #SHORTCUTS
+alias adjack="docker start adjack -ai"
 alias dc='docker-compose'
 alias dc-logs='dc logs --tail=100 -f'
 alias dc-stats='dc ps | grep Up | cut -d" " -f1 | tr "\\n" " " | xargs docker stats'
