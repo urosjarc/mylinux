@@ -35,6 +35,7 @@ ruby
 git
 python3.6
 python3.6-dev
+python3.6-venv
 qtcreator
 neo4j
 
