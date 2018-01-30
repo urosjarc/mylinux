@@ -18,6 +18,10 @@ pushd ~/.APPS/light
 popd
 
 
+echo '\n...NGROK...\n'
+wget -O ~/Downloads/ngrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+unzip ~/Downloads/ngrok.zip -d ~/.APPS/ngrok
+
 echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
 wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2017.3.2.tar.gz
