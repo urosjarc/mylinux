@@ -65,9 +65,10 @@ class Utils(object):
 
 	@staticmethod
 	def openBrowser(url):
-		Shell.cmd(['sensible-browser', url])
+		Shell.cmd(['chromium-browser', url])
 
 
+class Android(object):
 	apps = [
 		'com.andymstone.metronome',
 		'com.audible.application',
@@ -79,7 +80,6 @@ class Utils(object):
 		'si.izum.mcobiss',
 		'ws.appdev.android.rotation2'
 	]
-class Android(object):
 
 	def __init__(self):
 		Shell.cmdWait('sudo adb stop-server', catchErr=True)
