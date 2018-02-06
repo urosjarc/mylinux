@@ -58,4 +58,3 @@ git clone https://github.com/urosjarc/heart.git ~/vcs/heart
 
 echo '\n...SET AUTHOR PERMISSIONS...\n'
 sudo chown -R urosjarc: ~
-ulimit -s unlimited
