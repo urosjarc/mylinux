@@ -11,11 +11,11 @@ sudo chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
 
 echo '\n...LIGHT...\n'
 git clone https://github.com/haikarainen/light ~/.APPS/light
-pushd ~/.APPS/light
+cd ~/.APPS/light
 	sudo apt-get install help2man -y
 	sudo make
 	sudo make install
-popd
+cd ~
 
 
 echo '\n...TAR INSTALL...\n'
@@ -45,11 +45,10 @@ rm -rf ~/Documents
 rm -rf ~/Pictures
 rm -rf ~/Templates
 rm -rf ~/examples.desktop
-
+mkdir ~/vcs
 
 
 echo '\n...VERSION CONTROL SYSTEM...\n'
-mkdir ~/vcs
 git clone https://github.com/urosjarc/mylinux.git ~/vcs/mylinux
 git clone https://github.com/urosjarc/jetbrains.git ~/vcs/jetbrains
 git clone https://github.com/urosjarc/wallet.git ~/vcs/wallet

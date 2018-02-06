@@ -1,5 +1,5 @@
 echo "\nInstalling apt dependencies...\n"
-sudo apt-get -y install python3.6-dev curl
+sudo apt-get -y install python3-pip curl
 
 
 echo "\nInstalling pip dependencies...\n"
