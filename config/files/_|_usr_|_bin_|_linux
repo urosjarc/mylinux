@@ -73,10 +73,10 @@ class Android(object):
 		'com.andymstone.metronome',
 		'com.audible.application',
 		'com.contapps.android',
-		'com.evgeniysharafan.tabatatimer',
 		'com.google.android.apps.adm',
 		'com.urbandroid.lux',
 		'hai.lior.ukaleletunerfree',
+		'org.catfantom.multitimerfree',
 		'si.izum.mcobiss',
 		'ws.appdev.android.rotation2'
 	]
