@@ -156,7 +156,7 @@ bindsym $mod+Ctrl+l exec ~/.i3/i3lock-fancy-multimonitor/lock
 
 # Starting initilizacion
 exec feh --randomize --bg-scale ~/.i3/background/*
-exec pactl set-sink-mute 1 0
+exec pactl set-sink-mute @DEFAULT_SINK@ 0
 exec xset m 100 3 && xset r rate 180 50
 exec classicmenu-indicator
 exec nm-applet
