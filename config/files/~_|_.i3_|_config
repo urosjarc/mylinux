@@ -161,4 +161,3 @@ exec xset m 100 3 && xset r rate 180 50
 exec classicmenu-indicator
 exec nm-applet
 exec cvlc --play-and-exit ~/.i3/sounds/login.mp3 &
-exec gnome-terminal -x sh -c 'nohup mindfulness > /dev/null 2>&1 &' > /dev/null 2>&1 &
