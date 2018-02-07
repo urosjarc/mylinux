@@ -33,9 +33,10 @@ vim
 texlive-full
 ruby
 git
-python3.6
-python3.6-dev
-python3.6-venv
+python3.7
+python3.7-dev
+python3.7-venv
+python3-kivy
 qtcreator
 neo4j
 
