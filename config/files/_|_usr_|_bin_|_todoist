@@ -15,16 +15,17 @@ def tree(rootTasks, allTasks, level=0):
 	rootTasks = sorted(sorted(rootTasks, key=lambda task: task['day_order']), key=lambda task: task['all_day'])
 	level += 1
 	for i, rootT in enumerate(rootTasks):
-		print(' - '*(level-1) + rootT['content'])
+		print(' - ' * (level - 1) + rootT['content'])
 		childs = []
 		for task in allTasks:
 			if rootT['id'] == task['parent_id']:
 				childs.append(task)
 
-		rootT['children'] = tree(sorted(childs, key=lambda task: task['item_order']), allTasks,level)
+		rootT['children'] = tree(sorted(childs, key=lambda task: task['item_order']), allTasks, level)
 		for child in rootT['children']:
-			print(' - '*level + child['content'])
+			print(' - ' * level + child['content'])
 	return rootTasks
+
 
 def get_todays_tasks():
 	"""
