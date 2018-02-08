@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-cd ~/.APPS/kivy-designer
-python2 -m designer

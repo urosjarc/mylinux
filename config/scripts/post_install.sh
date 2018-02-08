@@ -18,8 +18,8 @@ cd ~/.APPS/light
 cd ~
 
 echo '\n...KIVY DESIGNER...\n'
-git clone https://github.com/kivy/kivy-designer ~/.APPS/kivy-designer
-sudo pip install -Ur ~/.APPS/kivy-designer/requirements.txt
+sudo pip install -U Cython
+sudo pip install git+https://github.com/kivy/kivy-designer
 garden install xpopup
 
 
