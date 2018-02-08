@@ -17,6 +17,11 @@ cd ~/.APPS/light
 	sudo make install
 cd ~
 
+echo '\n...KIVY DESIGNER...\n'
+git clone https://github.com/kivy/kivy-designer ~/.APPS/kivy-designer
+sudo pip install -Ur ~/.APPS/kivy-designer/requirements.txt
+garden install xpopup
+
 
 echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
