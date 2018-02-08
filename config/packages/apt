@@ -37,6 +37,7 @@ python3.7
 python3.7-dev
 python3.7-venv
 python3-kivy
+mesa-common-dev
 qtcreator
 neo4j
 
