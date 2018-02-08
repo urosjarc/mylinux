@@ -63,3 +63,6 @@ git clone https://github.com/urosjarc/heart.git ~/vcs/heart
 
 echo '\n...SET AUTHOR PERMISSIONS...\n'
 sudo chown -R urosjarc: ~
+
+echo '\n!!! YOU SHOULD REBOOT SYSTEM !!!\n'
+
