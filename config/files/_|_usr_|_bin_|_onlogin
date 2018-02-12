@@ -4,7 +4,7 @@ xrandr --output VGA-1 --off --output eDP-1 --off --output LVDS-1 --off --output 
 
 nohup slack > /dev/null 2>&1&
 nohup chromium-browser --new-window > /dev/null 2>&1&
-nohup chromium-browser --new-window https://www.youtube.com/channel/UCUPn5IEQugMf_JeNJOV9p2A > /dev/null 2>&1&
+nohup chromium-browser --new-window https://www.youtube.com/watch?v=ddFvjfvPnqk > /dev/null 2>&1&
 nohup pycharm </dev/null > /dev/null 2>&1&
 
 exit
