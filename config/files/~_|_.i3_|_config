@@ -160,4 +160,5 @@ exec pactl set-sink-mute @DEFAULT_SINK@ 0
 exec xset m 100 3 && xset r rate 180 50
 exec classicmenu-indicator
 exec nm-applet
+exec blueman-applet
 exec cvlc --play-and-exit ~/.i3/sounds/login.mp3 &
