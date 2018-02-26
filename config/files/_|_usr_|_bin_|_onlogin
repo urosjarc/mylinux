@@ -2,9 +2,9 @@
 
 xrandr --output VGA-1 --off --output eDP-1 --off --output LVDS-1 --off --output DP-3 --mode 3840x2160 --pos 2160x0 --rotate left --output DP-2 --primary --mode 3840x2160 --pos 0x0 --rotate left --output DP-1 --off
 
-slack &&
-chromium-browser --new-window https://www.youtube.com/watch?v=ddFvjfvPnqk &&
-chromium-browser http://awakeningbell.org/ &&
-pycharm &&
+nohup slack </dev/null >/dev/null 2>&1 & # completely detached from terminal
+nohup chromium-browser --new-window https://www.youtube.com/watch?v=ddFvjfvPnqk </dev/null >/dev/null 2>&1 & # completely detached from terminal
+nohup chromium-browser http://awakeningbell.org/ </dev/null >/dev/null 2>&1 & # completely detached from terminal
+nohup pycharm </dev/null >/dev/null 2>&1 & # completely detached from terminal
 
 exit
