@@ -45,6 +45,7 @@ python3.7-dev
 python3.7-venv
 qtcreator
 neo4j
+android-studio
 
 # -------- Kivy dep ----------------------
 libsdl2-dev
