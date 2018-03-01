@@ -8,7 +8,6 @@ git clone https://github.com/guimeira/i3lock-fancy-multimonitor.git ~/.i3/i3lock
 sudo chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
 
 
-
 echo '\n...LIGHT...\n'
 git clone https://github.com/haikarainen/light ~/.APPS/light
 cd ~/.APPS/light
@@ -16,6 +15,7 @@ cd ~/.APPS/light
 	sudo make
 	sudo make install
 cd ~
+
 
 echo '\n...KIVY DESIGNER...\n'
 sudo pip install -U Cython
@@ -32,13 +32,15 @@ tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/gitkraken.tar.gz -C ~/.APPS
 
 
+echo '\n...HEROKU INSTALL...\n'
+sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
 
 echo '\n...SYSTEM CONFIG...\n'
 sudo grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
 sudo sysctl -p #Update inotify
 sudo update-alternatives --config x-www-browser
 sudo -u urosjarc -H sh -c "chsh -s $(which zsh)"
-
 
 
 echo '\n...UPDATE FILE SYSTEM...\n'
@@ -60,9 +62,9 @@ git clone https://github.com/urosjarc/wallet.git ~/vcs/wallet
 git clone https://github.com/urosjarc/heart.git ~/vcs/heart
 
 
-
 echo '\n...SET AUTHOR PERMISSIONS...\n'
 sudo chown -R urosjarc: ~
+
 
 echo '\n!!! YOU SHOULD REBOOT SYSTEM !!!\n'
 
