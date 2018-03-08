@@ -25,10 +25,9 @@ printf '\n ---> WELLCOME UROS :)\n'
 {
 
     eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/id_rsa_github
-    ssh-add ~/.ssh/id_rsa_bitbucket
+    ssh-add ~/.ssh/gitkraken_rsa
 
-} &> /dev/null
+} </dev/null >/dev/null 2>&1
 
 #SHORTCUTS
 alias adjack="docker start adjack -ai"
