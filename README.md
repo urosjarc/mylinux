@@ -2,7 +2,7 @@
 ==========
 Linux post installation helper for install and config. your custom linux system.
 
-##Tell me more!
+## Tell me more!
 
 After installing linux os you want to setup the programms that you will
 be using (window manager, terminal, vim, etc...). You can install and
@@ -11,7 +11,7 @@ over do it with [FAI (Fully Automatic Installation)](http://fai-project.org/)!
 I have try and fail, so I made my own "post installation helper for linux",
 to save and automate initial setup for my pimp-ed out linux system.
 
-##How it works?
+## How it works?
 
 **linux** is writen in python (default programming lang. for linux), so
 it should work out of the box for every linux os.
@@ -38,7 +38,7 @@ You can define all those things in scripts `post_install.sh` and `pre_install.sh
 that are located in `./config/scripts` directory. The script with the
 name `init.sh` is reserved for installing **linux** dependencies... 
 
-##OK, I let's try it out!
+## OK, I let's try it out!
 
 Hold your horses, and follow steps:
 
@@ -56,7 +56,7 @@ Hold your horses, and follow steps:
     ./linux report [ --apt --pip --npm --config ]
 ```
 
-##But what if **linux** fail to setup something?
+## But what if **linux** fail to setup something?
 
 For that purpouse **linux** has advance report system. After installation
 youst execute `./linux report` and you will see if every thing is setup
@@ -119,7 +119,7 @@ Apt report:
 ╘═══════════════════╧═══════════════════════════╧═════════════════════════════════════╧═════════════╧══════════╛
 ```
 
-##Is this all?
+## Is this all?
 
 I must to tell you one more thing! While the installation process will
 be in process you can follow additional information in the terminal title
