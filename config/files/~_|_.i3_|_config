@@ -161,3 +161,5 @@ exec xset m 100 3 && xset r rate 180 50
 exec classicmenu-indicator
 exec nm-applet
 exec blueman-applet
+exec upwork || notify-send -u critical "Upwork app could not be started!!!"
+
