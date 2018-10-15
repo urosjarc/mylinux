@@ -17,21 +17,22 @@ cd ~/.APPS/light
 cd ~
 
 
-echo '\n...KIVY DESIGNER...\n'
-sudo pip install -U Cython
-sudo pip install git+https://github.com/kivy/kivy-designer
-garden install xpopup
-
-
 echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
-wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2017.3.2.tar.gz
+wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2018.2.4.tar.gz
 wget -O ~/Downloads/intelij.tar.gz 	    https://download.jetbrains.com/idea/ideaIC-2018.2.4.tar.gz
 wget -O ~/Downloads/gitkraken.tar.gz    https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz
 
 tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/intelij.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/gitkraken.tar.gz -C ~/.APPS
+
+echo '\n...DEB INSTALL...\n'
+wget -O ~/Downloads/upwork.deb https://updates-desktopapp.upwork.com/binaries/v5_1_0_562_f3wgs5ljinabm69t/upwork_5.1.0.562_amd64.deb
+
+sudo dpkg -i upwork.deb
+
+sudo apt-get -f install
 
 
 echo '\n...HEROKU INSTALL...\n'
@@ -60,8 +61,6 @@ mkdir ~/vcs
 echo '\n...VERSION CONTROL SYSTEM...\n'
 git clone https://github.com/urosjarc/mylinux.git ~/vcs/mylinux
 git clone https://github.com/urosjarc/jetbrains.git ~/vcs/jetbrains
-git clone https://github.com/urosjarc/wallet.git ~/vcs/wallet
-git clone https://github.com/urosjarc/heart.git ~/vcs/heart
 
 
 echo '\n...SET AUTHOR PERMISSIONS...\n'

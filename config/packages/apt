@@ -47,20 +47,6 @@ qtcreator
 neo4j
 android-studio
 
-# -------- Kivy dep ----------------------
-libsdl2-dev
-libsdl2-image-dev
-libsdl2-mixer-dev
-libsdl2-ttf-dev
-libportmidi-dev
-libswscale-dev
-libavformat-dev
-libavcodec-dev
-zlib1g-dev
-libgstreamer1.0
-gstreamer1.0-plugins-base
-gstreamer1.0-plugins-good
-
 # -------- Android -----------------------
 android-tools-adb
 android-tools-fastboot
@@ -75,4 +61,3 @@ kazam
 openshot
 scrot
 audacity
-musescore

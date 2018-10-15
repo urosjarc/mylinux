@@ -7,4 +7,4 @@ sudo pip3 install pylint docopt tabulate
 
 
 echo "\nInstalling node dependencies...\n"
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | sudo bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | sudo bash
