@@ -7,7 +7,6 @@ sudo mv /tmp/neo4j.list /etc/apt/sources.list.d
 echo '\n...SET KEYS...\n'
 
 sudo add-apt-repository ppa:yannubuntu/boot-repair 		-y # Boot repair
-sudo add-apt-repository ppa:phablet-team/tools          	-y # Android tools: android-tools-adb android-tools-fastboot
 sudo add-apt-repository ppa:nilarimogard/webupd8		-y # Audacity
 sudo apt-add-repository ppa:maarten-fonville/android-studio  	-y # Android studio
 

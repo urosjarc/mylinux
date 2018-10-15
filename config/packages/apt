@@ -1,6 +1,5 @@
 # -------- Booting tools -----------------
 gparted
-winusb
 boot-repair
 unetbootin
 
