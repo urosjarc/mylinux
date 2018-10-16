@@ -68,4 +68,5 @@ sudo chown -R urosjarc: ~
 
 
 echo '\n!!! YOU SHOULD REBOOT SYSTEM !!!\n'
+echo '\n!!! YOU SHOULD UPDATE GRAPHIC DRIVERS (Software and Updates) !!!\n'
 
