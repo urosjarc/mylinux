@@ -1,2 +1,1 @@
-sudo chown -R root:urosjarc /dev/kvm
 sh /opt/android-studio/bin/studio.sh
