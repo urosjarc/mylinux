@@ -16,6 +16,7 @@ meld
 
 # -------- Linux environment -------------
 i3
+fonts-firacode
 
 # -------- Display -----------------------
 arandr
