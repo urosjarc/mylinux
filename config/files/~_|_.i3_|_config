@@ -148,8 +148,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 
 # Brightness controls
-bindsym XF86MonBrightnessUp exec light -A 1 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 1 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 1 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 1 # decrease screen brightness
 
 # Screen lock
 bindsym $mod+Ctrl+l exec ~/.i3/i3lock-fancy-multimonitor/lock
