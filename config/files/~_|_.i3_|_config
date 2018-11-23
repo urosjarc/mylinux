@@ -28,9 +28,13 @@ bar {
 
 }
 
-# Window size
+# Window setup
+workspace_layout stacking
+for_window [class=".*"] title_format " <b>%class</b> | %title"
+
 new_window none
 new_float none
+
 
 # Set modifier
 set $mod Mod4
@@ -161,7 +165,8 @@ for_window [instance="upwork"] floating enable
 exec sh ~/.i3/xrandr.sh
 exec feh --randomize --bg-scale ~/.i3/background/*
 exec pactl set-sink-mute @DEFAULT_SINK@ 0
-exec xset m 100 3 && xset r rate 180 50
+exec xset m 100 3
+exec xset r rate 180 50
 exec classicmenu-indicator
 exec nm-applet
 exec blueman-applet
