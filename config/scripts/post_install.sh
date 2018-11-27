@@ -8,15 +8,6 @@ git clone https://github.com/guimeira/i3lock-fancy-multimonitor.git ~/.i3/i3lock
 sudo chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
 
 
-echo '\n...LIGHT...\n'
-git clone https://github.com/haikarainen/light ~/.APPS/light
-cd ~/.APPS/light
-	sudo apt-get install help2man -y
-	sudo make
-	sudo make install
-cd ~
-
-
 echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
 wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2018.2.4.tar.gz
