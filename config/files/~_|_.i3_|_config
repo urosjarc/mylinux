@@ -159,6 +159,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5 -time 0 # decrease screen b
 bindsym $mod+Ctrl+l exec ~/.i3/i3lock-fancy-multimonitor/lock
 
 # Starting initilizacion
+exec setxkbmap -option "caps:swapescape"
 exec pactl set-sink-volume @DEFAULT_SINK@ 75%
 exec sh ~/.i3/xrandr.sh
 exec feh --randomize --bg-scale ~/.i3/background/*
