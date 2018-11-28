@@ -42,8 +42,8 @@ set $mod Mod4
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# Start dmenu (a program launcher)
-bindsym $mod+p exec dmenu_run
+# Start action (a program launcher)
+bindsym $mod+a exec dmenu_run
 
 # Close focused window
 bindsym $mod+c kill
@@ -63,10 +63,6 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# New created window split in dir
-bindsym $mod+Shift+Right split h
-bindsym $mod+Shift+Down split v
-
 # Enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
@@ -78,10 +74,6 @@ bindsym $mod+g layout toggle split
 # Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
-
-# Focus the parent container
-bindsym $mod+Up focus parent
-bindsym $mod+Down focus child
 
 # Switch to workspace
 bindsym $mod+1 workspace 1
@@ -108,12 +100,19 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # Reload the configuration / restart
-bindsym $mod+Shift+w reload
 bindsym $mod+Shift+r restart
 
 # Keybindings
-bindsym $mod+Ctrl+u exec setxkbmap us
-bindsym $mod+Ctrl+s exec setxkbmap si
+# Logout/reboot/poweroff
+bindsym $mod+Shift+m mode "Map (U)SA, (S)LOVENIAN"
+mode "Map (U)SA, (S)LOVENIAN" {
+	bindsym u exec setxkbmap us
+	bindsym s exec setxkbmap si
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -130,10 +129,10 @@ mode "resize" {
 
 # Logout/reboot/poweroff
 bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
-mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
-        bindsym $mod+r exec reboot
-        bindsym $mod+l exec i3-msg exit
-        bindsym $mod+p exec poweroff
+mode "Exit (l)ogout, (r)eboot, (p)oweroff" {
+        bindsym r exec reboot
+        bindsym l exec i3-msg exit
+        bindsym p exec poweroff
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
