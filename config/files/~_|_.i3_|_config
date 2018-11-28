@@ -46,7 +46,7 @@ floating_modifier $mod
 bindsym $mod+p exec dmenu_run
 
 # Close focused window
-bindsym $mod+Shift+c kill
+bindsym $mod+c kill
 
 #Mouse do not change focus :)
 focus_follows_mouse no
