@@ -1,0 +1,2 @@
+sh $(zenity --file-selection --filename=$HOME/.i3/layouts/)
+

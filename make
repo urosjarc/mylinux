@@ -63,6 +63,7 @@ try:
 			exitIfsudoIsNotNone()
 			files()
 			copy('background', '~/.i3/background')
+			copy('layouts', '~/.i3/layouts')
 
 		elif args['lint']:
 			lint.py_run('"make"')
