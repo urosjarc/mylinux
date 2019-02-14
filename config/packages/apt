@@ -47,6 +47,10 @@ android-tools-fastboot
 icedtea-plugin
 chromium-browser
 
+# -------- Plugins -----------------------
+adobe-flashplugin
+browser-plugin-freshplayer-pepperflash
+
 # -------- Media tools -------------------
 gimp
 kazam
