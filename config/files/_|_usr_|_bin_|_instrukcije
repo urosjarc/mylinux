@@ -1,0 +1,14 @@
+#!/bin/bash
+
+mkdir -p ~/.local/share/googlecl
+mkdir -p export
+
+for f in *.mp4
+do
+        ffmpeg -i $f -vf crop=1088:608:0:656 -c:a copy export/$f
+done
+
+for f in *.mp4
+do
+        youtube-upload --title="Inštrukcije ${f:0:4}-${f:4:2}-${f:6:2} ${f:9:2}.${f:11:2}.${f:13:2}" export/$f
+done
