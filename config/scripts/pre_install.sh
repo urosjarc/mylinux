@@ -8,7 +8,7 @@ echo '\n...SET KEYS...\n'
 
 sudo add-apt-repository ppa:gezakovacs/ppa			-y                                  # Unetbootin
 sudo add-apt-repository ppa:yannubuntu/boot-repair 		-y                              # Boot repair
-sudo add-apt-repository ppa:nilarimogard/webupd8		-y                              # Audacity
+sudo add-apt-repository ppa:nilarimogard/webupd8		-y                              # Audacity, woeusb
 sudo apt-add-repository ppa:maarten-fonville/android-studio  	-y                      # Android studio
 sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"  # Flash plugins (firefox, chrome)
 
