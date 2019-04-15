@@ -10,10 +10,14 @@ sudo chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
 
 echo '\n...TAR INSTALL...\n'
 mkdir -p ~/.APPS
-wget -O ~/Downloads/pycharm.tar.gz 	    https://download-cf.jetbrains.com/python/pycharm-community-2018.2.4.tar.gz
+
+
+wget -O ~/Downloads/intellij.tar.gz     https://download.jetbrains.com/idea/ideaIC-2019.1.tar.gz
+wget -O ~/Downloads/pycharm.tar.gz      https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz
 wget -O ~/Downloads/gitkraken.tar.gz    https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz
 
 tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
+tar -xf ~/Downloads/intellij.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/gitkraken.tar.gz -C ~/.APPS
 
 echo '\n...DEB INSTALL...\n'

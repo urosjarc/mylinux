@@ -33,8 +33,7 @@ vim
 
 # -------- Programming -------------------
 git
-openjfx-source
-#texlive-full
+texlive-full
 ruby
 neo4j
 openjfx-source
