@@ -13,6 +13,7 @@ pulseaudio-module-bluetooth
 # -------- System admin ------------------
 wireshark
 meld
+filezilla
 
 # -------- Linux environment -------------
 i3
