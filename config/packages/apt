@@ -23,6 +23,7 @@ arandr
 redshift
 classicmenu-indicator
 blueman
+xbacklight
 
 # -------- Terminal ----------------------
 zsh
