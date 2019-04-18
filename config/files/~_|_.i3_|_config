@@ -171,6 +171,3 @@ exec feh --randomize --bg-scale ~/.i3/background/*
 exec classicmenu-indicator
 exec nm-applet
 exec blueman-applet
-
-# for_window [instance="upwork"] floating enable
-# exec --no-startup-id upwork || notify-send -u critical "Upwork app could not be started!!!"
