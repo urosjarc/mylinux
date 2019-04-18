@@ -20,13 +20,6 @@ tar -xf ~/Downloads/pycharm.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/intellij.tar.gz -C ~/.APPS
 tar -xf ~/Downloads/gitkraken.tar.gz -C ~/.APPS
 
-echo '\n...DEB INSTALL...\n'
-wget -O ~/Downloads/upwork.deb https://updates-desktopapp.upwork.com/binaries/v5_1_0_562_f3wgs5ljinabm69t/upwork_5.1.0.562_amd64.deb
-
-sudo dpkg -i ~/Downloads/upwork.deb
-
-sudo apt-get -f install
-
 
 echo '\n...HEROKU INSTALL...\n'
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
