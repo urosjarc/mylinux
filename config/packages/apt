@@ -37,6 +37,7 @@ git
 texlive-full
 ruby
 neo4j
+python3-venv
 openjfx-source
 android-studio
 
