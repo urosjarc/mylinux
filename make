@@ -1,10 +1,9 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 """
 Description:
     Linux post installation helper.
 
 Usage:
-    make lint
     make install
     make config
     make report [ --apt --pip --gem --npm --config ]
@@ -17,7 +16,6 @@ try:
 	import shutil
 	from libs import *
 	import os
-	from pylint import epylint as lint
 	from subprocess import call
 	from docopt import docopt
 	from apt.cache import LockFailedException
@@ -31,7 +29,7 @@ try:
 			aptInstall()
 			gemInstall()
 			pipInstall()
-			# npmInstall()
+			npmInstall()
 			post_install()
 			print('\n > Linux installation finish.')
 
@@ -64,12 +62,6 @@ try:
 			files()
 			copy('background', '~/.i3/background')
 			copy('layouts', '~/.i3/layouts')
-
-		elif args['lint']:
-			lint.py_run('"make"')
-			lint.py_run('"libs"')
-			lint.py_run('"config/files/_|_usr_|_bin_|_linux"')
-
 
 except KeyError as err:
 	print('ERROR: ' + str(err))

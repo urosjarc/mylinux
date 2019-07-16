@@ -1,6 +1,5 @@
 # -------- Booting tools -----------------
 gparted
-woeusb
 boot-repair
 
 # -------- Sound tools -------------------
@@ -34,7 +33,7 @@ vim
 
 # -------- Programming -------------------
 git
-texlive-full
+#texlive-full
 ruby
 neo4j
 qt4-designer
@@ -47,7 +46,6 @@ android-tools-adb
 android-tools-fastboot
 
 # -------- Browser -----------------------
-icedtea-plugin
 chromium-browser
 
 # -------- Plugins -----------------------

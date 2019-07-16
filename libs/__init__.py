@@ -96,14 +96,13 @@ def aptInstall():
 
 
 def pipInstall():
-	import pip, sys
+	from subprocess import call
+	import sys
 
 	sys.stdout.write("\x1b]2;Linux pip manager: installing\x07")
 	print('\nStart pip update...\n')
 
-	for packageName in _getPipPackages():
-		pip.main(['install', packageName])
-
+	call(('sudo pip3 install ' + ' '.join(_getPipPackages())).split())
 	sys.stdout.write("\x1b]2;Linux pip manager: finished\x07")
 
 
@@ -114,7 +113,7 @@ def npmInstall():
 	sys.stdout.write("\x1b]2;Linux npm manager: installing\x07")
 	print('\nStart npm update...\n')
 
-	call(('sudo npm install -g ' + ' '.join(_getNpmPackages())).split())
+        call(('sudo npm install -g ' + ' '.join(_getNpmPackages())).split())
 	sys.stdout.write("\x1b]2;Linux npm manager: finished\x07")
 
 
