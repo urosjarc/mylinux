@@ -1,0 +1,32 @@
+SHELL:=/bin/bash
+.ONESHELL:
+.SILENT:
+
+PWD = $(shell pwd)
+NOW_DATE = $(shell date "+%Y-%m-%d %H:%M:%S")
+
+define PRINT_HELP_PYSCRIPT
+import re, sys
+for line in sys.stdin:
+	match = re.search(r'^### (.*) #', line)
+	if match:
+		target = match.group(1)
+		print(f"\n{target}")
+
+	match = re.search(r'^(\S+):(?:.*\#{2}\s*(.*))?', line)
+	if match:
+		target = match.group(1)
+		help = match.group(2)
+		help = '' if help is None else f'## {help}'
+		print("  {:20} {}".format(target, help))
+endef
+export PRINT_HELP_PYSCRIPT
+
+help:
+	@echo
+	@echo	"> PWD: $(PWD)"
+	@echo   "> DATE_NOW: $(NOW_DATE)"
+	@python3 -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
+	@echo
+
+.DEFAULT_GOAL := help

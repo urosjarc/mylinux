@@ -1,0 +1,16 @@
+define ERROR =
+	printf "\n${ERR} > $1\n\n${NC}"
+endef
+
+define INFO =
+	printf "\n${WARN} > $1\n\n${NC}"
+endef
+
+define IS_ROOT =
+	@if [[ $EUID -ne 0 ]]; then
+		$(call ERROR, This script must be run as root!)
+		@exit 1
+	fi
+endef
+
+
