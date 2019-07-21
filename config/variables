@@ -1,5 +1,6 @@
 # User info
 	USER = urosjarc
+	DOWNLOADS = /home/$(USER)/Downloads
 
 # Directory structure
 	DATA = data

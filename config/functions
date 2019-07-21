@@ -18,13 +18,14 @@ define IS_ROOT =
 endef
 
 define WGET_APP =
-	if [ ! -f ~/Downloads/$1 ]; then
-		wget -O ~/Downloads/$1 $2
-		tar -xf ~/Downloads/$1 -C ~/.APPS
+	if [ ! -f $(DOWNLOADS)/$1 ]; then
+		wget -O $(DOWNLOADS)/$1 $2
+		tar -xf $(DOWNLOADS)/$1 -C ~/.APPS
 	fi
+
 endef
 
-define CP_DOTFILES = 
+define CP_DOTFILES =
 	for fpath in data/dotfiles/*
 	do
 		newPath=$(echo $fpath | sed -e 's/^.*\///g' -e 's/_|_/\//g')
