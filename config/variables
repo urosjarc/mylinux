@@ -1,20 +1,21 @@
-# Directory structure
+# User info
+	USER = urosjarc
 
-DATA = data
-BACKGROUND = $(DATA)/background
-DOTFILES = $(DATA)/dotfiles
-LAYOUTS = $(DATA)/layouts
-PACKAGES = $(DATA)/packages
+# Directory structure
+	DATA = data
+	BACKGROUND = $(DATA)/background
+	DOTFILES = $(DATA)/dotfiles
+	LAYOUTS = $(DATA)/layouts
+	PACKAGES = $(DATA)/packages
 
 
 # Versions
-
-NVM = 'v0.34.0'
-
+	NVM = 'v0.34.0'
+	PYCHARM = '2019.1.1'
+	IDEA = '2019.1'
 
 # Colours
-
-NC=\x1b[0m
-OK=\x1b[32;01m
-ERR=\x1b[31;01m
-WARN=\x1b[33;01m
+	NC=\x1b[0m
+	OK=\x1b[32;01m
+	ERR=\x1b[31;01m
+	WARN=\x1b[33;01m

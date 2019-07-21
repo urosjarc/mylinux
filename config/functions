@@ -7,10 +7,25 @@ define INFO =
 endef
 
 define IS_ROOT =
-	@if [[ $EUID -ne 0 ]]; then
+	if [[ $EUID -ne 0 ]]; then
 		$(call ERROR, This script must be run as root!)
-		@exit 1
+		exit 1
 	fi
 endef
 
+define WGET_APP =
+	PATH = ~/Downloads/$1
+
+	if [ ! -f ~/Downloads/$1 ]; then
+		wget -O $PATH $2
+		tar -xf $PATH -C ~/.APPS	
+endef
+
+define CP_DOTFILES = 
+	for fpath in data/dotfiles/*
+	do
+		newPath=$(echo $fpath | sed -e 's/^.*\///g' -e 's/_|_/\//g')
+		cp $fpath $newPath
+	done
+endef
 
