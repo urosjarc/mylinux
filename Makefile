@@ -2,6 +2,16 @@ include config/utils
 include config/variables
 include config/functions
 
+IS_ROOT = $(shell id -u)
+ifneq ($(IS_ROOT), 0)
+$(error This script must be run as root)
+endif
+
+SUDO_HOME = $(shell sudo -H echo $(HOME))
+ifneq ($(SUDO_HOME), /home/$(USER))
+$(error SUDO_HOME "$(SUDO_HOME)" is not equal to "/home/$(USER)")
+endif
+
 .DEFAULT_GOAL := all
 .PHONY: data
 
@@ -28,14 +38,10 @@ setup-apt:
 setup-nvm:
 	$(call INFO, INSTALL NVM)
 		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
-		export NVM_DIR="$HOME/.nvm"
-		[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-		[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 
 	$(call INFO, SETUP EXE LINKS)
-		ln -sfn "$NVM_DIR/versions/node/$(nvm version)/bin/node" "/usr/local/bin/node"
-		ln -sfn "$NVM_DIR/versions/node/$(nvm version)/bin/npm" "/usr/local/bin/npm"
+		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/node') "/usr/local/bin/node"
+		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/npm') "/usr/local/bin/npm"
 
 #============================
 ### update ##################
@@ -65,19 +71,19 @@ update-apt:
 ### install #################
 #============================
 
-install: install-pip3 install-npm install-gem install-APPS install-apt
+install: install-pip3 install-npm install-APPS install-apt install-gem
 
 install-npm:
 	$(call INFO, INSTALL NPM PACKAGES)
-		npm install -g $(grep -vE "^\s*#" $(PACKAGES)/npm | tr "\n" " ")
+		$(call INSTALL,npm install -g,npm)
 
 install-pip3:
 	$(call INFO, INSTALL PIP3 PACKAGES)
-		sudo -u $(USER) pip3 install $(grep -vE "^\s*#" $(PACKAGES)/pip3 | tr "\n" " ")
+		$(call INSTALL,pip3 install,pip3)
 
 install-gem:
 	$(call INFO, INSTALL GEM PACKAGES)
-		gem install $(grep -vE "^\s*#" $(PACKAGES)/gem | tr "\n" " ")
+		$(call INSTALL,gem install,gem)
 
 install-APPS:
 	$(call INFO, CREATING .APPS DIR)
@@ -94,7 +100,7 @@ install-APPS:
 
 install-apt:
 	$(call INFO, INSTALL APT PACKAGES)
-		apt-get -y install $(grep -vE "^\s*#" $(PACKAGES)/apt | tr "\n" " ")
+		$(call INSTALL,apt-get -y install,apt)
 
 #============================
 ### post-install ############

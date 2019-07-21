@@ -8,7 +8,6 @@
 	LAYOUTS = $(DATA)/layouts
 	PACKAGES = $(DATA)/packages
 
-
 # Versions
 	NVM = 'v0.34.0'
 	PYCHARM = '2019.1.1'

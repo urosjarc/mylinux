@@ -1,3 +1,7 @@
+define INSTALL =
+	sudo -H $1 $(shell grep -vE "^\s*#" ./data/packages/$2 | tr "\n" " ")
+endef
+
 define ERROR =
 	printf "\n${ERR} > $1\n\n${NC}"
 endef
