@@ -18,11 +18,10 @@ define IS_ROOT =
 endef
 
 define WGET_APP =
-	PATH = ~/Downloads/$1
-
 	if [ ! -f ~/Downloads/$1 ]; then
-		wget -O $PATH $2
-		tar -xf $PATH -C ~/.APPS	
+		wget -O ~/Downloads/$1 $2
+		tar -xf ~/Downloads/$1 -C ~/.APPS
+	fi
 endef
 
 define CP_DOTFILES = 

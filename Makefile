@@ -90,13 +90,13 @@ install-APPS:
 		mkdir -p ~/.APPS
 
 	$(call INFO, INSTALL GITKRAKEN)
-		$(call WGET_APP, gitkraken.tar.gz	,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
+		$(call WGET_APP,gitkraken.tar.gz,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
 
 	$(call INFO, INSTALL INTELLIJ)
-		$(call WGET_APP, intellij.tar.gz	,https://download.jetbrains.com/idea/ideaIC-2019.1.tar.gz)
+		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-2019.1.tar.gz)
 
 	$(call INFO, INSTALL PYCHARM)
-		$(call WGET_APP, pycharm.tar.gz		,https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz)
+		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz)
 
 install-apt:
 	$(call INFO, INSTALL APT PACKAGES)
