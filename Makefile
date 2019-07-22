@@ -32,7 +32,7 @@ run-select: ##Select which targets you want to run.
 
 	$(MAKE) $${NAME}
 
-run-all: setup install update post-install post-setup data ##Run whole installation set.
+run-all: setup install update post-install post-setup data vcs ##Run whole installation set.
 
 #=====================================================================
 ### Setup requirements for installation procedures ###################
@@ -167,11 +167,6 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 		update-alternatives --config x-www-browser
 		sudo -u $(USER) -H sh -c "chsh -s $(which zsh)"
 
-	$(call INFO, POST SETUP VCS)
-		mkdir -p ~/vcs
-		git clone https://github.com/$(USER)/mylinux.git ~/vcs/mylinux
-		git clone https://github.com/$(USER)/jetbrains.git ~/vcs/jetbrains
-
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
 #=====================================================================
@@ -187,8 +182,23 @@ data: ##Setup i3 background, layouts, and dotfiles.
 	$(call INFO, COPY DOTFILES)
 		$(value CP_DOTFILES)
 
+#=====================================================================
+### Setup your own vcs ####################
+#=====================================================================
 
+vcs: vcs-setup vcs-jetbrains
 
+vcs-setup: ##Create vcs directory and clone repos.
+	
+	$(call INFO, POST SETUP VCS)
+		mkdir -p ~/vcs
+		git clone https://github.com/$(USER)/mylinux.git ~/vcs/mylinux
+		git clone https://github.com/$(USER)/jetbrains.git ~/vcs/jetbrains
+
+vcs-jetbrains: ##Install jetbrains repo.
+	
+	$(call INFO, POST SETUP JETBRAINS)
+		(cd ~/vcs/jetbrains && make install)
 
 
 
