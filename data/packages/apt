@@ -1,2 +1,60 @@
 # -------- Booting tools -----------------
 gparted
+boot-repair
+
+# -------- Sound tools -------------------
+ffmpeg
+libmp3lame0
+vlc
+pavucontrol
+pulseaudio-module-bluetooth
+
+# -------- System admin ------------------
+wireshark
+meld
+filezilla
+
+# -------- Linux environment -------------
+i3
+
+# -------- Display -----------------------
+arandr
+redshift
+classicmenu-indicator
+blueman
+xbacklight
+
+# -------- Terminal ----------------------
+zsh
+terminator
+ranger
+feh
+vim
+
+# -------- Programming -------------------
+git
+#texlive-full
+ruby
+neo4j
+qt4-designer
+python3-venv
+openjfx-source
+android-studio
+
+# -------- Android -----------------------
+android-tools-adb
+android-tools-fastboot
+
+# -------- Browser -----------------------
+chromium-browser
+
+# -------- Plugins -----------------------
+adobe-flashplugin
+browser-plugin-freshplayer-pepperflash
+
+# -------- Media tools -------------------
+gimp
+kazam
+openshot
+scrot
+audacity
