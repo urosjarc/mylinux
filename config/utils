@@ -11,14 +11,14 @@ for line in sys.stdin:
 	match = re.search(r'^### (.*) #', line)
 	if match:
 		target = match.group(1)
-		print(f"\n{target}")
+		print(f"\n{target}:")
 
-	match = re.search(r'^(\S+):(?:.*\#{2}\s*(.*))?', line)
+	match = re.search(r'^([^\.\s]+):(?:.*\#{2}\s*(.*))?', line)
 	if match:
 		target = match.group(1)
 		help = match.group(2)
 		help = '' if help is None else f'## {help}'
-		print("  {:20} {}".format(target, help))
+		print("  > {:20} {}".format(target, help))
 endef
 export PRINT_HELP_PYSCRIPT
 

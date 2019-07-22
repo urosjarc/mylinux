@@ -12,10 +12,14 @@ ifneq ($(SUDO_HOME), /home/$(USER))
 $(error SUDO_HOME "$(SUDO_HOME)" is not equal to "/home/$(USER)")
 endif
 
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := run-all
 .PHONY: data
 
-select: ##Select which targets you want to run.
+#==================================================================
+### Running whole installation procedure ##########################
+#==================================================================
+
+run-select: ##Select which targets you want to run.
 	
 	NAME=$(shell whiptail --title "Select target to install" --radiolist "Choose:" 20 30 15 \
 	  "setup" "" on \
@@ -28,11 +32,11 @@ select: ##Select which targets you want to run.
 
 	$(MAKE) $${NAME}
 
-all: setup install update post-install post-setup data ##Run whole installation set.
+run-all: setup install update post-install post-setup data ##Run whole installation set.
 
-#============================
-### setup ###################
-#============================
+#=====================================================================
+### Setup requirements for installation procedures ###################
+#=====================================================================
 
 setup: setup-apt setup-nvm
 
@@ -63,9 +67,9 @@ setup-APPS: ##Create .APPS directory.
 	$(call INFO, CREATING .APPS DIR)
 		mkdir -p ~/.APPS
 
-#============================
-### update ##################
-#============================
+#=====================================================
+### Update various package managers ##################
+#=====================================================
 
 update: update-pip3 update-npm update-gem update-apt
 
@@ -87,9 +91,9 @@ update-apt:
 		apt-get update
 
 
-#============================
-### install #################
-#============================
+#===========================================
+### Installation procedure #################
+#===========================================
 
 install: install-pip3 install-npm install-APPS install-apt install-gem
 install-APPS: install-gitkraken install-intellij install-pycharm
@@ -122,9 +126,9 @@ install-apt:
 	$(call INFO, INSTALL APT PACKAGES)
 		$(call INSTALL,apt-get -y install,apt)
 
-#============================
-### post-install ############
-#============================
+#============================================
+### Post installation procedures ############
+#============================================
 
 post-install: ##Install zsh, i3, heroku.
 	
@@ -139,9 +143,9 @@ post-install: ##Install zsh, i3, heroku.
 	$(call INFO, POST INSTALL HEROKU)
 		wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
-#============================
-### post-setup ##############
-#============================
+#====================================================
+### Post installation setup procedures ##############
+#====================================================
 
 post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 	
@@ -168,9 +172,9 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 		git clone https://github.com/$(USER)/mylinux.git ~/vcs/mylinux
 		git clone https://github.com/$(USER)/jetbrains.git ~/vcs/jetbrains
 
-#============================
-### data ####################
-#============================
+#=====================================================================
+### Setup and copy all dotfiles to home directory ####################
+#=====================================================================
 
 data: ##Setup i3 background, layouts, and dotfiles.
 	
