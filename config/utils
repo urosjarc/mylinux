@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 .ONESHELL:
-#.SILENT:
+.SILENT:
 
 PWD = $(shell pwd)
 NOW_DATE = $(shell date "+%Y-%m-%d %H:%M:%S")

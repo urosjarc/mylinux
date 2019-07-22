@@ -15,7 +15,20 @@ endif
 .DEFAULT_GOAL := all
 .PHONY: data
 
-all: setup install update post-install post-setup data
+select: ##Select which targets you want to run.
+	
+	NAME=$(shell whiptail --title "Select target to install" --radiolist "Choose:" 20 30 15 \
+	  "setup" "" on \
+	  "update" "" on \
+	  "install" "" on \
+	  "post-install" "" on \
+	  "post-setup" "" on \
+	  "data" "" on \
+	  3>&1 1>&2 2>&3)
+
+	$(MAKE) $${NAME}
+
+all: setup install update post-install post-setup data ##Run whole installation set.
 
 #============================
 ### setup ###################
@@ -23,7 +36,8 @@ all: setup install update post-install post-setup data
 
 setup: setup-apt setup-nvm
 
-setup-apt:
+setup-apt: ##Add all repositories to apt.
+	
 	$(call INFO, SETUP APT REPOS)
 		add-apt-repository -y ppa:yannubuntu/boot-repair						# Boot repair
 		add-apt-repository -y ppa:nilarimogard/webupd8							# Audacity, woeusb
@@ -35,13 +49,19 @@ setup-apt:
 		echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
 		mv /tmp/neo4j.list /etc/apt/sources.list.d
 
-setup-nvm:
+setup-nvm: ##Install NVM and setup soft links.
+	
 	$(call INFO, INSTALL NVM)
 		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
 
-	$(call INFO, SETUP EXE LINKS)
+	$(call INFO, SETUP SOFT LINKS)
 		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/node') "/usr/local/bin/node"
 		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/npm') "/usr/local/bin/npm"
+
+setup-APPS: ##Create .APPS directory.
+	
+	$(call INFO, CREATING .APPS DIR)
+		mkdir -p ~/.APPS
 
 #============================
 ### update ##################
@@ -72,6 +92,7 @@ update-apt:
 #============================
 
 install: install-pip3 install-npm install-APPS install-apt install-gem
+install-APPS: install-gitkraken install-intellij install-pycharm
 
 install-npm:
 	$(call INFO, INSTALL NPM PACKAGES)
@@ -85,16 +106,15 @@ install-gem:
 	$(call INFO, INSTALL GEM PACKAGES)
 		$(call INSTALL,gem install,gem)
 
-install-APPS:
-	$(call INFO, CREATING .APPS DIR)
-		mkdir -p ~/.APPS
-
+install-APPS-gitkraken:
 	$(call INFO, INSTALL GITKRAKEN)
 		$(call WGET_APP,gitkraken.tar.gz,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
 
+install-APPS-intellij:
 	$(call INFO, INSTALL INTELLIJ)
 		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-2019.1.tar.gz)
 
+install-APPS-pycharm:
 	$(call INFO, INSTALL PYCHARM)
 		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz)
 
@@ -106,7 +126,8 @@ install-apt:
 ### post-install ############
 #============================
 
-post-install:
+post-install: ##Install zsh, i3, heroku.
+	
 	$(call INFO, POST INSTALL ZSH TOOLS)
 		wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
 		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
@@ -122,12 +143,13 @@ post-install:
 ### post-setup ##############
 #============================
 
-post-setup:
+post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
+	
 	$(call INFO, SETUP INOTIFY)
 		grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
 		sysctl -p #Update inotify
 
-	$(call INFO, POST SETUP CLEANING)
+	$(call INFO, POST CLEANING HOME DIRECTORY)
 		rm -rf ~/Desktop
 		rm -rf ~/Music
 		rm -rf ~/Public
@@ -150,7 +172,8 @@ post-setup:
 ### data ####################
 #============================
 
-data:
+data: ##Setup i3 background, layouts, and dotfiles.
+	
 	$(call INFO, COPY BACKGROUND)
 		cp -r $(BACKGROUND) ~/.i3/background
 
