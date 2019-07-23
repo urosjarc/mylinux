@@ -38,7 +38,7 @@ run-all: setup install update post-install post-setup data vcs ##Run whole insta
 ### Setup requirements for installation procedures ###################
 #=====================================================================
 
-setup: setup-apt setup-nvm
+setup: setup-apt setup-npm setup-pip3 setup-dirs
 
 setup-apt: ##Add all repositories to apt.
 	
@@ -53,16 +53,27 @@ setup-apt: ##Add all repositories to apt.
 		echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
 		mv /tmp/neo4j.list /etc/apt/sources.list.d
 
-setup-nvm: ##Install NVM and setup soft links.
+setup-npm: ##Install NVM
 	
 	$(call INFO, INSTALL NVM)
-		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
+		wget -O- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
+		. ~/.nvm/nvm.sh
 
+	$(call INFO, INSTALL NODE LTS)
+		nvm install --lts
+
+	$(call INFO, UPGRADE NPM)
+		nvm install-latest-npm
+
+
+setup-pip3: ##Install pip3
+	$(call INFO, INSTALL PIP3)
+		apt-get -y install python3-pip
+
+setup-dirs:
 	$(call INFO, SETUP SOFT LINKS)
 		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/node') "/usr/local/bin/node"
 		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/npm') "/usr/local/bin/npm"
-
-setup-APPS: ##Create .APPS directory.
 	
 	$(call INFO, CREATING .APPS DIR)
 		mkdir -p ~/.APPS
@@ -96,7 +107,7 @@ update-apt:
 #===========================================
 
 install: install-pip3 install-npm install-APPS install-apt install-gem
-install-APPS: install-gitkraken install-intellij install-pycharm
+install-APPS: install-APPS-gitkraken install-APPS-intellij install-APPS-pycharm
 
 install-npm:
 	$(call INFO, INSTALL NPM PACKAGES)
@@ -133,7 +144,7 @@ install-apt:
 post-install: ##Install zsh, i3, heroku.
 	
 	$(call INFO, POST INSTALL ZSH TOOLS)
-		wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
+		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
 	$(call INFO, POST INSTALL I3 TOOLS)
@@ -141,7 +152,7 @@ post-install: ##Install zsh, i3, heroku.
 		chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
 
 	$(call INFO, POST INSTALL HEROKU)
-		wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+		wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 #====================================================
 ### Post installation setup procedures ##############
@@ -198,7 +209,7 @@ vcs-setup: ##Create vcs directory and clone repos.
 vcs-jetbrains: ##Install jetbrains repo.
 	
 	$(call INFO, POST SETUP JETBRAINS)
-		(cd ~/vcs/jetbrains && make install)
+		cd ~/vcs/jetbrains; make install
 
 
 
