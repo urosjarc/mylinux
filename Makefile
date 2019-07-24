@@ -188,7 +188,12 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 
 	$(call INFO, POST SETUP ALTERNATIVES)
 		update-alternatives --config x-www-browser
-		sudo chsh -s /bin/zsh $(USER)
+		update-alternatives --config x-terminal-emulator
+
+	$(call INFO, POST SETUP SHELL)
+		grep $(USER) /etc/passwd
+		usermod --shell $(shell which zsh) $(USER)
+		grep $(USER) /etc/passwd
 
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
