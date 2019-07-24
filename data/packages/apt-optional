@@ -1,0 +1,17 @@
+# -------- Sistem admin ----------------
+wireshark
+filezilla
+
+# -------- Programming ------------------
+neo4j
+openjfx-source
+qt4-designer
+
+
+# -------- Android -----------------------
+android-studio
+android-tools-adb
+android-tools-fastboot
+
+# -------- Latex -------------------------
+texlive-full

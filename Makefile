@@ -12,7 +12,7 @@ ifneq ($(SUDO_HOME), /home/$(USER))
 $(error SUDO_HOME "$(SUDO_HOME)" is not equal to "/home/$(USER)")
 endif
 
-.DEFAULT_GOAL := run-all
+.DEFAULT_GOAL := run-min
 .PHONY: data
 
 #==================================================================
@@ -21,18 +21,19 @@ endif
 
 run-select: ##Select which targets you want to run.
 	
-	NAME=$(shell whiptail --title "Select target to install" --radiolist "Choose:" 20 30 15 \
+	$(MAKE) $(shell whiptail --title "Select target to install" --checklist "Choose:" 20 30 15 \
 	  "setup" "" on \
-	  "update" "" on \
 	  "install" "" on \
+	  "install-opt" "" off \
+	  "update" "" on \
 	  "post-install" "" on \
 	  "post-setup" "" on \
 	  "data" "" on \
+	  "vcs" "" on \
 	  3>&1 1>&2 2>&3)
 
-	$(MAKE) $${NAME}
-
-run-all: setup install update post-install post-setup data vcs ##Run whole installation set.
+run-min: setup install		   update post-install post-setup data vcs ##Run minimalistic installation set
+run-all: setup install install-opt update post-install post-setup data vcs ##Run whole installation set.
 
 #=====================================================================
 ### Setup requirements for installation procedures ###################
@@ -43,6 +44,7 @@ setup: setup-apt setup-npm setup-pip3 setup-dirs
 setup-apt: ##Add all repositories to apt.
 	
 	$(call INFO, SETUP APT REPOS)
+		add-apt-repository -y ppa:danielrichter2007/grub-customizer					# Grub customizer
 		add-apt-repository -y ppa:yannubuntu/boot-repair						# Boot repair
 		add-apt-repository -y ppa:nilarimogard/webupd8							# Audacity, woeusb
 		add-apt-repository -y ppa:maarten-fonville/android-studio					# Android studio
@@ -52,6 +54,9 @@ setup-apt: ##Add all repositories to apt.
 		wget -O - https://debian.neo4j.org/neotechnology.gpg.key | apt-key add -
 		echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
 		mv /tmp/neo4j.list /etc/apt/sources.list.d
+
+	$(call INFO, SETUP APT DEPENDENCIES)
+		apt-get -y install curl git
 
 setup-npm: ##Install NVM
 	
@@ -82,8 +87,7 @@ setup-dirs:
 ### Update various package managers ##################
 #=====================================================
 
-update: update-pip3 update-npm update-gem update-apt
-
+update: update-npm update-pip3 update-gem update-apt
 
 update-npm:
 	$(call INFO, UPDATE NPM)
@@ -106,8 +110,7 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-pip3 install-npm install-APPS install-apt install-gem
-install-APPS: install-APPS-gitkraken install-APPS-intellij install-APPS-pycharm
+install: install-npm install-pip3 install-gem install-apt install-apps-gitkraken install-apps-pycharm
 
 install-npm:
 	$(call INFO, INSTALL NPM PACKAGES)
@@ -121,21 +124,27 @@ install-gem:
 	$(call INFO, INSTALL GEM PACKAGES)
 		$(call INSTALL,gem install,gem)
 
-install-APPS-gitkraken:
-	$(call INFO, INSTALL GITKRAKEN)
-		$(call WGET_APP,gitkraken.tar.gz,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
-
-install-APPS-intellij:
-	$(call INFO, INSTALL INTELLIJ)
-		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-2019.1.tar.gz)
-
-install-APPS-pycharm:
-	$(call INFO, INSTALL PYCHARM)
-		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz)
-
 install-apt:
 	$(call INFO, INSTALL APT PACKAGES)
 		$(call INSTALL,apt-get -y install,apt)
+
+install-apps-gitkraken:
+	$(call INFO, INSTALL GITKRAKEN)
+		$(call WGET_APP,gitkraken.tar.gz,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
+
+install-apps-pycharm:
+	$(call INFO, INSTALL PYCHARM)
+		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz)
+
+install-opt: install-apt-optional install-apps-intellij
+
+install-apt-optional:
+	$(call INFO, INSTALL APT PACKAGES)
+		$(call INSTALL,apt-get -y install,apt-optional)
+
+install-apps-intellij:
+	$(call INFO, INSTALL INTELLIJ)
+		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-2019.1.tar.gz)
 
 #============================================
 ### Post installation procedures ############
@@ -145,10 +154,10 @@ post-install: ##Install zsh, i3, heroku.
 	
 	$(call INFO, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
+		$(call GIT_CLONE,https://github.com/zsh-users/zsh-syntax-highlighting.git,~/.oh-my-zsh/plugins/zsh-syntax-highlighting)
 
 	$(call INFO, POST INSTALL I3 TOOLS)
-		git clone https://github.com/guimeira/i3lock-fancy-multimonitor.git ~/.i3/i3lock-fancy-multimonitor
+		$(call GIT_CLONE,https://github.com/guimeira/i3lock-fancy-multimonitor.git,~/.i3/i3lock-fancy-multimonitor)
 		chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
 
 	$(call INFO, POST INSTALL HEROKU)
@@ -159,6 +168,9 @@ post-install: ##Install zsh, i3, heroku.
 #====================================================
 
 post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
+
+	$(call INFO, POST SETUP CHOWN HOME DIR)
+		chown -R $(USER) /home/$(USER)
 	
 	$(call INFO, SETUP INOTIFY)
 		grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
@@ -176,7 +188,7 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 
 	$(call INFO, POST SETUP ALTERNATIVES)
 		update-alternatives --config x-www-browser
-		sudo -u $(USER) -H sh -c "chsh -s $(which zsh)"
+		sudo chsh -s /bin/zsh $(USER)
 
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
@@ -185,10 +197,10 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 data: ##Setup i3 background, layouts, and dotfiles.
 	
 	$(call INFO, COPY BACKGROUND)
-		cp -r $(BACKGROUND) ~/.i3/background
+		cp -r $(BACKGROUND) ~/.i3
 
 	$(call INFO, COPY LAYOUTS)
-		cp -r $(LAYOUTS) ~/.i3/layouts
+		cp -r $(LAYOUTS) ~/.i3
 
 	$(call INFO, COPY DOTFILES)
 		$(value CP_DOTFILES)
@@ -203,8 +215,8 @@ vcs-setup: ##Create vcs directory and clone repos.
 	
 	$(call INFO, POST SETUP VCS)
 		mkdir -p ~/vcs
-		git clone https://github.com/$(USER)/mylinux.git ~/vcs/mylinux
-		git clone https://github.com/$(USER)/jetbrains.git ~/vcs/jetbrains
+		$(call GIT_CLONE,https://github.com/$(USER)/mylinux.git,~/vcs/mylinux)
+		$(call GIT_CLONE,https://github.com/$(USER)/jetbrains.git,~/vcs/jetbrains)
 
 vcs-jetbrains: ##Install jetbrains repo.
 	

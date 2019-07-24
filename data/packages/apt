@@ -1,6 +1,7 @@
 # -------- Booting tools -----------------
 gparted
 boot-repair
+grub-customizer
 
 # -------- Sound tools -------------------
 ffmpeg
@@ -10,9 +11,8 @@ pavucontrol
 pulseaudio-module-bluetooth
 
 # -------- System admin ------------------
-wireshark
 meld
-filezilla
+curl
 
 # -------- Linux environment -------------
 i3
@@ -33,17 +33,8 @@ vim
 
 # -------- Programming -------------------
 git
-#texlive-full
-ruby
-neo4j
-qt4-designer
+ruby-dev
 python3-venv
-openjfx-source
-android-studio
-
-# -------- Android -----------------------
-android-tools-adb
-android-tools-fastboot
 
 # -------- Browser -----------------------
 chromium-browser

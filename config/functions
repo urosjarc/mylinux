@@ -17,6 +17,14 @@ define IS_ROOT =
 	fi
 endef
 
+define GIT_CLONE =
+	if [ ! -d $2 ]; then
+		git clone $1 $2
+	else
+		cd $2; git pull
+	fi
+endef
+
 define WGET_APP =
 	if [ ! -f $(DOWNLOADS)/$1 ]; then
 		wget -O $(DOWNLOADS)/$1 $2
@@ -28,7 +36,11 @@ endef
 define CP_DOTFILES =
 	for fpath in data/dotfiles/*
 	do
-		newPath=$(echo $fpath | sed -e 's/^.*\///g' -e 's/_|_/\//g')
+		newPath=$(echo $fpath 	| sed -e 's/^.*\///g' -e 's/_|_/\//g' -e "s/~/\/home\/${USER}/g")
+		newDir=$(dirname $newPath)
+
+		mkdir -p $newDir
+		printf "%-50s --> %s\n" $fpath $newPath
 		cp $fpath $newPath
 	done
 endef
