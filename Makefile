@@ -39,7 +39,7 @@ run-all: setup install install-opt update post-install post-setup data vcs ##Run
 ### Setup requirements for installation procedures ###################
 #=====================================================================
 
-setup: setup-apt setup-npm setup-pip3 setup-dirs
+setup: setup-apt setup-npm setup-dirs
 
 setup-apt: ##Add all repositories to apt.
 	
@@ -55,9 +55,6 @@ setup-apt: ##Add all repositories to apt.
 		echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
 		mv /tmp/neo4j.list /etc/apt/sources.list.d
 
-	$(call INFO, SETUP APT DEPENDENCIES)
-		apt-get -y install curl git
-
 setup-npm: ##Install NVM
 	
 	$(call INFO, INSTALL NVM)
@@ -69,11 +66,6 @@ setup-npm: ##Install NVM
 
 	$(call INFO, UPGRADE NPM)
 		nvm install-latest-npm
-
-
-setup-pip3: ##Install pip3
-	$(call INFO, INSTALL PIP3)
-		apt-get -y install python3-pip
 
 setup-dirs:
 	$(call INFO, SETUP SOFT LINKS)
@@ -110,7 +102,11 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-npm install-pip3 install-gem install-apt install-apps-gitkraken install-apps-pycharm
+install: install-apt install-npm install-pip3 install-gem install-apps-gitkraken install-apps-pycharm
+
+install-apt:
+	$(call INFO, INSTALL APT PACKAGES)
+		$(call INSTALL,apt-get -y install,apt)
 
 install-npm:
 	$(call INFO, INSTALL NPM PACKAGES)
@@ -124,27 +120,27 @@ install-gem:
 	$(call INFO, INSTALL GEM PACKAGES)
 		$(call INSTALL,gem install,gem)
 
-install-apt:
-	$(call INFO, INSTALL APT PACKAGES)
-		$(call INSTALL,apt-get -y install,apt)
-
 install-apps-gitkraken:
 	$(call INFO, INSTALL GITKRAKEN)
 		$(call WGET_APP,gitkraken.tar.gz,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
+		ln -sfn ~/.APPS/gitkraken/gitkraken /usr/local/bin/gitkraken
 
 install-apps-pycharm:
 	$(call INFO, INSTALL PYCHARM)
 		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz)
+		ln -sfn $(shell find ~/.APPS/ -regex '.*\/pycharm.*\/bin\/pycharm.sh') /usr/local/bin/pycharm
 
 install-opt: install-apt-optional install-apps-intellij
 
 install-apt-optional:
 	$(call INFO, INSTALL APT PACKAGES)
 		$(call INSTALL,apt-get -y install,apt-optional)
+		ln -sfn /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
 
 install-apps-intellij:
 	$(call INFO, INSTALL INTELLIJ)
 		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-2019.1.tar.gz)
+		ln -sfn $(shell find ~/.APPS/ -regex '.*\/idea.*\/bin\/idea.sh') /usr/local/bin/idea
 
 #============================================
 ### Post installation procedures ############
