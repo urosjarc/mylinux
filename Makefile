@@ -87,7 +87,7 @@ update-npm:
 
 update-pip3:
 	$(call INFO, UPDATE PIP3)
-		pip3 install --upgrade setuptools pip
+		sudo -H pip3 install --upgrade setuptools pip
 
 update-gem:
 	$(call INFO, UPDATE GEM)
