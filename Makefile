@@ -30,10 +30,11 @@ run-select: ##Select which targets you want to run.
 	  "post-setup" "" on \
 	  "data" "" on \
 	  "vcs" "" on \
+	  "finish" "" on \
 	  3>&1 1>&2 2>&3)
 
-run-min: setup install		   update post-install post-setup data vcs ##Run minimalistic installation set
-run-all: setup install install-opt update post-install post-setup data vcs ##Run whole installation set.
+run-min: setup install		   update post-install post-setup data vcs finish ##Run minimalistic installation set
+run-all: setup install install-opt update post-install post-setup data vcs finish ##Run whole installation set.
 
 #=====================================================================
 ### Setup requirements for installation procedures ###################
@@ -127,8 +128,8 @@ install-apps-gitkraken:
 
 install-apps-pycharm:
 	$(call INFO, INSTALL PYCHARM)
-		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz)
-		ln -sfn $(shell find ~/.APPS/ -regex '.*\/pycharm.*\/bin\/pycharm.sh') /usr/local/bin/pycharm
+		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
+		ln -sfn ~/.APPS/pycharm-community-$(PYCHARM)/bin/pycharm.sh /usr/local/bin/pycharm
 
 install-opt: install-apt-optional install-apps-intellij
 
@@ -139,8 +140,8 @@ install-apt-optional:
 
 install-apps-intellij:
 	$(call INFO, INSTALL INTELLIJ)
-		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-2019.1.tar.gz)
-		ln -sfn $(shell find ~/.APPS/ -regex '.*\/idea.*\/bin\/idea.sh') /usr/local/bin/idea
+		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
+		ln -sfn ~/.APPS/ideaIC-$(IDEA)/bin/idea.sh') /usr/local/bin/idea
 
 #============================================
 ### Post installation procedures ############
@@ -164,9 +165,6 @@ post-install: ##Install zsh, i3, heroku.
 #====================================================
 
 post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
-
-	$(call INFO, POST SETUP CHOWN HOME DIR)
-		chown -R $(USER) /home/$(USER)
 	
 	$(call INFO, SETUP INOTIFY)
 		grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
@@ -224,8 +222,18 @@ vcs-jetbrains: ##Install jetbrains repo.
 	$(call INFO, POST SETUP JETBRAINS)
 		cd ~/vcs/jetbrains; make install
 
-
-
+#=====================================================================
+### Finish procedure #################################################
+#=====================================================================
+	
+finish: ##Finish procedure (user permissions, rebooting)
+	$(call INFO, POST SETUP CHOWN HOME DIR)
+		chown -R $(USER) /home/$(USER)
+	
+	$(call INFO, RESTARTING)
+		read -p "Reboot the sistem? (y/n)" -n 1 -r
+		if [[ $REPLY =~ ^[Yy] ]]; then reboot; fi
+	
 
 
 
