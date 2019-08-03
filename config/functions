@@ -1,5 +1,5 @@
 define INSTALL =
-	sudo -H $1 $(shell grep -vE "^\s*#" ./data/packages/$2 | tr "\n" " ")
+	sudo -H $1 $(shell grep -vE "^\s*#" $(PACKAGES)/$2 | tr "\n" " ")
 endef
 
 define ERROR =
@@ -28,7 +28,7 @@ endef
 define WGET_APP =
 	if [ ! -f $(DOWNLOADS)/$1 ]; then
 		wget -O $(DOWNLOADS)/$1 $2
-		tar -xf $(DOWNLOADS)/$1 -C ~/.APPS
+		tar -xf $(DOWNLOADS)/$1 -C $(APPS)
 	fi
 
 endef

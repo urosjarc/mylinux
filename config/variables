@@ -1,11 +1,13 @@
 # User info
 	USER = urosjarc
-	DOWNLOADS = /home/$(USER)/Downloads
+	HOME = /home/$(USER)
+	DOWNLOADS = $(HOME)/Downloads
+	APPS = $(HOME)/.APPS
+	VCS = $(HOME)/vcs
 
 # Directory structure
 	DATA = data
 	BACKGROUND = $(DATA)/background
-	DOTFILES = $(DATA)/dotfiles
 	LAYOUTS = $(DATA)/layouts
 	PACKAGES = $(DATA)/packages
 
@@ -13,6 +15,8 @@
 	NVM = 'v0.34.0'
 	PYCHARM = '2019.1.1'
 	IDEA = '2019.1'
+	CODE_FONTS = '1.2.2'
+	MATLAB = 'R2018a'
 
 # Colours
 	NC=\x1b[0m

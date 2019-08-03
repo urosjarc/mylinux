@@ -9,5 +9,8 @@
          <Stroke alt="on" code="VK_SLASH" shift="on"/>
          <Stroke code="VK_SLASH" meta="on" shift="on"/>
       </Action>
+      <Action id="undo">
+         <Stroke code="VK_Z" ctrl="on"/>
+      </Action>
    </Context>
 </CustomKeySet>

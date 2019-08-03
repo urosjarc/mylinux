@@ -74,7 +74,7 @@ setup-dirs:
 		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/npm') "/usr/local/bin/npm"
 	
 	$(call INFO, CREATING .APPS DIR)
-		mkdir -p ~/.APPS
+		mkdir -p $(APPS)
 
 #=====================================================
 ### Update various package managers ##################
@@ -124,12 +124,12 @@ install-gem:
 install-apps-gitkraken:
 	$(call INFO, INSTALL GITKRAKEN)
 		$(call WGET_APP,gitkraken.tar.gz,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
-		ln -sfn ~/.APPS/gitkraken/gitkraken /usr/local/bin/gitkraken
+		ln -sfn $(APPS)/gitkraken/gitkraken /usr/local/bin/gitkraken
 
 install-apps-pycharm:
 	$(call INFO, INSTALL PYCHARM)
 		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
-		ln -sfn ~/.APPS/pycharm-community-$(PYCHARM)/bin/pycharm.sh /usr/local/bin/pycharm
+		ln -sfn $(APPS)/pycharm-community-$(PYCHARM)/bin/pycharm.sh /usr/local/bin/pycharm
 
 install-opt: install-apt-optional install-apps-intellij
 
@@ -141,7 +141,7 @@ install-apt-optional:
 install-apps-intellij:
 	$(call INFO, INSTALL INTELLIJ)
 		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
-		ln -sfn ~/.APPS/ideaIC-$(IDEA)/bin/idea.sh') /usr/local/bin/idea
+		ln -sfn $(APPS)/ideaIC-$(IDEA)/bin/idea.sh') /usr/local/bin/idea
 
 #============================================
 ### Post installation procedures ############
@@ -159,6 +159,13 @@ post-install: ##Install zsh, i3, heroku.
 
 	$(call INFO, POST INSTALL HEROKU)
 		wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+	$(call INFO, INSTALL CODE FONTS)
+		$(call WGET_APP,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2)
+		cp $(APPS)/dejavu-code-ttf-$(CODE_FONTS)/ttf/* /usr/local/share/fonts
+		fc-cache -f
+		echo " ?? Installed fonts (DejaVuSansCode):"
+		fc-list | grep "DejaVuSansCode"
 
 #====================================================
 ### Post installation setup procedures ##############
@@ -213,14 +220,14 @@ vcs: vcs-setup vcs-jetbrains
 vcs-setup: ##Create vcs directory and clone repos.
 	
 	$(call INFO, POST SETUP VCS)
-		mkdir -p ~/vcs
-		$(call GIT_CLONE,https://github.com/$(USER)/mylinux.git,~/vcs/mylinux)
-		$(call GIT_CLONE,https://github.com/$(USER)/jetbrains.git,~/vcs/jetbrains)
+		mkdir -p $(VCS)
+		$(call GIT_CLONE,https://github.com/$(USER)/mylinux.git,$(VCS)/mylinux)
+		$(call GIT_CLONE,https://github.com/$(USER)/jetbrains.git,$(VCS)/jetbrains)
 
 vcs-jetbrains: ##Install jetbrains repo.
 	
 	$(call INFO, POST SETUP JETBRAINS)
-		cd ~/vcs/jetbrains; make install
+		cd $(VCS)/jetbrains; make install
 
 #=====================================================================
 ### Finish procedure #################################################
@@ -228,12 +235,25 @@ vcs-jetbrains: ##Install jetbrains repo.
 	
 finish: ##Finish procedure (user permissions, rebooting)
 	$(call INFO, POST SETUP CHOWN HOME DIR)
-		chown -R $(USER) /home/$(USER)
-	
+		chown -R $(USER) $(HOME)
+
+	$(call INFO, SETUP MATLAB)
+		read -p "Setup Matlab? (y/n)" -n 1 -r
+		if [[ $REPLY =~ ^[Yy] ]]; then $(MAKE) matlab; fi
+
 	$(call INFO, RESTARTING)
 		read -p "Reboot the sistem? (y/n)" -n 1 -r
 		if [[ $REPLY =~ ^[Yy] ]]; then reboot; fi
 	
+
+#=====================================================================
+### MATLAB procedure #################################################
+#=====================================================================
+
+matlab: ##Create matlab binary
+	$(call INFO, CREATE MATLAB LINKS)
+		ln -sfn $(APPS)/MATLAB/$(MATLAB)/bin/matlab /usr/local/bin/matlab
+		ls -la /usr/local/bin | grep "matlab"
 
 
 
