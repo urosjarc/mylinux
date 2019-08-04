@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CustomKeySet derivedfrom="Windows" modifieddefault="false">
    <Context id="Global">
+      <Action id="help-on-selection">
+         <Stroke alt="on" code="VK_I"/>
+         <Stroke code="VK_I" meta="on"/>
+      </Action>
+      <Action id="find-files">
+         <Stroke alt="on" code="VK_S"/>
+         <Stroke code="VK_S" meta="on"/>
+      </Action>
+      <Action id="new-mfile">
+         <Stroke alt="on" code="VK_M"/>
+         <Stroke code="VK_M" meta="on"/>
+      </Action>
+      <Action id="close-item">
+         <Stroke alt="on" code="VK_C"/>
+         <Stroke code="VK_C" meta="on"/>
+      </Action>
+      <Action id="undock">
+         <Stroke alt="on" code="VK_SPACE" shift="on"/>
+         <Stroke code="VK_SPACE" meta="on" shift="on"/>
+      </Action>
+      <Action id="undo">
+         <Stroke code="VK_Z" ctrl="on"/>
+      </Action>
       <Action id="comment">
          <Stroke alt="on" code="VK_SLASH"/>
          <Stroke code="VK_SLASH" meta="on"/>
+      </Action>
+      <Action id="select-next-tool">
+         <Stroke alt="on" code="VK_L"/>
+         <Stroke code="VK_L" meta="on"/>
+         <Stroke alt="on" code="VK_TAB"/>
+         <Stroke code="VK_TAB" meta="on"/>
       </Action>
       <Action id="uncomment">
          <Stroke alt="on" code="VK_SLASH" shift="on"/>
          <Stroke code="VK_SLASH" meta="on" shift="on"/>
       </Action>
-      <Action id="undo">
-         <Stroke code="VK_Z" ctrl="on"/>
+      <Action id="debug-continue">
+         <Stroke alt="on" code="VK_E"/>
+         <Stroke code="VK_E" meta="on"/>
+      </Action>
+      <Action id="select-previous-tool">
+         <Stroke alt="on" code="VK_H"/>
+         <Stroke code="VK_H" meta="on"/>
       </Action>
    </Context>
 </CustomKeySet>
