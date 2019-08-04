@@ -4,6 +4,7 @@
 	DOWNLOADS=$(HOME)/Downloads
 	APPS=$(HOME)/.APPS
 	VCS=$(HOME)/vcs
+	BIN=/usr/local/bin
 
 # Directory structure
 	DATA=data
@@ -20,7 +21,10 @@
 	MATLAB='R2018a'
 
 # Colours
+    UNDERLINE=\x1b[4m
+    BLINK=\x1b[5m
 	NC=\x1b[0m
+    BLUE=\x1b[34;01m
 	OK=\x1b[32;01m
 	ERR=\x1b[31;01m
 	WARN=\x1b[33;01m

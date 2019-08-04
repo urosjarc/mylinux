@@ -1,40 +1,54 @@
-define INSTALL =
-	sudo -H $1 $(shell grep -vE "^\s*#" $(PACKAGES)/$2 | tr "\n" " ")
+define TITLE =
+	printf "\n${BLUE}${UNDERLINE}     $$(echo $1 | sed -e 's/^\s*//g')                    \n\n${NC}"
 endef
 
 define ERROR =
-	printf "\n${ERR} > $1\n\n${NC}"
-endef
-
-define INFO =
-	printf "\n${OK} > $1\n\n${NC}"
+	printf "${ERR} !!! $1\n${NC}"
 endef
 
 define ALERT=
-	printf "${WARN}ALERT: $1\n${NC}"
+	printf "${WARN} ??? $1\n${NC}"
 endef
 
-define ECHO =
-	printf "${OK}INFO: $1\n${NC}"
+define INFO =
+	printf "${OK} ... $1\n${NC}"
+endef
+
+define INSTALL =
+	sudo -H $1 $$(grep -vE "^\s*#" $(PACKAGES)/$2 | tr "\n" " ")
+endef
+
+define LINK_BIN =
+    $(call INFO,LINK $$(ln -sfvn $1 $(BIN)/$2))
+endef
+
+define MKDIR =
+    if [[ ! -e $1 ]]; then
+        $(call INFO,$(mkdir -vp $dir))
+    elif [[ ! -d $1 ]]; then
+        $(call ERROR,Path $1 already exists but is not a directory!)
+    else
+        $(call ALERT,Folder $1 already exists!)
+    fi
 endef
 
 define GIT_CLONE =
 	if [ ! -d $2 ]; then
-	    $(ECHO,Cloning: $1 --> $2)
+	    $(call INFO,Cloning: $1 --> $2)
 		git clone $1 $2
 	else
-	    $(ECHO,Pulling: $1 in $2)
+	    $(call INFO,Pulling: $1 in $2)
 		cd $2; git pull
 	fi
 endef
 
 define WGET_APP =
 	if [ ! -f $(DOWNLOADS)/$1 ]; then
-        $(call ECHO,File $1 --> $(DOWNLOADS)!)
+        $(call INFO,File $1 --> $(DOWNLOADS)!)
 		wget -O $(DOWNLOADS)/$1 $2
 		tar -xf $(DOWNLOADS)/$1 -C $(APPS)
 	else
-        $(call ALERT,File $1 already exists in $(DOWNLOADS)!)
+        $(call ALERT,Extracted folder $1 already exists in $(DOWNLOADS)!)
 	fi
 endef
 
