@@ -246,7 +246,7 @@ matlab: ##Create matlab binary
 		then
 			echo
 			$(call LINK_BIN,$(APPS)/MATLAB/$(MATLAB)/bin/matlab,matlab)
-			$(call INFO,scripts: $(shell ls /usr/local/bin | grep "matlab"))
+			$(call INFO,bin 	scripts: $(shell ls /usr/local/bin | grep "matlab"))
 		fi
 
 #=====================================================================
@@ -256,12 +256,14 @@ matlab: ##Create matlab binary
 finish: ##Finish procedure (user permissions, rebooting)
 	$(call TITLE, POST SETUP CHOWN HOME DIR)
 		chown -R $(USER) $(HOME)
-		$(call INFO,folder $(HOME) now belongs to $(USER))
+		$(call INFO,folder "$(HOME)" now belongs to "$(USER)")
 
 	$(call TITLE, RESTARTING)
 		read -p "Reboot the sistem? (y/n): " -n 1 -r
 		if [[ $$REPLY =~ ^[Yy] ]]; then
-			echo
+			$(call ALERT,rebooting the sistem...)
 			reboot
+		else
+			$(call ALERT,you should reboot the sistem ASAP...)
 		fi
 
