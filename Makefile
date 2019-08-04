@@ -48,7 +48,7 @@ setup-apt: ##Add all repositories to apt.
 		add-apt-repository -y ppa:yannubuntu/boot-repair                                            # Boot repair
 		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity, woeusb
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
-		add-apt-repository -y "deb http://archive.canonical.com $$(lsb_release -sc) partner"	# Flash plugins (firefox, chrome)
+		add-apt-repository -y "deb http://archive.canonical.com $$(lsb_release -sc) partner"        # Flash plugins (firefox, chrome)
 
 	$(call TITLE, SETUP NEO4J SOURCES)
 		wget -O - https://debian.neo4j.org/neotechnology.gpg.key | apt-key add -
