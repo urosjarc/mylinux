@@ -72,8 +72,8 @@ setup-dirs:
 		$(call LINK_BIN,$$(find $(HOME)/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/node'),)
 		$(call LINK_BIN,$$(find $(HOME)/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/npm'),)
 		echo
-		$(call INFO,node ($$(node -v)))
-		$(call INFO,npm ($$(npm -v)))
+		$(call ALERT,node ($$(node -v)))
+		$(call ALERT,npm ($$(npm -v)))
 
 	$(call TITLE, CREATING .APPS DIR)
 		$(call MKDIR,$(APPS))
@@ -189,7 +189,7 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 		rm -rfv ~/Pictures
 		rm -rfv ~/Templates
 		rm -rfv ~/examples.desktop
-		$(call INFO,home directory: $$(ls -l $(HOME))
+		$(call INFO,home directory: $$(ls -l $(HOME)))
 
 	$(call TITLE, POST SETUP ALTERNATIVES)
 		update-alternatives --config x-www-browser
