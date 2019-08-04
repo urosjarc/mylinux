@@ -216,7 +216,7 @@ data: ##Setup i3 background, layouts, and dotfiles.
 			newPath=$$(echo $$fpath | sed -e 's/^.*\///g' -e 's/_|_/\//g' -e "s/~/\/home\/${USER}/g")
 			mkdir -p $$(dirname $$newPath)
 			cp $$fpath $$newPath
-			printf "%s-35 --> %s" $$fpath $$newPath
+			printf "%-35s -> %s\n" $$(basename $$fpath) $$newPath
 		done
 
 #=====================================================================
@@ -242,11 +242,12 @@ vcs-jetbrains: ##Install jetbrains repo.
 matlab: ##Create matlab binary
 	$(call TITLE, SETUP MATLAB)
 		read -p "Setup Matlab? (y/n): " -n 1 -r
+		echo
 		if [[ $$REPLY =~ ^[Yy] ]]
 		then
 			echo
 			$(call LINK_BIN,$(APPS)/MATLAB/$(MATLAB)/bin/matlab,matlab)
-			$(call INFO,bin 	scripts: $(shell ls /usr/local/bin | grep "matlab"))
+			$(call ALERT,bin scripts: $(shell ls /usr/local/bin | grep "matlab"))
 		fi
 
 #=====================================================================
@@ -256,14 +257,16 @@ matlab: ##Create matlab binary
 finish: ##Finish procedure (user permissions, rebooting)
 	$(call TITLE, POST SETUP CHOWN HOME DIR)
 		chown -R $(USER) $(HOME)
-		$(call INFO,folder "$(HOME)" now belongs to "$(USER)")
+		$(call INFO,folder \"$(HOME)\" now belongs to \"$(USER)\")
 
 	$(call TITLE, RESTARTING)
 		read -p "Reboot the sistem? (y/n): " -n 1 -r
+		echo
 		if [[ $$REPLY =~ ^[Yy] ]]; then
 			$(call ALERT,rebooting the sistem...)
 			reboot
 		else
+			echo
 			$(call ALERT,you should reboot the sistem ASAP...)
 		fi
 

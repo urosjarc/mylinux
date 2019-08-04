@@ -26,29 +26,29 @@ define MKDIR =
     if [[ ! -e $1 ]]; then
         $(call INFO,$(mkdir -vp $dir))
     elif [[ ! -d $1 ]]; then
-        $(call ERROR,path "$1" already exists but is not a directory!)
+        $(call ERROR,path \"$1\" already exists but is not a directory!)
     else
-        $(call ALERT,folder "$1" already exists!)
+        $(call ALERT,folder \"$1\" already exists...)
     fi
 endef
 
 define GIT_CLONE =
 	if [ ! -d $2 ]; then
-	    $(call INFO,git clone "$1" --> "$2")
+	    $(call INFO,git clone \"$1\" --> \"$2\")
 		git clone $1 $2
 	else
-	    $(call INFO,git pull "$2")
+	    $(call INFO,git pull \"$2\")
 		cd $2; git pull
 	fi
 endef
 
 define WGET_APP =
 	if [ ! -f $(DOWNLOADS)/$1 ]; then
-        $(call INFO,wget "$1" --> "$(DOWNLOADS)"!)
+        $(call INFO,wget \"$1\" --> \"$(DOWNLOADS)\")
 		wget -O $(DOWNLOADS)/$1 $2
 		tar -xf $(DOWNLOADS)/$1 -C $(APPS)
 	else
-        $(call ALERT,folder $1 already exists in "$(DOWNLOADS)"!)
+        $(call ALERT,folder \"$1\" already exists in \"$(DOWNLOADS)\"...)
 	fi
 endef
 
