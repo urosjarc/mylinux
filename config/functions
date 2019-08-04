@@ -7,28 +7,34 @@ define ERROR =
 endef
 
 define INFO =
-	printf "\n${WARN} > $1\n\n${NC}"
+	printf "\n${OK} > $1\n\n${NC}"
 endef
 
-define IS_ROOT =
-	if [[ $EUID -ne 0 ]]; then
-		$(call ERROR, This script must be run as root!)
-		exit 1
-	fi
+define ALERT=
+	printf "${WARN}ALERT: $1\n${NC}"
+endef
+
+define ECHO =
+	printf "${OK}INFO: $1\n${NC}"
 endef
 
 define GIT_CLONE =
 	if [ ! -d $2 ]; then
+	    $(ECHO,Cloning: $1 --> $2)
 		git clone $1 $2
 	else
+	    $(ECHO,Pulling: $1 in $2)
 		cd $2; git pull
 	fi
 endef
 
 define WGET_APP =
 	if [ ! -f $(DOWNLOADS)/$1 ]; then
+        $(call ECHO,File $1 --> $(DOWNLOADS)!)
 		wget -O $(DOWNLOADS)/$1 $2
 		tar -xf $(DOWNLOADS)/$1 -C $(APPS)
+	else
+        $(call ALERT,File $1 already exists in $(DOWNLOADS)!)
 	fi
 endef
 

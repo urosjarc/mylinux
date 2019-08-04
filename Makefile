@@ -29,12 +29,12 @@ run-select: ##Select which targets you want to run.
 		"post-setup" "" on \
 		"data" "" on \
 		"vcs" "" on \
+		"matlab" "" on \
 		"finish" "" on \
-		"matlab" "" off \
 		3>&1 1>&2 2>&3)
 
-run-min: setup install		   update post-install post-setup data vcs finish ##Run minimalistic installation set
-run-all: setup install install-opt update post-install post-setup data vcs finish ##Run whole installation set.
+run-min: setup install             update post-install post-setup data vcs matlab finish ##Run minimalistic installation set
+run-all: setup install install-opt update post-install post-setup data vcs matlab finish ##Run whole installation set.
 
 #=====================================================================
 ### Setup requirements for installation procedures ###################
@@ -44,35 +44,35 @@ setup: setup-apt setup-npm setup-dirs
 
 setup-apt: ##Add all repositories to apt.
 	$(call INFO, SETUP APT REPOS)
-		add-apt-repository -y ppa:danielrichter2007/grub-customizer					# Grub customizer
-		add-apt-repository -y ppa:yannubuntu/boot-repair						# Boot repair
-		add-apt-repository -y ppa:nilarimogard/webupd8							# Audacity, woeusb
-		add-apt-repository -y ppa:maarten-fonville/android-studio					# Android studio
-		add-apt-repository -y "deb http://archive.canonical.com $(shell lsb_release -sc) partner"	# Flash plugins (firefox, chrome)
+		add-apt-repository -y ppa:danielrichter2007/grub-customizer                                 # Grub customizer
+		add-apt-repository -y ppa:yannubuntu/boot-repair                                            # Boot repair
+		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity, woeusb
+		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
+		add-apt-repository -y "deb http://archive.canonical.com $$(lsb_release -sc) partner"	# Flash plugins (firefox, chrome)
 
 	$(call INFO, SETUP neo4j SOURCES)
 		wget -O - https://debian.neo4j.org/neotechnology.gpg.key | apt-key add -
 		echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
-		mv /tmp/neo4j.list /etc/apt/sources.list.d
+		mv -v /tmp/neo4j.list /etc/apt/sources.list.d
 
 setup-npm: ##Install NVM
-	$(call INFO, INSTALL NVM)
-		wget -O- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
+	$(call INFO, install nvm)
+		wget -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(nvm)/install.sh | bash
 		. ~/.nvm/nvm.sh
 
-	$(call INFO, INSTALL NODE LTS)
+	$(call INFO, install node lts)
 		nvm install --lts
 
-	$(call INFO, UPGRADE NPM)
+	$(call INFO, upgrade npm)
 		nvm install-latest-npm
 
 setup-dirs:
 	$(call INFO, SETUP SOFT LINKS)
-		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/node') "/usr/local/bin/node"
-		ln -sfn $(shell find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/npm') "/usr/local/bin/npm"
+		ln -sfnv $$(find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/node') "/usr/local/bin/node"
+		ln -sfnv $$(find ~/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/npm') "/usr/local/bin/npm"
 
 	$(call INFO, CREATING .APPS DIR)
-		mkdir -p $(APPS)
+		mkdir -vp $(APPS)
 
 #=====================================================
 ### Update various package managers ##################
@@ -121,24 +121,24 @@ install-gem:
 install-apps-gitkraken:
 	$(call INFO, INSTALL GITKRAKEN)
 		$(call WGET_APP,gitkraken.tar.gz,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
-		ln -sfn $(APPS)/gitkraken/gitkraken /usr/local/bin/gitkraken
+		ln -sfnv $(APPS)/gitkraken/gitkraken /usr/local/bin/gitkraken
 
 install-apps-pycharm:
 	$(call INFO, INSTALL PYCHARM)
 		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
-		ln -sfn $(APPS)/pycharm-community-$(PYCHARM)/bin/pycharm.sh /usr/local/bin/pycharm
+		ln -sfvn $(APPS)/pycharm-community-$(PYCHARM)/bin/pycharm.sh /usr/local/bin/pycharm
 
 install-opt: install-apt-optional install-apps-intellij
 
 install-apt-optional:
 	$(call INFO, INSTALL APT PACKAGES)
 		$(call INSTALL,apt-get -y install,apt-optional)
-		ln -sfn /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
+		ln -sfvn /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
 
 install-apps-intellij:
 	$(call INFO, INSTALL INTELLIJ)
 		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
-		ln -sfn $(APPS)/ideaIC-$(IDEA)/bin/idea.sh') /usr/local/bin/idea
+		ln -sfvn $(APPS)/ideaIC-$(IDEA)/bin/idea.sh') /usr/local/bin/idea
 
 #============================================
 ### Post installation procedures ############
@@ -151,16 +151,16 @@ post-install: ##Install zsh, i3, heroku.
 
 	$(call INFO, POST INSTALL I3 TOOLS)
 		$(call GIT_CLONE,https://github.com/guimeira/i3lock-fancy-multimonitor.git,~/.i3/i3lock-fancy-multimonitor)
-		chmod +x ~/.i3/i3lock-fancy-multimonitor/lock
+		chmod -v +x ~/.i3/i3lock-fancy-multimonitor/lock
 
 	$(call INFO, POST INSTALL HEROKU)
 		wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 	$(call INFO, INSTALL CODE FONTS)
 		$(call WGET_APP,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2)
-		cp $(APPS)/dejavu-code-ttf-$(CODE_FONTS)/ttf/* /usr/local/share/fonts
+		cp -v $(APPS)/dejavu-code-ttf-$(CODE_FONTS)/ttf/* /usr/local/share/fonts
 		fc-cache -f
-		echo " ?? Installed fonts (DejaVuSansCode):"
+		$(call ECHO,> Installed fonts (DejaVuSansCode):)
 		fc-list | grep "DejaVuSansCode"
 
 #====================================================
@@ -173,23 +173,23 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 		sysctl -p #Update inotify
 
 	$(call INFO, POST CLEANING HOME DIRECTORY)
-		rm -rf ~/Desktop
-		rm -rf ~/Music
-		rm -rf ~/Public
-		rm -rf ~/Videos
-		rm -rf ~/Documents
-		rm -rf ~/Pictures
-		rm -rf ~/Templates
-		rm -rf ~/examples.desktop
+		rm -rfv ~/Desktop
+		rm -rfv ~/Music
+		rm -rfv ~/Public
+		rm -rfv ~/Videos
+		rm -rfv ~/Documents
+		rm -rfv ~/Pictures
+		rm -rfv ~/Templates
+		rm -rfv ~/examples.desktop
 
 	$(call INFO, POST SETUP ALTERNATIVES)
 		update-alternatives --config x-www-browser
 		update-alternatives --config x-terminal-emulator
 
 	$(call INFO, POST SETUP SHELL)
-		grep $(USER) /etc/passwd
-		usermod --shell $(shell which zsh) $(USER)
-		grep $(USER) /etc/passwd
+		$(call ECHO,$$(grep $(USER) /etc/passwd))
+		usermod --shell $$(which zsh) $(USER)
+		$(call ECHO,$$(grep $(USER) /etc/passwd))
 
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
@@ -217,13 +217,13 @@ vcs: vcs-setup vcs-jetbrains
 
 vcs-setup: ##Create vcs directory and clone repos.
 	$(call INFO, POST SETUP VCS)
-		mkdir -p $(VCS)
+		mkdir -pv $(VCS)
 		$(call GIT_CLONE,https://github.com/$(USER)/mylinux.git,$(VCS)/mylinux)
 		$(call GIT_CLONE,https://github.com/$(USER)/jetbrains.git,$(VCS)/jetbrains)
 
 vcs-jetbrains: ##Install jetbrains repo.
 	$(call INFO, POST SETUP JETBRAINS)
-		cd $(VCS)/jetbrains; make install
+		cd -v $(VCS)/jetbrains; make install
 
 #=====================================================================
 ### Finish procedure #################################################
@@ -232,20 +232,27 @@ vcs-jetbrains: ##Install jetbrains repo.
 finish: ##Finish procedure (user permissions, rebooting)
 	$(call INFO, POST SETUP CHOWN HOME DIR)
 		chown -R $(USER) $(HOME)
-
-	$(call INFO, SETUP MATLAB)
-		read -p "Setup Matlab? (y/n)" -n 1 -r
-		if [[ $REPLY =~ ^[Yy] ]]; then $(MAKE) matlab; fi
+		$(call ECHO,$(HOME) now belongs to $(USER))
 
 	$(call INFO, RESTARTING)
-		read -p "Reboot the sistem? (y/n)" -n 1 -r
-		if [[ $REPLY =~ ^[Yy] ]]; then reboot; fi
+		read -p "Reboot the sistem? (y/n): " -n 1 -r
+		if [[ $$REPLY =~ ^[Yy] ]]; then
+			echo
+			reboot
+		fi
 
 #=====================================================================
 ### MATLAB procedure #################################################
 #=====================================================================
 
 matlab: ##Create matlab binary
-	$(call INFO, CREATE MATLAB LINKS)
-		ln -sfn $(APPS)/MATLAB/$(MATLAB)/bin/matlab /usr/local/bin/matlab
-		ls -la /usr/local/bin | grep "matlab"
+	$(call INFO, SETUP MATLAB)
+		read -p "Setup Matlab? (y/n): " -n 1 -r
+		if [[ $$REPLY =~ ^[Yy] ]]
+		then
+			echo
+			ln -sfnv $(APPS)/MATLAB/$(MATLAB)/bin/matlab /usr/local/bin/matlab
+			$(call ECHO,Scripts: $(shell ls /usr/local/bin | grep "matlab"))
+		fi
+
+
