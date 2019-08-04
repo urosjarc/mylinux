@@ -153,6 +153,7 @@ install-apps-intellij:
 post-install: ##Install zsh, i3, heroku.
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+		echo
 		$(call GIT_CLONE,https://github.com/zsh-users/zsh-syntax-highlighting.git,~/.oh-my-zsh/plugins/zsh-syntax-highlighting)
 
 	$(call TITLE, POST INSTALL I3 TOOLS)
@@ -167,7 +168,7 @@ post-install: ##Install zsh, i3, heroku.
 		cp -v $(APPS)/dejavu-code-ttf-$(CODE_FONTS)/ttf/* /usr/local/share/fonts
 		fc-cache -f
 		echo
-		$(call INFO,installed fonts "DejaVuSansCode")
+		$(call INFO,installed fonts [DejaVuSansCode])
 		fc-list | grep "DejaVuSansCode"
 
 #====================================================

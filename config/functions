@@ -7,7 +7,7 @@ define ERROR =
 endef
 
 define ALERT=
-	printf "${WARN} ??? $1\n${NC}"
+	printf "${WARN} *** $1\n${NC}"
 endef
 
 define INFO =
