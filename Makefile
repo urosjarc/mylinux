@@ -157,7 +157,7 @@ post-install: ##Install zsh, i3, heroku.
 
 	$(call TITLE, POST INSTALL I3 TOOLS)
 		$(call GIT_CLONE,https://github.com/guimeira/i3lock-fancy-multimonitor.git,~/.i3/i3lock-fancy-multimonitor)
-		chmod -v +x ~/.i3/i3lock-fancy-multimonitor/lock
+		$(call INFO,$$(chmod -v +x ~/.i3/i3lock-fancy-multimonitor/lock))
 
 	$(call TITLE, POST INSTALL HEROKU)
 		wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
@@ -167,7 +167,7 @@ post-install: ##Install zsh, i3, heroku.
 		cp -v $(APPS)/dejavu-code-ttf-$(CODE_FONTS)/ttf/* /usr/local/share/fonts
 		fc-cache -f
 		echo
-		$(call INFO,'Installed fonts (DejaVuSansCode):')
+		$(call INFO,installed fonts "DejaVuSansCode")
 		fc-list | grep "DejaVuSansCode"
 
 #====================================================
@@ -188,7 +188,7 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 		rm -rfv ~/Pictures
 		rm -rfv ~/Templates
 		rm -rfv ~/examples.desktop
-		$(call INFO,Home directory: $$(ls -l $(HOME))
+		$(call INFO,home directory: $$(ls -l $(HOME))
 
 	$(call TITLE, POST SETUP ALTERNATIVES)
 		update-alternatives --config x-www-browser
@@ -213,8 +213,9 @@ data: ##Setup i3 background, layouts, and dotfiles.
 	$(call TITLE, COPY DOTFILES)
 		for fpath in $(DOTFILES)/*; do
 			newPath=$$(echo $$fpath | sed -e 's/^.*\///g' -e 's/_|_/\//g' -e "s/~/\/home\/${USER}/g")
-			$(call MKDIR,$$(dirname $$newPath))
-			cp -v $$fpath $$newPath
+			mkdir -p $$(dirname $$newPath)
+			cp $$fpath $$newPath
+			printf "%s-35 --> %s" $$fpath $$newPath
 		done
 
 #=====================================================================
@@ -244,7 +245,7 @@ matlab: ##Create matlab binary
 		then
 			echo
 			$(call LINK_BIN,$(APPS)/MATLAB/$(MATLAB)/bin/matlab,matlab)
-			$(call INFO,Scripts: $(shell ls /usr/local/bin | grep "matlab"))
+			$(call INFO,scripts: $(shell ls /usr/local/bin | grep "matlab"))
 		fi
 
 #=====================================================================
@@ -254,7 +255,7 @@ matlab: ##Create matlab binary
 finish: ##Finish procedure (user permissions, rebooting)
 	$(call TITLE, POST SETUP CHOWN HOME DIR)
 		chown -R $(USER) $(HOME)
-		$(call INFO,Folder $(HOME) now belongs to $(USER))
+		$(call INFO,folder $(HOME) now belongs to $(USER))
 
 	$(call TITLE, RESTARTING)
 		read -p "Reboot the sistem? (y/n): " -n 1 -r
