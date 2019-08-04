@@ -30,18 +30,5 @@ define WGET_APP =
 		wget -O $(DOWNLOADS)/$1 $2
 		tar -xf $(DOWNLOADS)/$1 -C $(APPS)
 	fi
-
-endef
-
-define CP_DOTFILES =
-	for fpath in data/dotfiles/*
-	do
-		newPath=$(echo $fpath 	| sed -e 's/^.*\///g' -e 's/_|_/\//g' -e "s/~/\/home\/${USER}/g")
-		newDir=$(dirname $newPath)
-
-		mkdir -p $newDir
-		printf "%-50s --> %s\n" $fpath $newPath
-		cp $fpath $newPath
-	done
 endef
 
