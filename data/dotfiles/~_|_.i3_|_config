@@ -128,11 +128,13 @@ mode "resize" {
 }
 
 # Logout/reboot/poweroff
-bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
-mode "Exit (l)ogout, (r)eboot, (p)oweroff" {
+bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff, (S)uspend, (H)ibernate"
+mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate" {
         bindsym r exec reboot
         bindsym l exec i3-msg exit
         bindsym p exec poweroff
+        bindsym s exec systemctl suspend
+        bindsym h exec systemctl hibernate
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
