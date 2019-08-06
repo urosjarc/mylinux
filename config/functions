@@ -24,7 +24,7 @@ endef
 
 define MKDIR =
     if [[ ! -e $1 ]]; then
-        $(call INFO,$(mkdir -vp $dir))
+        $(call INFO,$$(mkdir -vp $1))
     elif [[ ! -d $1 ]]; then
         $(call ERROR,path \"$1\" already exists but is not a directory!)
     else

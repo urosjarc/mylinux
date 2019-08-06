@@ -33,8 +33,8 @@ run-select: ##Select which targets you want to run.
 		"finish" "" on \
 		3>&1 1>&2 2>&3)
 
-run-min: setup install             update post-install post-setup data vcs matlab finish ##Run minimalistic installation set
-run-all: setup install install-opt update post-install post-setup data vcs matlab finish ##Run whole installation set.
+run-min: setup install             post-install post-setup data vcs matlab finish ##Run minimalistic installation set
+run-all: setup install install-opt post-install post-setup data vcs matlab finish ##Run whole installation set.
 
 #=====================================================================
 ### Setup requirements for installation procedures ###################
@@ -55,6 +55,9 @@ setup-apt: ##Add all repositories to apt.
 		echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
 		echo
 		$(call INFO,$$(mv -v /tmp/neo4j.list /etc/apt/sources.list.d))
+
+	$(call TITLE, UPDATE APT)
+		apt-get update
 
 setup-npm: ##Install NVM
 	$(call TITLE, INSTALL NVM)
