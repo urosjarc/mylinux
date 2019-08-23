@@ -13,6 +13,7 @@ pulseaudio-module-bluetooth
 # -------- System admin ------------------
 meld
 curl
+unrar
 
 # -------- Linux environment -------------
 i3
