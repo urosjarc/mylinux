@@ -3,8 +3,9 @@ filezilla
 
 # -------- Programming ------------------
 neo4j
-openjfx-source
 qt4-designer
+openjfx
+openjdk-12-jdk
 
 
 # -------- Android -----------------------
