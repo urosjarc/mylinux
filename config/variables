@@ -14,7 +14,7 @@
 	PACKAGES=$(DATA)/packages
 
 # Versions
-	NVM='v0.34.0'
+	NODE='12'
 	PYCHARM='2019.1.1'
 	IDEA='2019.1'
 	CODE_FONTS='1.2.2'

@@ -40,7 +40,7 @@ run-all: setup install install-opt post-install post-setup data vcs matlab finis
 ### Setup requirements for installation procedures ###################
 #=====================================================================
 
-setup: setup-apt setup-npm setup-dirs
+setup: setup-apt setup-dirs
 
 setup-apt: ##Add all repositories to apt.
 	$(call TITLE, SETUP APT REPOS)
@@ -49,6 +49,9 @@ setup-apt: ##Add all repositories to apt.
 		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity, woeusb
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
 		add-apt-repository -y "deb http://archive.canonical.com $$(lsb_release -sc) partner"        # Flash plugins (firefox, chrome)
+
+	$(call TITLE, SETUP NODE SOURCES)
+		curl -sL https://deb.nodesource.com/setup_$(NODE).x | sudo -E bash -
 
 	$(call TITLE, SETUP NEO4J SOURCES)
 		wget -O - https://debian.neo4j.org/neotechnology.gpg.key | apt-key add -
@@ -59,25 +62,7 @@ setup-apt: ##Add all repositories to apt.
 	$(call TITLE, UPDATE APT)
 		apt-get update
 
-setup-npm: ##Install NVM
-	$(call TITLE, INSTALL NVM)
-		wget -O- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM}/install.sh | bash
-		. ~/.nvm/nvm.sh
-
-	$(call TITLE, INSTALL NODE LTS)
-		nvm install --lts
-
-	$(call TITLE, UPGRADE NPM)
-		nvm install-latest-npm
-
 setup-dirs:
-	$(call TITLE, SETUP SOFT LINKS)
-		$(call LINK_BIN,$$(find $(HOME)/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/node'),)
-		$(call LINK_BIN,$$(find $(HOME)/.nvm/versions/node -regex '.*\/v[0-9\.]+\/bin\/npm'),)
-		echo
-		$(call ALERT,node ($$(node -v)))
-		$(call ALERT,npm ($$(npm -v)))
-
 	$(call TITLE, CREATING .APPS DIR)
 		$(call MKDIR,$(APPS))
 
