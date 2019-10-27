@@ -92,7 +92,7 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-apt install-npm install-pip3 install-gem install-apps-gitkraken install-apps-pycharm
+install: install-apt install-npm install-pip3 install-gem install-apps-gitkraken install-apps-pycharm install-apps-intellij
 
 install-apt:
 	$(call TITLE, INSTALL APT PACKAGES)
@@ -121,7 +121,12 @@ install-apps-pycharm:
 		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
 		$(call LINK_BIN,$(APPS)/pycharm-community-$(PYCHARM)/bin/pycharm.sh,pycharm)
 
-install-opt: install-apt-optional install-apps-intellij
+install-apps-intellij:
+	$(call TITLE, INSTALL INTELLIJ)
+		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IC-.*/bin/idea.sh'),idea)
+
+install-opt: install-apt-optional install-apps-webstorm install-apps-clion
 
 install-apt-optional:
 	$(call TITLE, INSTALL APT PACKAGES)
@@ -129,10 +134,15 @@ install-apt-optional:
 		echo
 		$(call LINK_BIN,/opt/android-studio/bin/studio.sh,android-studio)
 
-install-apps-intellij:
-	$(call TITLE, INSTALL INTELLIJ)
-		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IC-.*/bin/idea.sh'),idea)
+install-apps-webstorm:
+	$(call TITLE, INSTALL WEBSTORM)
+		$(call WGET_APP,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm.*/bin/webstorm.sh'),webstorm)
+
+install-apps-clion:
+	$(call TITLE, INSTALL CLION)
+		$(call WGET_APP,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/CLion.*/bin/clion.sh'),clion)
 
 #============================================
 ### Post installation procedures ############
