@@ -51,13 +51,7 @@ setup-apt: ##Add all repositories to apt.
 		add-apt-repository -y "deb http://archive.canonical.com $$(lsb_release -sc) partner"        # Flash plugins (firefox, chrome)
 
 	$(call TITLE, SETUP NODE SOURCES)
-		curl -sL https://deb.nodesource.com/setup_$(NODE).x | sudo -E bash -
-
-	$(call TITLE, SETUP NEO4J SOURCES)
-		wget -O - https://debian.neo4j.org/neotechnology.gpg.key | apt-key add -
-		echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
-		echo
-		$(call INFO,$$(mv -v /tmp/neo4j.list /etc/apt/sources.list.d))
+		wget -O - https://deb.nodesource.com/setup_$(NODE).x | sudo -E bash -
 
 	$(call TITLE, UPDATE APT)
 		apt-get update

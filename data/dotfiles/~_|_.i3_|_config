@@ -164,6 +164,7 @@ bindsym $mod+d exec /usr/bin/display
 exec_always setxkbmap -layout us -option && xmodmap ~/.Xmodmap
 exec_always xset m 100 3
 exec_always xset r rate 180 50
+exec_always numlockx on
 
 # Exec on init
 exec pactl set-sink-mute @DEFAULT_SINK@ 0
