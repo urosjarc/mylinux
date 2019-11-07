@@ -29,12 +29,11 @@ run-select: ##Select which targets you want to run.
 		"post-setup" "" on \
 		"data" "" on \
 		"vcs" "" on \
-		"matlab" "" on \
 		"finish" "" on \
 		3>&1 1>&2 2>&3)
 
-run-min: setup install             post-install post-setup data vcs matlab finish ##Run minimalistic installation set
-run-all: setup install install-opt post-install post-setup data vcs matlab finish ##Run whole installation set.
+run-min: setup install             post-install post-setup data vcs finish ##Run minimalistic installation set
+run-all: setup install install-opt post-install post-setup data vcs finish ##Run whole installation set.
 
 #=====================================================================
 ### Setup requirements for installation procedures ###################
@@ -86,7 +85,7 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-apt install-npm install-pip3 install-gem install-apps-gitkraken install-apps-pycharm install-apps-intellij
+install: install-apt install-npm install-pip3 install-gem install-apps-gitkraken install-apps-pycharm install-apps-intellij install-apps-eagle
 
 install-apt:
 	$(call TITLE, INSTALL APT PACKAGES)
@@ -120,6 +119,12 @@ install-apps-intellij:
 		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IC-.*/bin/idea.sh'),idea)
 
+install-apps-eagle:
+	$(call TITLE, INSTALL EAGLE)
+		$(call OPEN_URL,https://www.autodesk.com/eagle-download-lin/)
+		tar -xf $(DOWNLOADS)/Autodesk_EAGLE_* -C $(APPS)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/eagle-.*/eagle'),eagle)
+
 install-opt: install-apt-optional install-apps-webstorm install-apps-clion
 
 install-apt-optional:
@@ -142,7 +147,7 @@ install-apps-clion:
 ### Post installation procedures ############
 #============================================
 
-post-install: ##Install zsh, i3, heroku.
+post-install: ##Install zsh, i3, heroku, fonts, jupyter
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 		echo
@@ -155,13 +160,17 @@ post-install: ##Install zsh, i3, heroku.
 	$(call TITLE, POST INSTALL HEROKU)
 		wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
-	$(call TITLE, INSTALL CODE FONTS)
+	$(call TITLE, POST INSTALL CODE FONTS)
 		$(call WGET_APP,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2)
 		cp -v $(APPS)/dejavu-code-ttf-$(CODE_FONTS)/ttf/* /usr/local/share/fonts
 		fc-cache -f
 		echo
 		$(call INFO,installed fonts [DejaVuSansCode])
 		fc-list | grep "DejaVuSansCode"
+
+	$(call TITLE, POST INSTALL JUPYTER)
+		jupyter contrib nbextension install --user
+		jupyter nbextensions_configurator enable --user
 
 #====================================================
 ### Post installation setup procedures ##############
@@ -226,21 +235,6 @@ vcs-setup: ##Create vcs directory and clone repos.
 vcs-jetbrains: ##Install jetbrains repo.
 	$(call TITLE, POST SETUP JETBRAINS)
 		cd $(VCS)/jetbrains; make install
-
-#=====================================================================
-### Matlab procedure #################################################
-#=====================================================================
-
-matlab: ##Create matlab binary
-	$(call TITLE, SETUP MATLAB)
-		read -p "Setup Matlab? (y/n): " -n 1 -r
-		echo
-		if [[ $$REPLY =~ ^[Yy] ]]
-		then
-			echo
-			$(call LINK_BIN,$(APPS)/MATLAB/$(MATLAB)/bin/matlab,matlab)
-			$(call ALERT,bin scripts: $(shell ls /usr/local/bin | grep "matlab"))
-		fi
 
 #=====================================================================
 ### Finish procedure #################################################

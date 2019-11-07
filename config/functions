@@ -52,3 +52,8 @@ define WGET_APP =
 	fi
 endef
 
+define OPEN_URL =
+    $(call INFO,Opening $1)
+    sudo -u $(USER) firefox $1 > /dev/null 2>&1
+endef
+
