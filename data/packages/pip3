@@ -2,5 +2,6 @@ maybe
 jupyter
 pyqtgraph
 numba
+pyqt5
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator

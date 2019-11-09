@@ -39,6 +39,7 @@ git
 ruby-dev
 python3-pip
 python3-venv
+qt4-designer
 
 # -------- Browser -----------------------
 chromium-browser
