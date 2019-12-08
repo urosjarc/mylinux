@@ -20,7 +20,6 @@
 	WEBSTORM='2019.2.3'
 	CLION='2019.2.4'
 	CODE_FONTS='1.2.2'
-	MATLAB='R2018a'
 
 # Colours
     UNDERLINE=\x1b[4m
