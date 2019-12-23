@@ -85,7 +85,7 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-apt install-npm install-pip3 install-gem install-apps-gitkraken install-apps-pycharm install-apps-intellij install-apps-eagle
+install: install-apt install-npm install-pip3 install-gem install-apps-pycharm install-apps-intellij install-apps-clion
 
 install-apt:
 	$(call TITLE, INSTALL APT PACKAGES)
@@ -103,12 +103,6 @@ install-gem:
 	$(call TITLE, INSTALL GEM PACKAGES)
 		$(call INSTALL,gem install,gem)
 
-install-apps-gitkraken:
-	$(call TITLE, INSTALL GITKRAKEN)
-		$(call WGET_APP,gitkraken.tar.gz,https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz)
-		$(call LINK_BIN,$(APPS)/gitkraken/gitkraken,gitkraken)
-		$(call INFO,gitkraken ($$(gitkraken -v)))
-
 install-apps-pycharm:
 	$(call TITLE, INSTALL PYCHARM)
 		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
@@ -119,13 +113,13 @@ install-apps-intellij:
 		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IC-.*/bin/idea.sh'),idea)
 
-install-apps-eagle:
-	$(call TITLE, INSTALL EAGLE)
-		$(call OPEN_URL,https://www.autodesk.com/eagle-download-lin/)
-		tar -xf $(DOWNLOADS)/Autodesk_EAGLE_* -C $(APPS)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/eagle-.*/eagle'),eagle)
+install-apps-clion:
+	$(call TITLE, INSTALL CLION)
+		$(call WGET_APP,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/clion.*/bin/clion.sh'),clion)
 
-install-opt: install-apt-optional install-apps-webstorm install-apps-clion
+
+install-opt: install-apt-optional install-apps-webstorm
 
 install-apt-optional:
 	$(call TITLE, INSTALL APT PACKAGES)
@@ -138,10 +132,10 @@ install-apps-webstorm:
 		$(call WGET_APP,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm.*/bin/webstorm.sh'),webstorm)
 
-install-apps-clion:
-	$(call TITLE, INSTALL CLION)
-		$(call WGET_APP,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/CLion.*/bin/clion.sh'),clion)
+install-apps-simplicity:
+	$(call TITLE, INSTALL SIMPLICITY)
+		$(call WGET_APP,simplicity.tar.gz,https://www.silabs.com/documents/login/software/SimplicityStudio-$(SIMPLICITY).tgz)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/SimplicityStudio_${SIMPLICITY}/studio'),simplicity)
 
 #============================================
 ### Post installation procedures ############
