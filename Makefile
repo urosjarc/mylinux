@@ -135,7 +135,8 @@ install-apps-webstorm:
 install-apps-simplicity:
 	$(call TITLE, INSTALL SIMPLICITY)
 		$(call WGET_APP,simplicity.tar.gz,https://www.silabs.com/documents/login/software/SimplicityStudio-$(SIMPLICITY).tgz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/SimplicityStudio_${SIMPLICITY}/studio'),simplicity)
+		echo -e 'cd ${APPS}/SimplicityStudio_${SIMPLICITY}/ && ./run_studio.sh' > ${BIN}/simplicity
+		cat simplicity
 
 #============================================
 ### Post installation procedures ############

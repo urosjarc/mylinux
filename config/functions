@@ -28,7 +28,7 @@ define MKDIR =
     elif [[ ! -d $1 ]]; then
         $(call ERROR,path \"$1\" already exists but is not a directory!)
     else
-        $(call ALERT,folder \"$1\" already exists...)
+        $(call ALERT,folder \"$1\" already exists ...)
     fi
 endef
 
@@ -46,10 +46,11 @@ define WGET_APP =
 	if [ ! -f $(DOWNLOADS)/$1 ]; then
         $(call INFO,wget \"$1\" --> \"$(DOWNLOADS)\")
 		wget -O $(DOWNLOADS)/$1 $2
-		tar -xf $(DOWNLOADS)/$1 -C $(APPS)
 	else
-        $(call ALERT,folder \"$1\" already exists in \"$(DOWNLOADS)\"...)
+        $(call ALERT,folder \"$1\" already exists in \"$(DOWNLOADS)\" ...)
 	fi
+    $(call INFO,extracting \"$1\" to \"$(APPS)\" ...)
+    tar -xf $(DOWNLOADS)/$1 -C $(APPS)
 endef
 
 define OPEN_URL =
