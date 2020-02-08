@@ -35,14 +35,17 @@ vim
 
 # -------- Programming -------------------
 nodejs
-git
 ruby-dev
 python3-pip
+
+# -------- Programming tools -------------
+git
 python3-venv
 cmake
 doxygen
 graphviz
 libcmocka-dev
+libsdl2-dev
 
 # -------- Browser -----------------------
 chromium-browser

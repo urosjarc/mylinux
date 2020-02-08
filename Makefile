@@ -124,6 +124,10 @@ install-opt: install-apt-optional install-apps-webstorm
 install-apt-optional:
 	$(call TITLE, INSTALL APT PACKAGES)
 		$(call INSTALL,apt-get -y install,apt-optional)
+
+install-apps-android:
+	$(call TITLE, INSTALL ANDROID)
+		$(call INSTALL,apt-get -y install,apt-android)
 		echo
 		$(call LINK_BIN,/opt/android-studio/bin/studio.sh,android-studio)
 
@@ -136,7 +140,7 @@ install-apps-simplicity:
 	$(call TITLE, INSTALL SIMPLICITY)
 		$(call WGET_APP,simplicity.tar.gz,https://www.silabs.com/documents/login/software/SimplicityStudio-$(SIMPLICITY).tgz)
 		echo -e 'cd ${APPS}/SimplicityStudio_${SIMPLICITY}/ && ./run_studio.sh' > ${BIN}/simplicity
-		cat simplicity
+		cat ${BIN}/simplicity
 
 #============================================
 ### Post installation procedures ############
