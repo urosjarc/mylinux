@@ -46,6 +46,7 @@ doxygen
 graphviz
 libcmocka-dev
 libsdl2-dev
+libglfw3
 
 # -------- Browser -----------------------
 chromium-browser
