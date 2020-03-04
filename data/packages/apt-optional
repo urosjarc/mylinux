@@ -6,11 +6,5 @@ qt4-designer
 openjfx
 openjdk-12-jdk
 
-
-# -------- Android -----------------------
-android-studio
-android-tools-adb
-android-tools-fastboot
-
 # -------- Latex -------------------------
 texlive-full
