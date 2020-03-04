@@ -200,6 +200,11 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 		usermod --shell $$(which zsh) $(USER)
 		$(call INFO,$$(grep $(USER) /etc/passwd | sed -e 's/.*,,,://g'))
 
+	$(call TITLE, POST SETUP WIRESHARK)
+		sudo adduser $(USER) wireshark
+		sudo modprobe usbmon
+		sudo setfacl -m u:$(USER):r /dev/usbmon*
+
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
 #=====================================================================
