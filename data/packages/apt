@@ -1,37 +1,37 @@
-# -------- Booting tools -----------------
-gparted
-boot-repair
-grub-customizer
-
-# -------- Sound tools -------------------
-ffmpeg
-libmp3lame0
-vlc
-pavucontrol
-pulseaudio-module-bluetooth
-
-# -------- System admin ------------------
-meld
-curl
-unrar
-numlockx
-
 # -------- Linux environment -------------
 i3
 
-# -------- Display -----------------------
+# -------- Linux environment tools -----------------------
 arandr
 redshift
 classicmenu-indicator
 blueman
 xbacklight
+numlockx
 
-# -------- Terminal ----------------------
+# -------- Terminal environment ----------------------
 zsh
 terminator
 ranger
 feh
 vim
+unrar
+
+# -------- Sound tools -------------------
+ffmpeg
+libmp3lame0
+pavucontrol
+pulseaudio-module-bluetooth
+audacity
+vlc
+
+# -------- System administration tools -------------
+gparted
+boot-repair
+grub-customizer
+wireshark
+curl
+meld
 
 # -------- Programming -------------------
 nodejs
@@ -44,20 +44,19 @@ python3-venv
 cmake
 doxygen
 graphviz
+
+# -------- Programming libs -------------
 libcmocka-dev
 libsdl2-dev
 libusb-1.0-0-dev
 
 # -------- Browser -----------------------
 chromium-browser
-
-# -------- Plugins -----------------------
 adobe-flashplugin
 browser-plugin-freshplayer-pepperflash
 
-# -------- Media tools -------------------
+# -------- Apps -------------------
 kolourpaint
 kazam
 openshot
 scrot
-audacity
