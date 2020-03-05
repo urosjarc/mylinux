@@ -202,8 +202,6 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 
 	$(call TITLE, POST SETUP WIRESHARK)
 		sudo adduser $(USER) wireshark
-		sudo modprobe usbmon
-		sudo setfacl -m u:$(USER):r /dev/usbmon*
 
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
