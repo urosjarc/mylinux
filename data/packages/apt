@@ -27,7 +27,6 @@ vlc
 
 # -------- System administration tools -------------
 gparted
-boot-repair
 grub-customizer
 wireshark
 curl
