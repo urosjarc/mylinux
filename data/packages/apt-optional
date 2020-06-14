@@ -5,6 +5,7 @@ filezilla
 qt4-designer
 openjfx
 openjdk-12-jdk
+neo4j
 
 # -------- Latex -------------------------
 texlive-full

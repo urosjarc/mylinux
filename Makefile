@@ -49,6 +49,10 @@ setup-apt: ##Add all repositories to apt.
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
 		add-apt-repository -y "deb http://archive.canonical.com $$(lsb_release -sc) partner"        # Flash plugins (firefox, chrome)
 
+	$(call TITLE, SETUP NEO4J SOURCES)
+		wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
+		echo 'deb https://debian.neo4j.com stable latest' | sudo tee /etc/apt/sources.list.d/neo4j.list
+
 	$(call TITLE, SETUP NODE SOURCES)
 		wget -O - https://deb.nodesource.com/setup_$(NODE).x | sudo -E bash -
 
