@@ -89,7 +89,11 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-apt install-npm install-pip3 install-gem install-apps-pycharm install-apps-intellij install-apps-clion
+install: install-drivers install-apt install-npm install-pip3 install-gem install-apps-pycharm install-apps-intellij install-apps-clion
+
+install-drivers:
+	$(call TITLE, INSTALL DRIVERS)
+		ubuntu-drivers autoinstall
 
 install-apt:
 	$(call TITLE, INSTALL APT PACKAGES)
