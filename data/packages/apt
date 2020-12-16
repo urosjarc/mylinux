@@ -16,6 +16,7 @@ ranger
 feh
 vim
 unrar
+aptitude
 
 # -------- Sound tools -------------------
 ffmpeg
