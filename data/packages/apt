@@ -1,5 +1,6 @@
 # -------- Linux environment -------------
 i3
+compton
 
 # -------- Linux environment tools -----------------------
 arandr

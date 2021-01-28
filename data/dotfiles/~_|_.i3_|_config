@@ -175,3 +175,4 @@ exec feh --randomize --bg-scale ~/.i3/background/*
 exec classicmenu-indicator
 exec nm-applet
 exec blueman-applet
+exec compton -I 0.028 -O 0.03 -D 3 -m 1 -f -b --inactive-dim 0.2
