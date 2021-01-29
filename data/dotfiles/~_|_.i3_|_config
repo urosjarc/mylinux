@@ -102,18 +102,6 @@ bindsym $mod+Shift+0 move container to workspace 10
 # Reload the configuration / restart
 bindsym $mod+Shift+r restart
 
-# Keybindings
-# Logout/reboot/poweroff
-bindsym $mod+Shift+m mode "Map (U)SA, (S)LOVENIAN"
-mode "Map (U)SA, (S)LOVENIAN" {
-	bindsym u exec setxkbmap -layout us -option && xmodmap ~/.Xmodmap
-	bindsym s exec setxkbmap -layout si -option && xmodmap ~/.Xmodmap
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
 mode "resize" {
@@ -145,6 +133,12 @@ mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate" {
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
 
+# F Keybindings
+bindsym F1 exec setxkbmap -layout us -option && xmodmap ~/.Xmodmap
+bindsym F2 exec setxkbmap -layout si -option && xmodmap ~/.Xmodmap
+bindsym F3 exec redshift -x && redshift -O 2500 && xbacklight -set 75 # dark mode :3
+bindsym F10 exec redshift -x && redshift -O 5000 && xbacklight -set 75 # light mode :3
+
 # Print screen
 bindsym --release Print exec gnome-screenshot --interactive
 
@@ -155,7 +149,6 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 # Brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5 -time 0 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5 -time 0 # decrease screen brightness
-bindsym $mod+n exec redshift -O 2500 && xbacklight -set 0 # dark mode :3
 
 # Screen lock
 bindsym $mod+Ctrl+l exec ~/.i3/i3lock-fancy-multimonitor/lock
@@ -166,6 +159,7 @@ exec_always setxkbmap -layout us -option && xmodmap ~/.Xmodmap
 exec_always xset m 100 3
 exec_always xset r rate 180 50
 exec_always numlockx on
+exec_always compton -I 0.028 -O 0.03 -D 3 -m 1 -f -b --inactive-dim 0.2
 
 # Exec on init
 exec pactl set-sink-mute @DEFAULT_SINK@ 0
@@ -175,4 +169,3 @@ exec feh --randomize --bg-scale ~/.i3/background/*
 exec classicmenu-indicator
 exec nm-applet
 exec blueman-applet
-exec compton -I 0.028 -O 0.03 -D 3 -m 1 -f -b --inactive-dim 0.2
