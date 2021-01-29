@@ -35,47 +35,24 @@ for_window [class=".*"] title_format " <b>%class</b> | %title"
 new_window none
 new_float none
 
-
 # Set modifier
 set $mod Mod4
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# Start action (a program launcher)
-bindsym $mod+a exec dmenu_run
-
-# Close focused window
-bindsym $mod+c kill
-
 #Mouse do not change focus :)
 focus_follows_mouse no
 
-# Change focus
+# Moving
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-
-# Move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
-# Enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen
-
-# Change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+t layout tabbed
-bindsym $mod+g layout toggle split
-
-# Toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
-
-# Switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -86,8 +63,6 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
-
-# Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
 bindsym $mod+Shift+3 move container to workspace 3
@@ -98,9 +73,6 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
-
-# Reload the configuration / restart
-bindsym $mod+Shift+r restart
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -115,43 +87,47 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+# Commands and modes
+bindsym $mod+Shift+r restart
+bindsym $mod+f fullscreen
+bindsym $mod+c kill
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+g layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
 # Logout/reboot/poweroff
-bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff, (S)uspend, (H)ibernate"
-mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate" {
+bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff, (S)uspend, (H)ibernate, (K)ey"
+mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate, (k)ey" {
         bindsym r exec reboot
         bindsym l exec i3-msg exit
         bindsym p exec poweroff
         bindsym s exec systemctl suspend
         bindsym h exec systemctl hibernate
+        bindsym k exec ~/.i3/i3lock-fancy-multimonitor/lock
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
 
-# Starting terminals
-bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
-
 # F Keybindings
 bindsym F1 exec setxkbmap -layout us -option && xmodmap ~/.Xmodmap
 bindsym F2 exec setxkbmap -layout si -option && xmodmap ~/.Xmodmap
 bindsym F3 exec redshift -x && redshift -O 2500 && xbacklight -set 75 # dark mode :3
 bindsym F10 exec redshift -x && redshift -O 5000 && xbacklight -set 75 # light mode :3
-
-# Print screen
 bindsym --release Print exec gnome-screenshot --interactive
-
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-
-# Brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5 -time 0 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5 -time 0 # decrease screen brightness
 
-# Screen lock
-bindsym $mod+Ctrl+l exec ~/.i3/i3lock-fancy-multimonitor/lock
+# Exec on mod key
+bindsym $mod+a exec dmenu_run
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
 bindsym $mod+d exec nautilus ~/vcs
 
 # Exec on reload
