@@ -184,11 +184,11 @@ post-install: ##Install zsh, i3, heroku, fonts, jupyter
 #====================================================
 
 post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
-	$(call TITLE, SETUP INOTIFY)
+	$(call TITLE, POST SETUP INOTIFY)
 		grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
 		sysctl -p #Update inotify
 
-	$(call TITLE, POST CLEANING HOME DIRECTORY)
+	$(call TITLE, POST SETUP HOME DIRECTORY)
 		rm -rfv ~/Desktop
 		rm -rfv ~/Music
 		rm -rfv ~/Public
