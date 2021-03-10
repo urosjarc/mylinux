@@ -12,14 +12,14 @@
 	LAYOUTS=$(DATA)/layouts
 	DOTFILES=$(DATA)/dotfiles
 	PACKAGES=$(DATA)/packages
-
+	SCRIPTS=$(DATA)/scripts
+	
 # Versions
-	NODE='12'
-	PYCHARM='2019.3.3'
-	IDEA='2019.3.3'
-	WEBSTORM='2019.3.3'
-	CLION='2019.3.4'
-	SIMPLICITY='v4'
+	NODE='14'
+	PYCHARM='2020.3.3'
+	IDEA='2020.3.2'
+	WEBSTORM='2020.3.2'
+	CLION='2020.3.2'
 	CODE_FONTS='1.2.2'
 
 # Colours

@@ -12,7 +12,7 @@ ifneq ($(SUDO_HOME), $(HOME))
 $(error SUDO_HOME "$(SUDO_HOME)" is not equal to "$(HOME)")
 endif
 
-.DEFAULT_GOAL := run-min
+.DEFAULT_GOAL := run
 .PHONY: data
 
 #==================================================================
@@ -23,7 +23,6 @@ run-select: ##Select which targets you want to run.
 	$(MAKE) $$(whiptail --title "Select target to install" --checklist "Choose:" 20 30 15 \
 		"setup" "" on \
 		"install" "" on \
-		"install-opt" "" off \
 		"update" "" off \
 		"post-install" "" on \
 		"post-setup" "" on \
@@ -32,8 +31,7 @@ run-select: ##Select which targets you want to run.
 		"finish" "" on \
 		3>&1 1>&2 2>&3)
 
-run-min: setup install             post-install post-setup data vcs finish ##Run minimalistic installation set
-run-all: setup install install-opt post-install post-setup data vcs finish ##Run whole installation set.
+run: setup install post-install post-setup data vcs finish ##Run default installation set
 
 #=====================================================================
 ### Setup requirements for installation procedures ###################
@@ -43,9 +41,7 @@ setup: setup-apt setup-dirs
 
 setup-apt: ##Add all repositories to apt.
 	$(call TITLE, SETUP APT REPOS)
-		add-apt-repository -y ppa:danielrichter2007/grub-customizer                                 # Grub customizer
-		add-apt-repository -y ppa:yannubuntu/boot-repair                                            # Boot repair
-		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity, woeusb
+		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
 		add-apt-repository -y "deb http://archive.canonical.com $$(lsb_release -sc) partner"        # Flash plugins (firefox, chrome)
 
@@ -89,7 +85,7 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-drivers install-apt install-npm install-pip3 install-gem install-apps-pycharm install-apps-intellij install-apps-clion
+install: install-drivers install-apt install-npm install-pip3 install-gem install-apps-pycharm install-apps-webstorm install-apps-intellij install-apps-clion
 
 install-drivers:
 	$(call TITLE, INSTALL DRIVERS)
@@ -126,12 +122,10 @@ install-apps-clion:
 		$(call WGET_APP,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/clion.*/bin/clion.sh'),clion)
 
-
-install-opt: install-apt-optional install-apps-webstorm
-
-install-apt-optional:
-	$(call TITLE, INSTALL APT PACKAGES)
-		$(call INSTALL,apt-get -y install,apt-optional)
+install-apps-webstorm:
+	$(call TITLE, INSTALL WEBSTORM)
+		$(call WGET_APP,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm.*/bin/webstorm.sh'),webstorm)
 
 install-apps-android:
 	$(call TITLE, INSTALL ANDROID)
@@ -139,16 +133,6 @@ install-apps-android:
 		echo
 		$(call LINK_BIN,/opt/android-studio/bin/studio.sh,android-studio)
 
-install-apps-webstorm:
-	$(call TITLE, INSTALL WEBSTORM)
-		$(call WGET_APP,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm.*/bin/webstorm.sh'),webstorm)
-
-install-apps-simplicity:
-	$(call TITLE, INSTALL SIMPLICITY)
-		$(call WGET_APP,simplicity.tar.gz,https://www.silabs.com/documents/login/software/SimplicityStudio-$(SIMPLICITY).tgz)
-		echo -e 'cd ${APPS}/SimplicityStudio_${SIMPLICITY}/ && ./run_studio.sh' > ${BIN}/simplicity
-		cat ${BIN}/simplicity
 
 #============================================
 ### Post installation procedures ############
@@ -163,9 +147,6 @@ post-install: ##Install zsh, i3, heroku, fonts, jupyter
 	$(call TITLE, POST INSTALL I3 TOOLS)
 		$(call GIT_CLONE,https://github.com/guimeira/i3lock-fancy-multimonitor.git,~/.i3/i3lock-fancy-multimonitor)
 		$(call INFO,$$(chmod -v +x ~/.i3/i3lock-fancy-multimonitor/lock))
-
-	$(call TITLE, POST INSTALL HEROKU)
-		wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 	$(call TITLE, POST INSTALL CODE FONTS)
 		$(call WGET_APP,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2)
@@ -208,9 +189,6 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 		usermod --shell $$(which zsh) $(USER)
 		$(call INFO,$$(grep $(USER) /etc/passwd | sed -e 's/.*,,,://g'))
 
-	$(call TITLE, POST SETUP WIRESHARK)
-		sudo adduser $(USER) wireshark
-
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
 #=====================================================================
@@ -221,6 +199,9 @@ data: ##Setup i3 background, layouts, and dotfiles.
 
 	$(call TITLE, COPY LAYOUTS)
 		cp -rv $(LAYOUTS) ~/.i3
+		
+	$(call TITLE, COPY BIN)
+		cp -rv $(SCRIPTS) $(BIN)
 
 	$(call TITLE, COPY DOTFILES)
 		for fpath in $(DOTFILES)/*; do

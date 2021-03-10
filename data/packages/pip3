@@ -4,6 +4,6 @@ numpy
 jupyter
 pyqtgraph
 numba
-pyqt5
+pyqt5-tools
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator

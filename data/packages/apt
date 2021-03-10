@@ -29,8 +29,6 @@ vlc
 
 # -------- System administration tools -------------
 gparted
-grub-customizer
-wireshark
 curl
 meld
 

@@ -22,9 +22,3 @@ export NVM_DIR="$HOME/.nvm"
 
 #My settings
 printf '\n ---> WELLCOME UROS :)\n'
-{
-
-    eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/gitkraken_rsa
-
-} </dev/null >/dev/null 2>&1
