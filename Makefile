@@ -107,24 +107,28 @@ install-gem:
 	$(call TITLE, INSTALL GEM PACKAGES)
 		$(call INSTALL,gem install,gem)
 
+install-apps-chrome:
+	$(call TITLE, INSTALL CHROME)
+		$(call WGET_DEB,google-chrome-stable_current_amd64.deb,https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
+
 install-apps-pycharm:
 	$(call TITLE, INSTALL PYCHARM)
-		$(call WGET_APP,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
+		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
 		$(call LINK_BIN,$(APPS)/pycharm-community-$(PYCHARM)/bin/pycharm.sh,pycharm)
 
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
-		$(call WGET_APP,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
+		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IC-.*/bin/idea.sh'),idea)
 
 install-apps-clion:
 	$(call TITLE, INSTALL CLION)
-		$(call WGET_APP,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz)
+		$(call WGET_TAR,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/clion.*/bin/clion.sh'),clion)
 
 install-apps-webstorm:
 	$(call TITLE, INSTALL WEBSTORM)
-		$(call WGET_APP,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz)
+		$(call WGET_TAR,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm.*/bin/webstorm.sh'),webstorm)
 
 install-apps-android:
@@ -149,7 +153,7 @@ post-install: ##Install zsh, i3, heroku, fonts, jupyter
 		$(call INFO,$$(chmod -v +x ~/.i3/i3lock-fancy-multimonitor/lock))
 
 	$(call TITLE, POST INSTALL CODE FONTS)
-		$(call WGET_APP,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2)
+		$(call WGET_TAR,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2)
 		cp -v $(APPS)/dejavu-code-ttf-$(CODE_FONTS)/ttf/* /usr/local/share/fonts
 		fc-cache -f
 		echo

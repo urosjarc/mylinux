@@ -42,7 +42,7 @@ define GIT_CLONE =
 	fi
 endef
 
-define WGET_APP =
+define WGET_TAR =
 	if [ ! -f $(DOWNLOADS)/$1 ]; then
         $(call INFO,wget \"$1\" --> \"$(DOWNLOADS)\")
 		wget -O $(DOWNLOADS)/$1 $2
@@ -51,6 +51,16 @@ define WGET_APP =
 	fi
     $(call INFO,extracting \"$1\" to \"$(APPS)\" ...)
     tar -xf $(DOWNLOADS)/$1 -C $(APPS)
+endef
+
+define WGET_DEB =
+	if [ ! -f $(DOWNLOADS)/$1 ]; then
+        $(call INFO,wget \"$1\" --> \"$(DOWNLOADS)\")
+		wget -O $(DOWNLOADS)/$1 $2
+	else
+        $(call ALERT,file \"$1\" already exists in \"$(DOWNLOADS)\" ...)
+	fi
+    dpkg -i $(DOWNLOADS)/$1
 endef
 
 define OPEN_URL =

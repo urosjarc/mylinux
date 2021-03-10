@@ -49,11 +49,6 @@ libcmocka-dev
 libsdl2-dev
 python3-pyqt5.qtopengl
 
-# -------- Browser -----------------------
-chromium-browser
-adobe-flashplugin
-browser-plugin-freshplayer-pepperflash
-
 # -------- Apps -------------------
 kolourpaint
 kazam

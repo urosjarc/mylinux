@@ -5,5 +5,7 @@ jupyter
 pyqtgraph
 numba
 pyqt5-tools
+dash
+plotly
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator
