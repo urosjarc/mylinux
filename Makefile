@@ -43,7 +43,6 @@ setup-apt: ##Add all repositories to apt.
 	$(call TITLE, SETUP APT REPOS)
 		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
-		add-apt-repository -y "deb http://archive.canonical.com $$(lsb_release -sc) partner"        # Flash plugins (firefox, chrome)
 
 	$(call TITLE, SETUP NEO4J SOURCES)
 		wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
@@ -85,7 +84,7 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-drivers install-apt install-npm install-pip3 install-gem install-apps-pycharm install-apps-webstorm install-apps-intellij install-apps-clion
+install: install-drivers install-apt install-npm install-pip3 install-gem install-apps-chrome install-apps-pycharm install-apps-webstorm install-apps-intellij install-apps-clion
 
 install-drivers:
 	$(call TITLE, INSTALL DRIVERS)
