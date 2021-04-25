@@ -15,12 +15,11 @@ define INFO =
 endef
 
 define INSTALL_LOOP =
-	for package in $$(grep -vE "^\s*#" $(PACKAGES)/$1 | tr "\n" " ")
+	for package in $$(grep -vE "^\s*#" $(PACKAGES)/$2 | tr "\n" " ")
 	do
-	    sudo -H $2 $$package
+	    sudo -H $1 $$package
 	done
-endef
-
+endef 
 define INSTALL =
 	sudo -H $1 $$(grep -vE "^\s*#" $(PACKAGES)/$2 | tr "\n" " ")
 endef

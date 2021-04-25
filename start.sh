@@ -5,7 +5,9 @@ printS "Install make"
 sudo apt install -y make
 
 printS "Setup background images"
-nautilus /usr/share/backgrounds/ ./data/background/
+open /usr/share/backgrounds/
+open ./data/background/
+
 
 printS "Setup user info and versions"
 open config/variables 
