@@ -1,9 +1,12 @@
-# User info
-	USER=uros.jarc
+# User info *replace values with your own data*
+	USER=urosjarc
 	EMAIL=jar.fmf@gmail.com
 
 # Versions
 	CODE_FONTS='1.2.2'
+
+# Author of this project *github username*
+    AUTHOR=urosjarc
 
 # Directories
 	HOME=/home/$(USER)

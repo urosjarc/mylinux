@@ -201,8 +201,8 @@ vcs: vcs-setup vcs-jetbrains
 vcs-setup: ##Create vcs directory and clone repos
 	$(call TITLE, POST SETUP VCS)
 		$(call MKDIR,$(VCS))
-		$(call GIT_CLONE,https://github.com/$(USER)/mylinux.git,$(VCS)/mylinux)
-		$(call GIT_CLONE,https://github.com/$(USER)/jetbrains.git,$(VCS)/jetbrains)
+		$(call GIT_CLONE,https://github.com/$(AUTHOR)/mylinux.git,$(VCS)/mylinux)
+		$(call GIT_CLONE,https://github.com/$(AUTHOR)/jetbrains.git,$(VCS)/jetbrains)
 
 vcs-jetbrains: ##Install my repositories
 	$(call TITLE, POST SETUP JETBRAINS)
