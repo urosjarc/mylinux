@@ -1,5 +1,11 @@
 # User info
-	USER=urosjarc
+	USER=uros.jarc
+	EMAIL=jar.fmf@gmail.com
+
+# Versions
+	CODE_FONTS='1.2.2'
+
+# Directories
 	HOME=/home/$(USER)
 	DOWNLOADS=$(HOME)/Downloads
 	APPS=$(HOME)/.APPS
@@ -13,14 +19,6 @@
 	DOTFILES=$(DATA)/dotfiles
 	PACKAGES=$(DATA)/packages
 	SCRIPTS=$(DATA)/scripts
-	
-# Versions
-	NODE='14'
-	PYCHARM='2021.1.1'
-	IDEA='2021.1'
-	WEBSTORM='2021.1'
-	CLION='2021.1.1'
-	CODE_FONTS='1.2.2'
 
 # Colours
     UNDERLINE=\x1b[4m

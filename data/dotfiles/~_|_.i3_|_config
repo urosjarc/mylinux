@@ -98,14 +98,13 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # Logout/reboot/poweroff
-bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff, (S)uspend, (H)ibernate, (K)ey"
-mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate, (k)ey" {
+bindsym $mod+Shift+e mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate"
+mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate" {
         bindsym r exec reboot
         bindsym l exec i3-msg exit
         bindsym p exec poweroff
         bindsym s exec systemctl suspend
         bindsym h exec systemctl hibernate
-        bindsym k exec ~/.i3/i3lock-fancy-multimonitor/lock
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -144,4 +143,3 @@ exec sh ~/.i3/xrandr.sh
 exec feh --randomize --bg-scale ~/.i3/background/*
 exec classicmenu-indicator
 exec nm-applet
-exec blueman-applet

@@ -13,13 +13,13 @@ $(error SUDO_HOME "$(SUDO_HOME)" is not equal to "$(HOME)")
 endif
 
 .DEFAULT_GOAL := run
-.PHONY: data
+.PHONY: data config
 
 #==================================================================
 ### Running whole installation procedure ##########################
 #==================================================================
 
-run-select: ##Select which targets you want to run.
+run-select: ##Select which targets you want to run
 	$(MAKE) $$(whiptail --title "Select target to install" --checklist "Choose:" 20 30 15 \
 		"setup" "" on \
 		"install" "" on \
@@ -39,7 +39,7 @@ run: setup install post-install post-setup data vcs finish ##Run default install
 
 setup: setup-apt setup-dirs
 
-setup-apt: ##Add all repositories to apt.
+setup-apt: ##Add all repositories to apt
 	$(call TITLE, SETUP APT REPOS)
 		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
@@ -48,13 +48,10 @@ setup-apt: ##Add all repositories to apt.
 		wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
 		echo 'deb https://debian.neo4j.com stable latest' | sudo tee /etc/apt/sources.list.d/neo4j.list
 
-	$(call TITLE, SETUP NODE SOURCES)
-		wget -O - https://deb.nodesource.com/setup_$(NODE).x | sudo -E bash -
-
 	$(call TITLE, UPDATE APT)
 		apt-get update
 
-setup-dirs:
+setup-dirs: ##Create folder for tar apps to install in
 	$(call TITLE, CREATING .APPS DIR)
 		$(call MKDIR,$(APPS))
 
@@ -84,7 +81,7 @@ update-apt:
 ### Installation procedure #################
 #===========================================
 
-install: install-drivers install-apt install-npm install-pip3 install-gem install-apps-chrome install-apps-pycharm install-apps-webstorm install-apps-intellij install-apps-clion
+install: install-drivers install-apt install-snap install-npm install-pip3 install-gem install-apps-chrome
 
 install-drivers:
 	$(call TITLE, INSTALL DRIVERS)
@@ -93,6 +90,10 @@ install-drivers:
 install-apt:
 	$(call TITLE, INSTALL APT PACKAGES)
 		$(call INSTALL,apt-get -y install,apt)
+
+install-snap:
+	$(call TITLE, INSTALL SNAP PACKAGES)
+		$(call INSTALL_LOOP,snap install --classic,snap)
 
 install-npm:
 	$(call TITLE, INSTALL NPM PACKAGES)
@@ -110,26 +111,6 @@ install-apps-chrome:
 	$(call TITLE, INSTALL CHROME)
 		$(call WGET_DEB,google-chrome-stable_current_amd64.deb,https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
 
-install-apps-pycharm:
-	$(call TITLE, INSTALL PYCHARM)
-		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
-		$(call LINK_BIN,$(APPS)/pycharm-community-$(PYCHARM)/bin/pycharm.sh,pycharm)
-
-install-apps-intellij:
-	$(call TITLE, INSTALL INTELLIJ)
-		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IC-.*/bin/idea.sh'),idea)
-
-install-apps-clion:
-	$(call TITLE, INSTALL CLION)
-		$(call WGET_TAR,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/clion.*/bin/clion.sh'),clion)
-
-install-apps-webstorm:
-	$(call TITLE, INSTALL WEBSTORM)
-		$(call WGET_TAR,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm.*/bin/webstorm.sh'),webstorm)
-
 install-apps-android:
 	$(call TITLE, INSTALL ANDROID)
 		$(call INSTALL,apt-get -y install,apt-android)
@@ -141,15 +122,11 @@ install-apps-android:
 ### Post installation procedures ############
 #============================================
 
-post-install: ##Install zsh, i3, heroku, fonts, jupyter
+post-install: ##Install zsh, fonts, jupyter
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 		echo
 		$(call GIT_CLONE,https://github.com/zsh-users/zsh-syntax-highlighting.git,~/.oh-my-zsh/plugins/zsh-syntax-highlighting)
-
-	$(call TITLE, POST INSTALL I3 TOOLS)
-		$(call GIT_CLONE,https://github.com/guimeira/i3lock-fancy-multimonitor.git,~/.i3/i3lock-fancy-multimonitor)
-		$(call INFO,$$(chmod -v +x ~/.i3/i3lock-fancy-multimonitor/lock))
 
 	$(call TITLE, POST INSTALL CODE FONTS)
 		$(call WGET_TAR,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2)
@@ -167,7 +144,7 @@ post-install: ##Install zsh, i3, heroku, fonts, jupyter
 ### Post installation setup procedures ##############
 #====================================================
 
-post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
+post-setup: ##Setup inotify, alternatives, vcs, clean home directory
 	$(call TITLE, POST SETUP INOTIFY)
 		grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
 		sysctl -p #Update inotify
@@ -196,21 +173,22 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory.
 ### Setup and copy all dotfiles to home directory ####################
 #=====================================================================
 
-data: ##Setup i3 background, layouts, and dotfiles.
+data: ##Setup i3 background, layouts, scripts and dotfiles
 	$(call TITLE, COPY BACKGROUND)
 		cp -rv $(BACKGROUND) ~/.i3
 
 	$(call TITLE, COPY LAYOUTS)
 		cp -rv $(LAYOUTS) ~/.i3
-		
+
 	$(call TITLE, COPY BIN)
 		cp -rv $(SCRIPTS) $(BIN)
 
 	$(call TITLE, COPY DOTFILES)
 		for fpath in $(DOTFILES)/*; do
 			newPath=$$(echo $$fpath | sed -e 's/^.*\///g' -e 's/_|_/\//g' -e "s/~/\/home\/${USER}/g")
+			newText=$$(cat $$fpath | sed -e "s/USER/${USER}/g" -e "s/EMAIL/${EMAIL}/g")
 			mkdir -p $$(dirname $$newPath)
-			cp $$fpath $$newPath
+			echo $$newText >> $$newPath
 			printf "%-35s -> %s\n" $$(basename $$fpath) $$newPath
 		done
 
@@ -220,13 +198,13 @@ data: ##Setup i3 background, layouts, and dotfiles.
 
 vcs: vcs-setup vcs-jetbrains
 
-vcs-setup: ##Create vcs directory and clone repos.
+vcs-setup: ##Create vcs directory and clone repos
 	$(call TITLE, POST SETUP VCS)
 		$(call MKDIR,$(VCS))
 		$(call GIT_CLONE,https://github.com/$(USER)/mylinux.git,$(VCS)/mylinux)
 		$(call GIT_CLONE,https://github.com/$(USER)/jetbrains.git,$(VCS)/jetbrains)
 
-vcs-jetbrains: ##Install jetbrains repo.
+vcs-jetbrains: ##Install my repositories
 	$(call TITLE, POST SETUP JETBRAINS)
 		cd $(VCS)/jetbrains; make install
 
