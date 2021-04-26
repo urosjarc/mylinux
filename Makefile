@@ -123,6 +123,9 @@ install-apps-android:
 #============================================
 
 post-install: ##Install zsh, fonts, jupyter
+	$(call TITLE, POST APT AUTOREMOVE)
+		sudo apt autoremove
+
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 		echo
