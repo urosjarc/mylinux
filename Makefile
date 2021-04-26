@@ -186,9 +186,9 @@ data: ##Setup i3 background, layouts, scripts and dotfiles
 	$(call TITLE, COPY DOTFILES)
 		for fpath in $(DOTFILES)/*; do
 			newPath=$$(echo $$fpath | sed -e 's/^.*\///g' -e 's/_|_/\//g' -e "s/~/\/home\/${USER}/g")
-			newText=$$(cat $$fpath | sed -e "s/USER/${USER}/g" -e "s/EMAIL/${EMAIL}/g")
 			mkdir -p $$(dirname $$newPath)
-			echo $$newText >> $$newPath
+			cp $$fpath $$newPath
+			sed -i -e "s/USER/${USER}/g" -e "s/EMAIL/${EMAIL}/g" $$newPath
 			printf "%-35s -> %s\n" $$(basename $$fpath) $$newPath
 		done
 
