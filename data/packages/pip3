@@ -2,6 +2,7 @@ maybe
 neo4j
 numpy
 jupyter
+virtualenv
 pyqtgraph
 numba
 pyqt5-tools
