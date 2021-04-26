@@ -3,6 +3,7 @@ neo4j
 numpy
 jupyter
 virtualenv
+PyQtWebEngine
 pyqtgraph
 numba
 pyqt5-tools
