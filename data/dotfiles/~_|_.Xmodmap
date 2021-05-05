@@ -2,9 +2,3 @@ clear Lock
 keysym Caps_Lock = Escape
 keysym Escape = Caps_Lock
 add Lock = Caps_Lock
-
-keycode 108 = Mode_switch
-keysym h = h H Left
-keysym l = l L Right
-keysym k = k K Up
-keysym j = j J Down
