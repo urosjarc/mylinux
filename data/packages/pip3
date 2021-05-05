@@ -1,12 +1,6 @@
-maybe
-neo4j
-numpy
-jupyter
 virtualenv
-pyqtgraph
-numba
-pyqt5-tools
-dash
-plotly
+conan
+jupyter
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator
+pyqt5-tools
