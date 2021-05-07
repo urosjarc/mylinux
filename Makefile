@@ -152,6 +152,13 @@ post-install: ##Install zsh, fonts, jupyter
 #====================================================
 
 post-setup: ##Setup inotify, alternatives, vcs, clean home directory
+	$(call TITLE, POST SETUP PROFILER)
+		sh -c 'echo 1 >/proc/sys/kernel/perf_event_paranoid'
+		sh -c 'echo 0 >/proc/sys/kernel/kptr_restrict'
+		sh -c 'echo kernel.perf_event_paranoid=1 >> /etc/sysctl.d/99-perf.conf'
+		sh -c 'echo kernel.kptr_restrict=0 >> /etc/sysctl.d/99-perf.conf'
+		sh -c 'sysctl --system'
+
 	$(call TITLE, POST SETUP INOTIFY)
 		grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
 		sysctl -p #Update inotify
