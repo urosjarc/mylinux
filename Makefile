@@ -127,8 +127,8 @@ post-install: ##Install zsh, fonts, jupyter
 	$(call TITLE, POST APT AUTOREMOVE)
 		apt autoremove
 
-	$(call TITLE, POST INSTALL PROFILER)
-		apt install -y "linux-tools-$(KERNEL)"
+	$(call TITLE, POST INSTALL PROFILERS)
+		apt install -y "linux-tools-$(KERNEL)" valgrind
 
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
