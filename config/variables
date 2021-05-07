@@ -8,6 +8,8 @@
 # Author of this project *github username*
     AUTHOR=urosjarc
 
+# Sys info
+    KERNEL=$(shell uname -r)
 # Directories
 	HOME=/home/$(USER)
 	DOWNLOADS=$(HOME)/Downloads

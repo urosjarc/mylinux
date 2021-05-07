@@ -43,6 +43,7 @@ setup-apt: ##Add all repositories to apt
 	$(call TITLE, SETUP APT REPOS)
 		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
+		add-apt-repository -y ppa:peek-developers/stable                                            # Peep (gif screen recorder)
 
 	$(call TITLE, SETUP NEO4J SOURCES)
 		wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
@@ -124,7 +125,10 @@ install-apps-android:
 
 post-install: ##Install zsh, fonts, jupyter
 	$(call TITLE, POST APT AUTOREMOVE)
-		sudo apt autoremove
+		apt autoremove
+
+	$(call TITLE, POST INSTALL PROFILER)
+		apt install -y "linux-tools-$(KERNEL)"
 
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
@@ -230,4 +234,3 @@ finish: ##Finish procedure (user permissions, rebooting)
 			echo
 			$(call ALERT,you should reboot the sistem ASAP...)
 		fi
-
