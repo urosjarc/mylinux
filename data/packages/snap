@@ -1,12 +1,6 @@
 # -------- Programming -----------------
 node
 
-# -------- JetBrains -------------------
-pycharm-community
-clion
-webstorm
-intellij-idea-community
-
 # -------- Others ----------------------
 zoom-client
 losslesscut
