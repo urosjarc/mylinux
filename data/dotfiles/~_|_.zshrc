@@ -20,4 +20,4 @@ source $ZSH/oh-my-zsh.sh
 if [[ ! "$PWD" = */vcs/* ]]; then cd ~/vcs; fi
 
 #My settings
-printf '\n ---> WELLCOME UROS :)\n'
+printf '\n ---> WELLCOME :)\n'
