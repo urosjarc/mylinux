@@ -112,8 +112,6 @@ mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate" {
 }
 
 # F Keybindings
-bindsym F1 exec setxkbmap -layout us -option && xmodmap ~/.Xmodmap
-bindsym F2 exec setxkbmap -layout si -option && xmodmap ~/.Xmodmap
 bindsym F3 exec redshift -x && redshift -O 2500 && xbacklight -set 75 # dark mode :3
 bindsym F10 exec redshift -x && redshift -O 5000 && xbacklight -set 75 # light mode :3
 bindsym --release Print exec gnome-screenshot --interactive
@@ -128,6 +126,7 @@ bindsym $mod+a exec dmenu_run
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
 bindsym $mod+d exec nautilus ~/vcs
+bindsym $mod+Tab exec language-toggle
 
 # Exec on reload
 exec_always setxkbmap -layout us -option && xmodmap ~/.Xmodmap
@@ -135,6 +134,7 @@ exec_always xset m 100 3
 exec_always xset r rate 180 50
 exec_always numlockx on
 exec_always compton -I 0.028 -O 0.03 -D 3 -m 1 -f -b --inactive-dim 0.2
+exec_always bluetooth
 
 # Exec on init
 exec pactl set-sink-mute @DEFAULT_SINK@ 0
@@ -143,3 +143,4 @@ exec sh ~/.i3/xrandr.sh
 exec feh --randomize --bg-scale ~/.i3/background/*
 exec classicmenu-indicator
 exec nm-applet
+exec blueman-applet

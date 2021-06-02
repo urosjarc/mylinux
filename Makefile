@@ -232,7 +232,7 @@ data: ##Setup i3 background, layouts, scripts and dotfiles
 		cp -rv $(LAYOUTS) ~/.i3
 
 	$(call TITLE, COPY BIN)
-		cp -rv $(SCRIPTS) $(BIN)
+		cp -rv $(SCRIPTS)/* $(BIN)
 
 	$(call TITLE, COPY DOTFILES)
 		for fpath in $(DOTFILES)/*; do
