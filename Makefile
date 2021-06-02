@@ -50,6 +50,9 @@ setup-apt: ##Add all repositories to apt
 		wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
 		echo 'deb https://debian.neo4j.com stable latest' | sudo tee /etc/apt/sources.list.d/neo4j.list
 
+	$(call TITLE, SETUP GIT LFS)
+		curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+
 	$(call TITLE, UPDATE APT)
 		apt-get update
 

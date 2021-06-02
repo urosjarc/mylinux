@@ -39,6 +39,7 @@ python3-pip
 
 # -------- Programming tools -------------
 git
+git-lfs
 python3-venv
 cmake
 doxygen
