@@ -34,21 +34,11 @@ meld
 
 # -------- Programming -------------------
 nodejs
-ruby-dev
-python3-pip
 
 # -------- Programming tools -------------
 git
 git-lfs
-python3-venv
 cmake
-doxygen
-graphviz
-
-# -------- Programming libs -------------
-libcmocka-dev
-libsdl2-dev
-python3-pyqt5.qtopengl
 
 # -------- Apps -------------------
 kolourpaint

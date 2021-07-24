@@ -46,10 +46,6 @@ setup-apt: ##Add all repositories to apt
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
 		add-apt-repository -y ppa:peek-developers/stable                                            # Peep (gif screen recorder)
 
-	$(call TITLE, SETUP NEO4J SOURCES)
-		wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
-		echo 'deb https://debian.neo4j.com stable latest' | sudo tee /etc/apt/sources.list.d/neo4j.list
-
 	$(call TITLE, SETUP GIT LFS)
 		curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 
@@ -64,7 +60,7 @@ setup-dirs: ##Create folder for tar apps to install in
 ### Update various package managers ##################
 #=====================================================
 
-update: update-npm update-pip3 update-gem update-apt
+update: update-npm update-pip3 update-apt
 
 update-npm:
 	$(call TITLE, UPDATE NPM)
@@ -74,10 +70,6 @@ update-pip3:
 	$(call TITLE, UPDATE PIP3)
 		sudo -H pip3 install --upgrade setuptools pip
 
-update-gem:
-	$(call TITLE, UPDATE GEM)
-		gem update
-
 update-apt:
 	$(call TITLE, UPDATE APT)
 		apt-get update
@@ -86,7 +78,7 @@ update-apt:
 ### Installation for package managers ######
 #===========================================
 
-install: install-drivers install-apt install-snap install-npm install-pip3 install-gem
+install: install-drivers install-apt install-snap install-npm install-pip3
 
 install-drivers:
 	$(call TITLE, INSTALL DRIVERS)
@@ -108,15 +100,11 @@ install-pip3:
 	$(call TITLE, INSTALL PIP3 PACKAGES)
 		$(call INSTALL,pip3 install,pip3)
 
-install-gem:
-	$(call TITLE, INSTALL GEM PACKAGES)
-		$(call INSTALL,gem install,gem)
-
 #===========================================
 ### Installation for applications ##########
 #===========================================
 
-install-apps: install-apps-pycharm install-apps-intellij install-apps-clion install-apps-webstorm install-apps-chrome install-apps-qutebrowser
+install-apps: install-apps-pycharm install-apps-intellij install-apps-clion install-apps-webstorm install-apps-chrome
 
 install-apps-pycharm:
 	$(call TITLE, INSTALL PYCHARM)
@@ -141,16 +129,6 @@ install-apps-webstorm:
 install-apps-chrome:
 	$(call TITLE, INSTALL CHROME)
 		$(call WGET_DEB,google-chrome-stable_current_amd64.deb,https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
-
-install-apps-qutebrowser:
-	$(call TITLE, INSTALL QUTEBROWSER)
-		$(call GIT_CLONE,https://github.com/qutebrowser/qutebrowser.git,$(APPS)/qb)
-		cd $(APPS)/qb && python3 scripts/mkvenv.py
-		rm -f $(APPS)/qb/qutebrowser.sh
-		echo -e "#!/bin/bash\n$(APPS)/qb/.venv/bin/python3 -m qutebrowser" > $(APPS)/qb/qutebrowser.sh
-		chmod 777 $(APPS)/qb/qutebrowser.sh
-		$(call LINK_BIN,$(APPS)/qb/qutebrowser.sh,qutebrowser)
-
 
 install-apps-android:
 	$(call TITLE, INSTALL ANDROID)

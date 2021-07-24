@@ -1,6 +1,4 @@
-virtualenv
 conan
 jupyter
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator
-pyqt5-tools
