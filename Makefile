@@ -46,9 +46,6 @@ setup-apt: ##Add all repositories to apt
 		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
 		add-apt-repository -y ppa:peek-developers/stable                                            # Peep (gif screen recorder)
 
-	$(call TITLE, SETUP GIT LFS)
-		curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-
 	$(call TITLE, UPDATE APT)
 		apt-get update
 
@@ -145,9 +142,6 @@ post-install: ##Install zsh, fonts, jupyter
 	$(call TITLE, POST APT AUTOREMOVE)
 		apt autoremove
 
-	$(call TITLE, POST INSTALL PROFILERS)
-		apt install -y "linux-tools-$(KERNEL)" valgrind
-
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 		echo
@@ -170,13 +164,6 @@ post-install: ##Install zsh, fonts, jupyter
 #====================================================
 
 post-setup: ##Setup inotify, alternatives, vcs, clean home directory
-	$(call TITLE, POST SETUP PROFILER)
-		sh -c 'echo 1 >/proc/sys/kernel/perf_event_paranoid'
-		sh -c 'echo 0 >/proc/sys/kernel/kptr_restrict'
-		sh -c 'echo kernel.perf_event_paranoid=1 >> /etc/sysctl.d/99-perf.conf'
-		sh -c 'echo kernel.kptr_restrict=0 >> /etc/sysctl.d/99-perf.conf'
-		sh -c 'sysctl --system'
-
 	$(call TITLE, POST SETUP INOTIFY)
 		grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches = 524288' | sudo tee --append /etc/sysctl.conf > /dev/null
 		sysctl -p #Update inotify
@@ -209,6 +196,9 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory
 #=====================================================================
 
 data: ##Setup i3 background, layouts, scripts and dotfiles
+	$(call TITLE, CREATE i3 DIR)
+		mkdir -p ~/.i3
+
 	$(call TITLE, COPY BACKGROUND)
 		cp -rv $(BACKGROUND) ~/.i3
 

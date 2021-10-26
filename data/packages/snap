@@ -3,7 +3,6 @@ node
 
 # -------- Comunications -----------------
 zoom-client
-slack
 
 # -------- Others ----------------------
 losslesscut

@@ -16,8 +16,5 @@ source $ZSH/oh-my-zsh.sh
 #BASH
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
-#Start in VCS
-if [[ ! "$PWD" = */vcs/* ]]; then cd ~/vcs; fi
-
 #My settings
 printf '\n ---> WELLCOME :)\n'
