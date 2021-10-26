@@ -1,6 +1,9 @@
 # -------- Programming -----------------
 node
 
-# -------- Others ----------------------
+# -------- Comunications -----------------
 zoom-client
+slack
+
+# -------- Others ----------------------
 losslesscut

@@ -35,12 +35,6 @@ meld
 # -------- Programming -------------------
 nodejs
 
-# -------- Vulcan ------------------------
-vulkan-tools
-libvulkan-dev
-vulkan-validationlayers-dev
-spirv-tools
-
 # -------- Programming tools -------------
 git
 git-lfs
