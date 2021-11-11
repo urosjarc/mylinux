@@ -34,6 +34,7 @@ meld
 
 # -------- Programming -------------------
 nodejs
+python3-tk
 
 # -------- Programming tools -------------
 git
