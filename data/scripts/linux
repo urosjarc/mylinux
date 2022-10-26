@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ $1 == "jetbrains" ]]; then
-    cat ~/vcs/jetbrains/README.md | sed -n '/## Keymaps/,$p' | zenity --text-info --text --column --font='DejaVu Sans Mono' --width 600 --height 1000
-fi
-
-if [[ $1 == "mylinux" ]]; then
-    cat ~/vcs/mylinux/README.md | sed -n '/## Keymaps/,$p' | zenity --text-info --text --column --font='DejaVu Sans Mono' --width 600 --height 1000
-fi

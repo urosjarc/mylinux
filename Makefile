@@ -194,7 +194,7 @@ vcs-setup: ##Create vcs directory and clone repos
 
 vcs-jetbrains: ##Install my repositories
 	$(call TITLE, POST SETUP JETBRAINS)
-		cd $(VCS)/jetbrains; make install
+		cd $(VCS)/jetbrains; make install || echo "Jetbrains installation failed..."
 
 #=====================================================================
 ### Finish procedure #################################################

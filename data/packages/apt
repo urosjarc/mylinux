@@ -1,6 +1,7 @@
 # -------- Linux environment -------------
 i3
 compton
+rofi
 
 # -------- Linux environment tools -----------------------
 arandr
