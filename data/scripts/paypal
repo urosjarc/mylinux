@@ -1,4 +1,2 @@
 #!/usr/bin/env bash
-
-terminator --execute python ~/.i3/paypal.py
-sleep 100
+gnome-terminal -- bash -c "python3 ~/.i3/paypal.py; exec bash"
