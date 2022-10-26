@@ -112,14 +112,14 @@ mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate" {
 }
 
 # F Keybindings
-bindsym F3 exec redshift -x && redshift -O 2500 && xbacklight -set 75 # dark mode :3
-bindsym F10 exec redshift -x && redshift -O 5000 && xbacklight -set 75 # light mode :3
+bindsym F6 exec redshift -x && redshift -O 2500 && xbacklight -set 75 # dark mode :3
+bindsym F8 exec redshift -x && redshift -O 5000 && xbacklight -set 75 # light mode :3
 bindsym --release Print exec gnome-screenshot --interactive
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 -time 0 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 -time 0 # decrease screen brightness
+bindsym F7 exec xbacklight -inc 5 -time 0 # increase screen brightness
+bindsym F5 exec xbacklight -dec 5 -time 0 # decrease screen brightness
 
 # Exec on mod key
 bindsym $mod+a exec --no-startup-id rofi -show drun -run-command "i3-msg exec '{cmd}'" -show-icons -theme docu
