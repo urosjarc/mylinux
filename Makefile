@@ -204,8 +204,8 @@ finish: ##Finish procedure (user permissions, rebooting)
 	$(call TITLE, POST SETUP CHOWN HOME DIR)
 		chown -R $(USER) $(HOME)
 		$(call INFO,folder \"$(HOME)\" now belongs to \"$(USER)\")
-        chmod 777 $(BIN) -R
-        $(call INFO,folder \"$(BIN)\" now belongs to \"$(USER)\")
+		chmod 777 $(BIN) -R
+		$(call INFO,folder \"$(BIN)\" now belongs to \"$(USER)\")
 
 	$(call TITLE, RESTARTING)
 		read -p "Reboot the sistem? (y/n): " -n 1 -r
