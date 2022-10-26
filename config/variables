@@ -3,11 +3,11 @@
 	EMAIL=jar.fmf@gmail.com
 
 # Versions
-	CODE_FONTS='1.2.2'
-    PYCHARM='2021.2.3'
-    IDEA='2021.2.3'
-    WEBSTORM='2021.2.3'
-    CLION='2021.2.3'
+    CODE_FONTS='1.2.2'
+    PYCHARM='2022.2.3'
+    IDEA='2022.2.3'
+    WEBSTORM='2022.2.3'
+    CLION='2022.2.3'
 
 # Author of this project *github username*
     AUTHOR=urosjarc

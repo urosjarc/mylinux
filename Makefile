@@ -15,23 +15,6 @@ endif
 .DEFAULT_GOAL := run
 .PHONY: data config
 
-#==================================================================
-### Running whole installation procedure ##########################
-#==================================================================
-
-run-select: ##Select which targets you want to run
-	$(MAKE) $$(whiptail --title "Select target to install" --checklist "Choose:" 20 30 15 \
-		"setup" "" on \
-		"install" "" on \
-		"install-apps" "" on \
-		"update" "" off \
-		"post-install" "" on \
-		"post-setup" "" on \
-		"data" "" on \
-		"vcs" "" on \
-		"finish" "" on \
-		3>&1 1>&2 2>&3)
-
 run: setup install install-apps post-install post-setup data vcs finish ##Run default installation set
 
 #=====================================================================
@@ -42,10 +25,7 @@ setup: setup-apt setup-dirs
 
 setup-apt: ##Add all repositories to apt
 	$(call TITLE, SETUP APT REPOS)
-		add-apt-repository -y ppa:nilarimogard/webupd8                                              # Audacity
-		add-apt-repository -y ppa:maarten-fonville/android-studio                                   # Android studio
-		add-apt-repository -y ppa:peek-developers/stable                                            # Peep (gif screen recorder)
-
+	
 	$(call TITLE, UPDATE APT)
 		apt-get update
 
@@ -127,18 +107,11 @@ install-apps-chrome:
 	$(call TITLE, INSTALL CHROME)
 		$(call WGET_DEB,google-chrome-stable_current_amd64.deb,https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
 
-install-apps-android:
-	$(call TITLE, INSTALL ANDROID)
-		$(call INSTALL,apt-get -y install,apt-android)
-		echo
-		$(call LINK_BIN,/opt/android-studio/bin/studio.sh,android-studio)
-
-
 #============================================
 ### Post installation procedures ############
 #============================================
 
-post-install: ##Install zsh, fonts, jupyter
+post-install: ##Install zsh, fonts
 	$(call TITLE, POST APT AUTOREMOVE)
 		apt autoremove
 
@@ -154,10 +127,6 @@ post-install: ##Install zsh, fonts, jupyter
 		echo
 		$(call INFO,installed fonts [DejaVuSansCode])
 		fc-list | grep "DejaVuSansCode"
-
-	$(call TITLE, POST INSTALL JUPYTER)
-		jupyter contrib nbextension install --user
-		jupyter nbextensions_configurator enable --user
 
 #====================================================
 ### Post installation setup procedures ##############
@@ -188,22 +157,16 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory
 		usermod --shell $$(which zsh) $(USER)
 		$(call INFO,$$(grep $(USER) /etc/passwd | sed -e 's/.*,,,://g'))
 
-	$(call TITLE, POST SETUP CONAN)
-		conan profile new default-profile
-
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
 #=====================================================================
 
-data: ##Setup i3 background, layouts, scripts and dotfiles
+data: ##Setup i3 background, scripts and dotfiles
 	$(call TITLE, CREATE i3 DIR)
 		mkdir -p ~/.i3
 
 	$(call TITLE, COPY BACKGROUND)
 		cp -rv $(BACKGROUND) ~/.i3
-
-	$(call TITLE, COPY LAYOUTS)
-		cp -rv $(LAYOUTS) ~/.i3
 
 	$(call TITLE, COPY BIN)
 		cp -rv $(SCRIPTS)/* $(BIN)
