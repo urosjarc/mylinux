@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
 terminator --execute python ~/.i3/paypal.py
-
-xmodmap ~/.Xmodmap
+sleep 100
