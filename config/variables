@@ -3,6 +3,7 @@
 	EMAIL=jar.fmf@gmail.com
 
 # Versions
+    GITC='2.0.785'
     CODE_FONTS='1.2.2'
     PYCHARM='2022.2.3'
     IDEA='2022.2.3'

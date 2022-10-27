@@ -128,6 +128,10 @@ post-install: ##Install zsh, fonts
 		$(call INFO,installed fonts [DejaVuSansCode])
 		fc-list | grep "DejaVuSansCode"
 
+	$(call TITLE, POST INSTALL GIT CREDENTIAL MANAGER)
+		$(call WGET_DEB,gcm-linux_amd64.$(GITC).deb,https://github.com/GitCredentialManager/git-credential-manager/releases/download/v$(GITC)/gcm-linux_amd64.$(GITC).deb)
+
+
 #====================================================
 ### Post installation setup procedures ##############
 #====================================================
