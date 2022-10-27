@@ -25,7 +25,7 @@ setup: setup-apt setup-dirs
 
 setup-apt: ##Add all repositories to apt
 	$(call TITLE, SETUP APT REPOS)
-	
+
 	$(call TITLE, UPDATE APT)
 		apt-get update
 
@@ -191,6 +191,7 @@ vcs-setup: ##Create vcs directory and clone repos
 		$(call MKDIR,$(VCS))
 		$(call GIT_CLONE,https://github.com/$(AUTHOR)/mylinux.git,$(VCS)/mylinux)
 		$(call GIT_CLONE,https://github.com/$(AUTHOR)/jetbrains.git,$(VCS)/jetbrains)
+		$(call GIT_CLONE,https://github.com/$(AUTHOR)/mypaypal.git,$(VCS)/mypaypal)
 
 vcs-jetbrains: ##Install my repositories
 	$(call TITLE, POST SETUP JETBRAINS)
