@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-gnome-terminal -- bash -c "python3 ~/.i3/paypal.py; exec bash"
+gnome-terminal -- bash -c "python3 ~/vcs/mypaypal/main.py; exec bash"
