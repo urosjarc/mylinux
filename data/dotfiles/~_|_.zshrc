@@ -18,4 +18,3 @@ source $ZSH/oh-my-zsh.sh
 
 #My settings
 printf '\n ---> WELLCOME (⌐■_■) \n'
-sudo su
