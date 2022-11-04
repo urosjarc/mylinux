@@ -8,6 +8,4 @@ else
 fi
 
 xmodmap ~/.Xmodmap
-setxkbmap -option caps:swapescape
-
-xmodmap ~/.Xmodmap
+setxkbmap -option caps:escape
