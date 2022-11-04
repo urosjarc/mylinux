@@ -17,5 +17,5 @@ source $ZSH/oh-my-zsh.sh
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
 #My settings
-sudo su
 printf '\n ---> WELLCOME (⌐■_■) \n'
+sudo su
