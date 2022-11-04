@@ -1,8 +1,16 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
+import subprocess
+from time import sleep
 
-layout=$(setxkbmap -print | awk -F"+" '/xkb_symbols/ {print $2}')
-if [[ $layout == 'us' ]] ; then
-  spd-say 'e'
-else
-  spd-say 's'
-fi
+
+def get(cmd): return subprocess.check_output(cmd).decode("utf-8")
+def run(cmd): subprocess.call(["/bin/bash", "-c", cmd])
+
+layout_current = None
+while True:
+    layout = get(['setxkbmap', '-query']).split()[-1][0]
+    print(layout)
+    if layout_current != layout:
+        layout_current = layout
+        run(f'spd-say {layout}')
+    sleep(0.1)
