@@ -95,7 +95,7 @@ bindsym $mod+s layout stacking
 bindsym $mod+t layout tabbed
 bindsym $mod+g layout toggle split
 bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
+bindsym $mod+Tab focus mode_toggle
 
 # Logout/reboot/poweroff
 bindsym $mod+Shift+e mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate"
@@ -114,7 +114,7 @@ mode "Exit (l)ogout, (r)eboot, (p)oweroff, (s)uspend, (h)ibernate" {
 # F Keybindings
 bindsym F6 exec redshift -x && redshift -O 2500 && xbacklight -set 75 # dark mode :3
 bindsym F8 exec redshift -x && redshift -O 5000 && xbacklight -set 75 # light mode :3
-bindsym --release Print exec gnome-screenshot --interactive
+bindsym --release Print exec scrot -e 'mv $f /tmp/ && kolourpaint /tmp/$f'
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
@@ -126,7 +126,7 @@ bindsym $mod+a exec --no-startup-id rofi -show drun -run-command "i3-msg exec '{
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
 bindsym $mod+d exec nautilus ~/vcs
-bindsym $mod+Tab exec language-toggle
+bindsym $mod+space exec language-toggle
 
 # Exec on reload
 exec_always setxkbmap -layout us -option && xmodmap ~/.Xmodmap
