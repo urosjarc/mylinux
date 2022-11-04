@@ -2,9 +2,12 @@
 
 layout=$(setxkbmap -query | grep layout | awk '{print $2}')
 if [ $layout = "us" ] ; then
-    setxkbmap -layout si -option && xmodmap ~/.Xmodmap
+    setxkbmap -layout si -option
 else
-    setxkbmap -layout us -option && xmodmap ~/.Xmodmap
+    setxkbmap -layout us -option
 fi
+
+xmodmap ~/.Xmodmap
+setxkbmap -option caps:swapescape
 
 xmodmap ~/.Xmodmap
