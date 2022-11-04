@@ -9,7 +9,6 @@ def run(cmd): subprocess.call(["/bin/bash", "-c", cmd])
 layout_current = None
 while True:
     layout = get(['setxkbmap', '-query']).split()[-1][0]
-    print(layout)
     if layout_current != layout:
         layout_current = layout
         run(f'spd-say {layout}')
