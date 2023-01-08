@@ -5,10 +5,10 @@
 # Versions
     GITC='2.0.785'
     CODE_FONTS='1.2.2'
-    PYCHARM='2022.2.3'
-    IDEA='2022.2.3'
-    WEBSTORM='2022.2.3'
-    CLION='2022.2.3'
+    PYCHARM='2022.3.1'
+    IDEA='2022.3.1'
+    WEBSTORM='2022.3.1'
+    CLION='2022.3.1'
 
 # Author of this project *github username*
     AUTHOR=urosjarc
