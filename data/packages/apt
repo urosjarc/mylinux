@@ -39,6 +39,7 @@ meld
 nodejs
 npm
 python3-pip
+python3-venv
 python3-tk
 
 # -------- Programming tools -------------
