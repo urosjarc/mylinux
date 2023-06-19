@@ -90,8 +90,8 @@ install-apps-pycharm:
 
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
-		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIC-$(IDEA).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IC-.*/bin/idea.sh'),idea)
+		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea.sh'),idea)
 
 install-apps-clion:
 	$(call TITLE, INSTALL CLION)
@@ -127,11 +127,6 @@ post-install: ##Install zsh, fonts
 		echo
 		$(call INFO,installed fonts [DejaVuSansCode])
 		fc-list | grep "DejaVuSansCode"
-
-	$(call TITLE, POST INSTALL GIT CREDENTIAL MANAGER)
-		$(call WGET_DEB,gcm-linux_amd64.$(GITC).deb,https://github.com/GitCredentialManager/git-credential-manager/releases/download/v$(GITC)/gcm-linux_amd64.$(GITC).deb)
-		git-credential-manager-core configure
-
 
 #====================================================
 ### Post installation setup procedures ##############
