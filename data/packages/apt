@@ -45,6 +45,7 @@ python3-tk
 # -------- Programming tools -------------
 git
 cmake
+graphviz
 
 # -------- Apps -------------------
 kolourpaint
