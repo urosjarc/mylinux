@@ -38,6 +38,7 @@ curl
 meld
 
 # -------- Programming -------------------
+android-sdk-platform-tools
 nodejs
 npm
 python3-pip
