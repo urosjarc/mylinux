@@ -26,6 +26,8 @@ tree
 ffmpeg
 libmp3lame0
 pavucontrol
+pulseeffects
+lsp-plugins
 pulseaudio-module-bluetooth
 audacity
 vlc
