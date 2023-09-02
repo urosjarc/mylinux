@@ -81,27 +81,12 @@ install-pip3:
 ### Installation for applications ##########
 #===========================================
 
-install-apps: install-apps-pycharm install-apps-intellij install-apps-clion install-apps-webstorm install-apps-chrome
-
-install-apps-pycharm:
-	$(call TITLE, INSTALL PYCHARM)
-		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
-		$(call LINK_BIN,$(APPS)/pycharm-community-$(PYCHARM)/bin/pycharm.sh,pycharm)
+install-apps: install-apps-intellij install-apps-chrome
 
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
 		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea.sh'),idea)
-
-install-apps-clion:
-	$(call TITLE, INSTALL CLION)
-		$(call WGET_TAR,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/clion.*/bin/clion.sh'),clion)
-
-install-apps-webstorm:
-	$(call TITLE, INSTALL WEBSTORM)
-		$(call WGET_TAR,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm.*/bin/webstorm.sh'),webstorm)
 
 install-apps-chrome:
 	$(call TITLE, INSTALL CHROME)
@@ -191,6 +176,7 @@ vcs-setup: ##Create vcs directory and clone repos
 		$(call MKDIR,$(VCS))
 		$(call GIT_CLONE,https://github.com/$(AUTHOR)/mylinux.git,$(VCS)/mylinux)
 		$(call GIT_CLONE,https://github.com/$(AUTHOR)/jetbrains.git,$(VCS)/jetbrains)
+		$(call GIT_CLONE,https://github.com/$(AUTHOR)/mypaypal.git,$(VCS)/jetbrains)
 
 vcs-jetbrains: ##Install my repositories
 	$(call TITLE, POST SETUP JETBRAINS)
