@@ -4,10 +4,7 @@
 
 # Versions
     CODE_FONTS='1.2.2'
-    PYCHARM='2023.1.2'
-    IDEA='2023.1.2'
-    WEBSTORM='2023.1.2'
-    CLION='2023.1.3'
+    IDEA='2023.2.2'
 
 # Author of this project *github username*
     AUTHOR=urosjarc
