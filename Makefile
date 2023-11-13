@@ -81,16 +81,12 @@ install-pip3:
 ### Installation for applications ##########
 #===========================================
 
-install-apps: install-apps-intellij install-apps-chrome
+install-apps: install-apps-intellij
 
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
 		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea.sh'),idea)
-
-install-apps-chrome:
-	$(call TITLE, INSTALL CHROME)
-		$(call WGET_DEB,google-chrome-stable_current_amd64.deb,https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
 
 #============================================
 ### Post installation procedures ############
