@@ -24,8 +24,6 @@ run: setup install install-apps post-install post-setup data vcs finish ##Run de
 setup: setup-apt setup-dirs
 
 setup-apt: ##Add all repositories to apt
-	$(call TITLE, SETUP APT REPOS)
-
 	$(call TITLE, UPDATE APT)
 		apt-get update
 
@@ -37,15 +35,11 @@ setup-dirs: ##Create folder for tar apps to install in
 ### Update various package managers ##################
 #=====================================================
 
-update: update-npm update-pip3 update-apt
+update: update-nvm update-apt
 
-update-npm:
+update-nvm:
 	$(call TITLE, UPDATE NPM)
-		npm install -g npm
-
-update-pip3:
-	$(call TITLE, UPDATE PIP3)
-		sudo -H pip3 install --upgrade setuptools pip
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
 
 update-apt:
 	$(call TITLE, UPDATE APT)
@@ -55,7 +49,7 @@ update-apt:
 ### Installation for package managers ######
 #===========================================
 
-install: install-drivers install-apt install-snap install-npm install-pip3
+install: install-drivers install-apt install-snap
 
 install-drivers:
 	$(call TITLE, INSTALL DRIVERS)
@@ -68,14 +62,6 @@ install-apt:
 install-snap:
 	$(call TITLE, INSTALL SNAP PACKAGES)
 		$(call INSTALL_LOOP,snap install --classic,snap)
-
-install-npm:
-	$(call TITLE, INSTALL NPM PACKAGES)
-		$(call INSTALL,npm install -g,npm)
-
-install-pip3:
-	$(call TITLE, INSTALL PIP3 PACKAGES)
-		$(call INSTALL,pip3 install,pip3)
 
 #===========================================
 ### Installation for applications ##########
@@ -149,9 +135,6 @@ data: ##Setup i3 background, scripts and dotfiles
 	$(call TITLE, COPY BACKGROUND)
 		cp -rv $(BACKGROUND) ~/.i3
 
-	$(call TITLE, COPY BIN)
-		cp -rv $(SCRIPTS)/* $(BIN)
-
 	$(call TITLE, COPY DOTFILES)
 		for fpath in $(DOTFILES)/*; do
 			newPath=$$(echo $$fpath | sed -e 's/^.*\///g' -e 's/_|_/\//g' -e "s/~/\/home\/${USER}/g")
@@ -172,7 +155,6 @@ vcs-setup: ##Create vcs directory and clone repos
 		$(call MKDIR,$(VCS))
 		$(call GIT_CLONE,https://github.com/$(AUTHOR)/mylinux.git,$(VCS)/mylinux)
 		$(call GIT_CLONE,https://github.com/$(AUTHOR)/jetbrains.git,$(VCS)/jetbrains)
-		$(call GIT_CLONE,https://github.com/$(AUTHOR)/mypaypal.git,$(VCS)/jetbrains)
 
 vcs-jetbrains: ##Install my repositories
 	$(call TITLE, POST SETUP JETBRAINS)

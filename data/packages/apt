@@ -27,7 +27,6 @@ ffmpeg
 libmp3lame0
 pavucontrol
 pulseeffects
-lsp-plugins
 pulseaudio-module-bluetooth
 audacity
 vlc
@@ -37,17 +36,8 @@ gparted
 curl
 meld
 
-# -------- Programming -------------------
-nodejs
-npm
-python3-pip
-python3-venv
-python3-tk
-
-# -------- Programming tools -------------
+# -------- Programming -------------
 git
-cmake
-graphviz
 
 # -------- Apps -------------------
 kolourpaint
