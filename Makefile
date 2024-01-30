@@ -67,7 +67,7 @@ install-snap:
 ### Installation for applications ##########
 #===========================================
 
-install-apps: install-apps-intellij
+install-apps: install-apps-intellij install-apps-docker
 
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
@@ -75,8 +75,8 @@ install-apps-intellij:
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea.sh'),idea)
 
 install-apps-docker:
-    $(call TITLE, INSTALL DOCKER)
-        $(call WGET_DEB,docker-desktop.deb,https://desktop.docker.com/linux/main/amd64/135262/docker-desktop-$(DOCKER)-amd64.deb)
+	$(call TITLE, INSTALL DOCKER)
+		$(call WGET_DEB,docker-desktop.deb,https://desktop.docker.com/linux/main/amd64/135262/docker-desktop-$(DOCKER)-amd64.deb)
 
 #============================================
 ### Post installation procedures ############
