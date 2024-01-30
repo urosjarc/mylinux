@@ -74,6 +74,10 @@ install-apps-intellij:
 		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea.sh'),idea)
 
+install-apps-docker:
+    $(call TITLE, INSTALL DOCKER)
+        $(call WGET_DEB,docker-desktop.deb,https://desktop.docker.com/linux/main/amd64/135262/docker-desktop-$(DOCKER)-amd64.deb)
+
 #============================================
 ### Post installation procedures ############
 #============================================
