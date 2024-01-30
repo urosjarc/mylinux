@@ -76,7 +76,9 @@ install-apps-intellij:
 
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)
-		$(call WGET_DEB,docker-desktop.deb,https://desktop.docker.com/linux/main/amd64/135262/docker-desktop-$(DOCKER)-amd64.deb)
+		curl -fsSL https://get.docker.com -o get-docker.sh
+		sh get-docker.sh
+		apt install docker-compose
 
 #============================================
 ### Post installation procedures ############
