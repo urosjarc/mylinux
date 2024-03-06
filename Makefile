@@ -74,6 +74,11 @@ install-apps-intellij:
 		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea.sh'),idea)
 
+install-apps-pycharm:
+	$(call TITLE, INSTALL PYCHARM)
+		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/pycharm-.*/bin/pycharm.sh'),pycharm)
+
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)
 		curl -fsSL https://get.docker.com -o get-docker.sh
