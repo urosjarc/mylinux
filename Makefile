@@ -45,7 +45,7 @@ update-apt:
 ### Installation for package managers ######
 #===========================================
 
-install: install-drivers install-apt install-snap install-nvm
+install: install-drivers install-apt install-snap install-nvm install-kompose
 
 install-drivers:
 	$(call TITLE, INSTALL DRIVERS)
@@ -62,6 +62,12 @@ install-snap:
 install-nvm:
 	$(call TITLE, INSTALL NPM)
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
+
+install-kompose:
+	$(call TITLE, INSTALL KOMPOSE)
+		curl -L https://github.com/kubernetes/kompose/releases/download/$(KOMPOSE)/kompose-linux-amd64 -o kompose
+		chmod +x kompose
+		mv ./kompose /usr/local/bin/kompose
 
 #===========================================
 ### Installation for applications ##########

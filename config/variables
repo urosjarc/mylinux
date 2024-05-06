@@ -7,6 +7,7 @@
     IDEA='2023.3.2'
     PYCHARM='2023.3.4'
     NVM='v0.39.7'
+    KOMPOSE='v1.33.0'
 
 # Author of this project *github username*
     AUTHOR=urosjarc
