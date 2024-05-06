@@ -35,11 +35,7 @@ setup-dirs: ##Create folder for tar apps to install in
 ### Update various package managers ##################
 #=====================================================
 
-update: update-nvm update-apt
-
-update-nvm:
-	$(call TITLE, UPDATE NPM)
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
+update: update-apt
 
 update-apt:
 	$(call TITLE, UPDATE APT)
@@ -49,7 +45,7 @@ update-apt:
 ### Installation for package managers ######
 #===========================================
 
-install: install-drivers install-apt install-snap
+install: install-drivers install-apt install-snap install-nvm
 
 install-drivers:
 	$(call TITLE, INSTALL DRIVERS)
@@ -62,6 +58,10 @@ install-apt:
 install-snap:
 	$(call TITLE, INSTALL SNAP PACKAGES)
 		$(call INSTALL_LOOP,snap install --classic,snap)
+
+install-nvm:
+	$(call TITLE, INSTALL NPM)
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
 
 #===========================================
 ### Installation for applications ##########
@@ -81,8 +81,8 @@ install-apps-pycharm:
 
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)
-		curl -fsSL https://get.docker.com -o get-docker.sh
-		sh get-docker.sh
+		curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
+		sh /tmp/get-docker.sh
 		apt install docker-compose
 
 #============================================

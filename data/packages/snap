@@ -1,6 +1,7 @@
 # -------- Programming -----------------
 postman
 zig
+microk8s
 
 # -------- Comunications -----------------
 zoom-client
