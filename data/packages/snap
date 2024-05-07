@@ -1,7 +1,10 @@
 # -------- Programming -----------------
 postman
 zig
+
+# -------- Virtualization -----------------
 microk8s
+kubectl
 
 # -------- Comunications -----------------
 zoom-client
