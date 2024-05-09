@@ -5,6 +5,7 @@ zig
 # -------- Virtualization -----------------
 microk8s
 kubectl
+helm
 
 # -------- Comunications -----------------
 zoom-client
