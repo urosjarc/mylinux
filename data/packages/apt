@@ -39,6 +39,7 @@ meld
 # -------- Programming -------------
 git
 graphviz
+openjdk-21-jdk
 
 # -------- Apps -------------------
 kolourpaint
