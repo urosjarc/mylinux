@@ -4,6 +4,7 @@
 
 # Versions
     CODE_FONTS='1.2.2'
+    TINKEY='1.11.0'
     IDEA='2024.2.3'
     PYCHARM='2024.2.3'
     NVM='v0.40.1'

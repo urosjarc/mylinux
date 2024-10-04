@@ -19,7 +19,7 @@ define INSTALL_LOOP =
 	do
 	    sudo -H $1 $$package
 	done
-endef 
+endef
 define INSTALL =
 	sudo -H $1 $$(grep -vE "^\s*#" $(PACKAGES)/$2 | tr "\n" " ")
 endef
@@ -55,8 +55,10 @@ define WGET_TAR =
 	else
         $(call ALERT,folder \"$1\" already exists in \"$(DOWNLOADS)\" ...)
 	fi
-    $(call INFO,extracting \"$1\" to \"$(APPS)\" ...)
-    tar -xf $(DOWNLOADS)/$1 -C $(APPS)
+
+    $(call MKDIR,$(APPS)/$3)
+    $(call INFO,extracting \"$1\" to \"$(APPS)/$3\" ...)
+    tar -xf $(DOWNLOADS)/$1 -C $(APPS)/$3
 endef
 
 define WGET_DEB =
@@ -73,4 +75,3 @@ define OPEN_URL =
     $(call INFO,Opening $1)
     sudo -u $(USER) firefox $1 > /dev/null 2>&1
 endef
-

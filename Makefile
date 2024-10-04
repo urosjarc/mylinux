@@ -71,12 +71,12 @@ install-apps: install-apps-intellij install-apps-docker
 
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
-		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz)
+		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea'),idea)
 
 install-apps-pycharm:
 	$(call TITLE, INSTALL PYCHARM)
-		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
+		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/pycharm-.*/bin/pycharm'),pycharm)
 
 install-apps-docker:
@@ -84,6 +84,12 @@ install-apps-docker:
 		curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
 		sh /tmp/get-docker.sh
 		apt install docker-compose
+
+install-apps-tinkey:
+	$(call TITLE, INSTALL TINKEY)
+		$(call WGET_TAR,tinkey.tar.gz,https://storage.googleapis.com/tinkey/tinkey-$(TINKEY).tar.gz,tinkey)
+		$(call LINK_BIN,$(APPS)/tinkey/tinkey,tinkey)
+		$(call LINK_BIN,$(APPS)/tinkey/tinkey_deploy.jar,tinkey_deploy.jar)
 
 #============================================
 ### Post installation procedures ############
@@ -99,7 +105,7 @@ post-install: ##Install zsh, fonts
 		$(call GIT_CLONE,https://github.com/zsh-users/zsh-syntax-highlighting.git,~/.oh-my-zsh/plugins/zsh-syntax-highlighting)
 
 	$(call TITLE, POST INSTALL CODE FONTS)
-		$(call WGET_TAR,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2)
+		$(call WGET_TAR,dejavu-code-ttf,https://github.com/SSNikolaevich/DejaVuSansCode/releases/download/v$(CODE_FONTS)/dejavu-code-ttf-$(CODE_FONTS).tar.bz2,.)
 		cp -v $(APPS)/dejavu-code-ttf-$(CODE_FONTS)/ttf/* /usr/local/share/fonts
 		fc-cache -f
 		echo
