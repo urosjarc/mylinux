@@ -141,6 +141,8 @@ post-setup: ##Setup inotify, alternatives, vcs, clean home directory
 		usermod --shell $$(which zsh) $(USER)
 		$(call INFO,$$(grep $(USER) /etc/passwd | sed -e 's/.*,,,://g'))
 
+	$(call TITLE, POST SETUP LINKS)
+		$(call LINK_BIN,/usr/bin/timew,t)
 #=====================================================================
 ### Setup and copy all dotfiles to home directory ####################
 #=====================================================================
