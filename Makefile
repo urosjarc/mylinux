@@ -60,8 +60,8 @@ install-snap:
 		$(call INSTALL_LOOP,snap install --classic,snap)
 
 install-nvm:
-	$(call TITLE, INSTALL NPM)
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
+	$(call TITLE, INSTALL NVM)
+		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM)/install.sh | bash
 
 #===========================================
 ### Installation for applications ##########
