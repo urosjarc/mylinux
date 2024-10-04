@@ -4,10 +4,9 @@
 
 # Versions
     CODE_FONTS='1.2.2'
-    IDEA='2023.3.2'
-    PYCHARM='2023.3.4'
-    NVM='v0.39.7'
-    KOMPOSE='v1.33.0'
+    IDEA='2024.2.3'
+    PYCHARM='2024.2.3'
+    NVM='v0.40.1'
 
 # Author of this project *github username*
     AUTHOR=urosjarc

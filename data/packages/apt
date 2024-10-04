@@ -11,6 +11,7 @@ blueman
 xbacklight
 numlockx
 gnome-tweaks
+network-manager-openconnect-gnome
 
 # -------- Terminal environment ----------------------
 zsh
@@ -46,3 +47,4 @@ kolourpaint
 kazam
 scrot
 peek
+remmina
