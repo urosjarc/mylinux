@@ -72,12 +72,12 @@ install-apps: install-apps-intellij install-apps-docker
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
 		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea.sh'),idea)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea'),idea)
 
 install-apps-pycharm:
 	$(call TITLE, INSTALL PYCHARM)
 		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/pycharm-.*/bin/pycharm.sh'),pycharm)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/pycharm-.*/bin/pycharm'),pycharm)
 
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)
