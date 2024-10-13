@@ -122,6 +122,7 @@ bindsym F7 exec xbacklight -inc 5 -time 0 # increase screen brightness
 bindsym F5 exec xbacklight -dec 5 -time 0 # decrease screen brightness
 
 # Exec on mod key
+bindsym $mod+space exec setxkbmap -print | awk -F"+" '/xkb_symbols/ {print $2}' | grep -qE us && setxkbmap us && xmodmap ~/.Xmodmap || setxkbmap si && xmodmap ~/.Xmodmap
 bindsym $mod+a exec --no-startup-id rofi -show drun -run-command "i3-msg exec '{cmd}'" -show-icons -theme docu
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
