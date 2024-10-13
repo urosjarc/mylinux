@@ -4,7 +4,7 @@ keysym Escape = Caps_Lock
 add Lock = Caps_Lock
 
 keycode 108 = Mode_switch
-keysym h = h H Left
-keysym l = l L Right
-keysym k = k K Up
-keysym j = j J Down
+keysym h = h H Left H
+keysym l = l L Right L
+keysym k = k K Up K
+keysym j = j J Down J
