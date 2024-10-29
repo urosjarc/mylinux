@@ -43,6 +43,7 @@ git
 graphviz
 openjdk-21-jdk
 python3-tk
+python3-pip
 
 # -------- Apps -------------------
 kolourpaint
