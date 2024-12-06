@@ -141,3 +141,4 @@ exec pactl set-sink-volume @DEFAULT_SINK@ 80%
 exec feh --randomize --bg-scale ~/.i3/background/*
 exec classicmenu-indicator
 exec nm-applet
+exec clockify
