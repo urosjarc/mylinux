@@ -67,7 +67,7 @@ install-nvm:
 ### Installation for applications ##########
 #===========================================
 
-install-apps: install-apps-intellij install-apps-docker
+install-apps: install-apps-intellij install-apps-pycharm install-apps-docker
 
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
@@ -78,6 +78,11 @@ install-apps-pycharm:
 	$(call TITLE, INSTALL PYCHARM)
 		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/pycharm-.*/bin/pycharm'),pycharm)
+
+install-apps-android:
+	$(call TITLE, INSTALL ANDROID)
+		$(call WGET_TAR,android.tar.gz,https://redirector.gvt1.com/edgedl/android/studio/ide-zips/$(ANDROID)/android-studio-$(ANDROID)-linux.tar.gz,.)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/android-studio/bin/studio'),android)
 
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)

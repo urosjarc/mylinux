@@ -5,8 +5,9 @@
 # Versions
     CODE_FONTS='1.2.2'
     TINKEY='1.11.0'
-    IDEA='2024.2.3'
-    PYCHARM='2024.2.3'
+    IDEA='2024.3.1.1'
+    PYCHARM='2024.3.1.1'
+    ANDROID='2024.2.1.12'
     NVM='v0.40.1'
 
 # Author of this project *github username*
