@@ -8,7 +8,7 @@ arandr
 redshift
 classicmenu-indicator
 blueman
-xbacklight
+brightnessctl
 numlockx
 gnome-tweaks
 network-manager-openconnect-gnome

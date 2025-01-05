@@ -104,6 +104,9 @@ post-install: ##Install zsh, fonts
 	$(call TITLE, POST APT AUTOREMOVE)
 		apt autoremove
 
+	$(call TITLE, RUN brightnessctl WIHOUT SUDO)
+		chmod +s $(which brightnessctl)
+
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 		echo
