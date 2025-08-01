@@ -84,6 +84,11 @@ install-apps-android:
 		$(call WGET_TAR,android.tar.gz,https://redirector.gvt1.com/edgedl/android/studio/ide-zips/$(ANDROID)/android-studio-$(ANDROID)-linux.tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/android-studio/bin/studio'),android)
 
+install-apps-rider:
+	$(call TITLE, INSTALL RIDER)
+		$(call WGET_TAR,rider.tar.gz,https://download.jetbrains.com/rider/JetBrains.Rider-$(RIDER).tar.gz,.)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/JetBrains.Rider-.*/bin/rider'),rider)
+
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)
 		curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
