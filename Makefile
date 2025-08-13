@@ -87,7 +87,7 @@ install-apps-android:
 install-apps-rider:
 	$(call TITLE, INSTALL RIDER)
 		$(call WGET_TAR,rider.tar.gz,https://download.jetbrains.com/rider/JetBrains.Rider-$(RIDER).tar.gz,.)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/JetBrains.Rider-.*/bin/rider'),rider)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/.*Rider-.*/bin/rider'),rider)
 
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)
