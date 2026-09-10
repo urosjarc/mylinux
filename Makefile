@@ -49,7 +49,7 @@ install: install-drivers install-apt install-snap install-nvm
 
 install-drivers:
 	$(call TITLE, INSTALL DRIVERS)
-		ubuntu-drivers autoinstall
+		ubuntu-drivers install
 
 install-apt:
 	$(call TITLE, INSTALL APT PACKAGES)
@@ -67,33 +67,47 @@ install-nvm:
 ### Installation for applications ##########
 #===========================================
 
-install-apps: install-apps-intellij install-apps-pycharm install-apps-docker
+install-apps: install-apps-intellij install-apps-pycharm install-apps-webstorm install-apps-datagrip install-apps-docker install-apps-tinkey
 
 install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
 		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea'),idea)
-
+		
+install-apps-webstorm:
+	$(call TITLE, INSTALL WEBSTORM)
+		$(call WGET_TAR,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(IDEA).tar.gz,.)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm-.*/bin/webstorm'),webstorm)
+		
 install-apps-pycharm:
 	$(call TITLE, INSTALL PYCHARM)
-		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-community-$(PYCHARM).tar.gz,.)
+		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-$(PYCHARM).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/pycharm-.*/bin/pycharm'),pycharm)
 
-install-apps-android:
-	$(call TITLE, INSTALL ANDROID)
-		$(call WGET_TAR,android.tar.gz,https://redirector.gvt1.com/edgedl/android/studio/ide-zips/$(ANDROID)/android-studio-$(ANDROID)-linux.tar.gz,.)
-		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/android-studio/bin/studio'),android)
+install-apps-datagrip:
+	$(call TITLE, INSTALL DATAGRIP)
+		$(call WGET_TAR,datagrip.tar.gz,https://download.jetbrains.com/datagrip/datagrip-$(IDEA).tar.gz,.)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/DataGrip-.*/bin/datagrip'),datagrip)
+		
+install-apps-clion:
+	$(call TITLE, INSTALL CLION)
+		$(call WGET_TAR,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz,.)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/CLion-.*/bin/clion'),clion)
 
 install-apps-rider:
 	$(call TITLE, INSTALL RIDER)
 		$(call WGET_TAR,rider.tar.gz,https://download.jetbrains.com/rider/JetBrains.Rider-$(RIDER).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/.*Rider-.*/bin/rider'),rider)
 
+install-apps-android:
+	$(call TITLE, INSTALL ANDROID)
+		$(call WGET_TAR,android.tar.gz,https://redirector.gvt1.com/edgedl/android/studio/ide-zips/$(ANDROID)/android-studio-$(ANDROID)-linux.tar.gz,.)
+		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/android-studio/bin/studio'),android)
+		
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)
 		curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
 		sh /tmp/get-docker.sh
-		apt install docker-compose
 
 install-apps-tinkey:
 	$(call TITLE, INSTALL TINKEY)
@@ -110,7 +124,7 @@ post-install: ##Install zsh, fonts
 		apt autoremove
 
 	$(call TITLE, RUN brightnessctl WIHOUT SUDO)
-		chmod +s $(which brightnessctl)
+		chmod +s $$(which brightnessctl)
 
 	$(call TITLE, POST INSTALL ZSH TOOLS)
 		wget -O- https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
@@ -208,7 +222,7 @@ finish: ##Finish procedure (user permissions, rebooting)
 		echo
 		if [[ $$REPLY =~ ^[Yy] ]]; then
 			$(call ALERT,rebooting the sistem...)
-			reboot
+			systemctl reboot -i
 		else
 			echo
 			$(call ALERT,you should reboot the sistem ASAP...)
