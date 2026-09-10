@@ -76,7 +76,7 @@ install-apps-intellij:
 		
 install-apps-webstorm:
 	$(call TITLE, INSTALL WEBSTORM)
-		$(call WGET_TAR,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(IDEA).tar.gz,.)
+		$(call WGET_TAR,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm-.*/bin/webstorm'),webstorm)
 		
 install-apps-pycharm:
@@ -86,7 +86,7 @@ install-apps-pycharm:
 
 install-apps-datagrip:
 	$(call TITLE, INSTALL DATAGRIP)
-		$(call WGET_TAR,datagrip.tar.gz,https://download.jetbrains.com/datagrip/datagrip-$(IDEA).tar.gz,.)
+		$(call WGET_TAR,datagrip.tar.gz,https://download.jetbrains.com/datagrip/datagrip-$(DATAGRIP).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/DataGrip-.*/bin/datagrip'),datagrip)
 		
 install-apps-clion:

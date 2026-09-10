@@ -4,12 +4,15 @@
 
 # Versions
     CODE_FONTS='1.2.2'
-    TINKEY='1.11.0'
-    IDEA='2025.2'
-    PYCHARM='2025.2.0.1'
-    ANDROID='2025.1.2'
-    RIDER='2025.1.5'
-    NVM='v0.40.1'
+    TINKEY='1.14.0'
+    DATAGRIP='2026.2.5'
+    CLION='2026.2.2'
+    IDEA='2026.2.2'
+    WEBSTORM='2026.2.2'
+    PYCHARM='2026.2.2'
+    RIDER='2026.2.1'
+    ANDROID='2026.1.4'
+    NVM='v0.40.7'
 
 # Author of this project *github username*
     AUTHOR=urosjarc
