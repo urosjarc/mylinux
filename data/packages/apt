@@ -13,6 +13,7 @@ brightnessctl
 numlockx
 gnome-tweaks
 network-manager-openconnect-gnome
+network-manager-applet
 
 # -------- Terminal environment ----------------------
 zsh
