@@ -73,12 +73,12 @@ install-apps-intellij:
 	$(call TITLE, INSTALL INTELLIJ)
 		$(call WGET_TAR,intellij.tar.gz,https://download.jetbrains.com/idea/ideaIU-$(IDEA).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/idea-IU-.*/bin/idea'),idea)
-		
+
 install-apps-webstorm:
 	$(call TITLE, INSTALL WEBSTORM)
 		$(call WGET_TAR,webstorm.tar.gz,https://download.jetbrains.com/webstorm/WebStorm-$(WEBSTORM).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/WebStorm-.*/bin/webstorm'),webstorm)
-		
+
 install-apps-pycharm:
 	$(call TITLE, INSTALL PYCHARM)
 		$(call WGET_TAR,pycharm.tar.gz,https://download.jetbrains.com/python/pycharm-$(PYCHARM).tar.gz,.)
@@ -88,7 +88,7 @@ install-apps-datagrip:
 	$(call TITLE, INSTALL DATAGRIP)
 		$(call WGET_TAR,datagrip.tar.gz,https://download.jetbrains.com/datagrip/datagrip-$(DATAGRIP).tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/DataGrip-.*/bin/datagrip'),datagrip)
-		
+
 install-apps-clion:
 	$(call TITLE, INSTALL CLION)
 		$(call WGET_TAR,clion.tar.gz,https://download.jetbrains.com/cpp/CLion-$(CLION).tar.gz,.)
@@ -103,11 +103,12 @@ install-apps-android:
 	$(call TITLE, INSTALL ANDROID)
 		$(call WGET_TAR,android.tar.gz,https://redirector.gvt1.com/edgedl/android/studio/ide-zips/$(ANDROID)/android-studio-$(ANDROID)-linux.tar.gz,.)
 		$(call LINK_BIN,$$(find $(APPS) -regex '.*\/android-studio/bin/studio'),android)
-		
+
 install-apps-docker:
 	$(call TITLE, INSTALL DOCKER)
 		curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
 		sh /tmp/get-docker.sh
+		sudo usermod -aG docker $(USER)
 
 install-apps-tinkey:
 	$(call TITLE, INSTALL TINKEY)
