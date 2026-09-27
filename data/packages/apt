@@ -14,6 +14,7 @@ numlockx
 gnome-tweaks
 network-manager-openconnect-gnome
 network-manager-applet
+scrcpy
 
 # -------- Terminal environment ----------------------
 zsh
